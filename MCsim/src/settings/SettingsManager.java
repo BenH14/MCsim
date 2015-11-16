@@ -172,14 +172,14 @@ public class SettingsManager {
 		res[1] = gd.getDisplayMode().getHeight();
 
 		//Default Bindings are WAD for Jump/Left/Right respectively, spacebar is primary attack, ctrl for secondary attack, placeblock as q, pause as esc
-		setKeyCode("left", 65);
-		setKeyCode("right", 68);
-		setKeyCode("jump", 87);
-		setKeyCode("openinv", 69);
-		setKeyCode("pattack", 32);
-		setKeyCode("sattack", 17);
-		setKeyCode("placeblock", 81);
-		setKeyCode("pause", 27);
+		setKeyCode("left", 37);
+		setKeyCode("right", 39);
+		setKeyCode("jump", 38);
+		setKeyCode("openinv", 0);
+		setKeyCode("pattack", 40);
+		setKeyCode("sattack", 0);
+		setKeyCode("placeblock", 0);
+		setKeyCode("pause", 0);
 		
 		TextAA = true;
 		AA = true;

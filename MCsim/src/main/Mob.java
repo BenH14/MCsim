@@ -7,17 +7,27 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import settings.SettingsManager;
+
 public abstract class Mob {
 
+	//LOCATION
 	public int x;
 	public int y;
 	protected DIRECTION MOB_DIRECTION;
-	protected BufferedImage Assets[];
-	protected BufferedImage currentAsset;
-	protected BufferedImage textBoxImage;
-	protected String textBoxString;
 	protected int speedMultiplier;
 
+	//ASSETS
+	protected BufferedImage Assets[];
+	protected BufferedImage currentAsset;
+	protected int scaleFactor[];
+
+	//TEXT BOX
+	protected BufferedImage textBoxImage;
+	protected String textBoxString;
+	protected int textBoxLifetime;
+
+	//LINKED LIST
 	public Mob next;
 
 	public Mob(int spawnPosX, int spawnPosY, String givenAssetName, int givenSpeedMultipler) {
@@ -31,14 +41,22 @@ public abstract class Mob {
 
 		loadAssets();
 
+		scaleFactor = new int[2];
+
+		scaleFactor[0] = 1000 / SettingsManager.getResX();
+		scaleFactor[1] = 500 / SettingsManager.getResY();
+
 	}
 
 	public abstract void loadAssets();
 
 	public Graphics2D render(Graphics2D g2d) {
 
-		g2d.drawImage(currentAsset,x ,y ,50 ,50 ,null);
-		g2d.drawImage(textBoxImage, x + 10, y - 10, 200, 50, null);
+		//Renders the currently selected image to the screen
+		g2d.drawImage(currentAsset,(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
+
+		//Draws text box if it still has a lifetime
+		if(textBoxLifetime != 0){g2d.drawImage(textBoxImage,((int) x * scaleFactor[0]) +  20,((int) y * scaleFactor[1]) + 20 ,(int) 2000 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);}
 
 		return g2d;
 
@@ -48,7 +66,11 @@ public abstract class Mob {
 
 		getInputs();
 
+		if(textBoxLifetime  != 0) {
+			textBoxLifetime--;
+		}
 
+		//Works out where to move the mob
 		if(x > 0 && x < 1000 && y > 0 && y < 500) {
 			switch(MOB_DIRECTION){
 			case EAST:

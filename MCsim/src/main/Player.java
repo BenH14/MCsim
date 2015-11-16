@@ -7,12 +7,14 @@ import javax.imageio.ImageIO;
 
 public class Player extends Mob {
 
+	private KeyController key;
+
 	public Player(int spawnPosX, int spawnPosY, String givenAssetName, int givenSpeedMultipler) {
 		super(spawnPosX, spawnPosY, givenAssetName, givenSpeedMultipler);
 	}
 
 	public void loadAssets() {
-	
+
 		try {
 			//Still doesn't need an asset as the last used one will be kept
 			Assets[1] = ImageIO.read(new File("res/player/autumn.png")); //NORTH
@@ -26,12 +28,14 @@ public class Player extends Mob {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void getInputs() {
-	
-		
+
+
+
+
 	}
 
 }

@@ -8,16 +8,16 @@ import settings.SettingsManager;
 public class KeyController implements KeyListener{
 
 	private boolean up;
-	private int upKey;
+	private final int upKey;
 
 	private boolean down;
-	private int downKey;
+	private final int downKey;
 
 	private boolean left;
-	private int leftKey;
+	private final int leftKey;
 
 	private boolean right;
-	private int rightKey;
+	private final int rightKey;
 
 	public KeyController() {
 
@@ -32,6 +32,8 @@ public class KeyController implements KeyListener{
 	public void keyPressed(KeyEvent arg0) {
 
 
+		
+		
 	}
 
 

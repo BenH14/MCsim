@@ -25,21 +25,32 @@ public class KeyController implements KeyListener{
 		rightKey = SettingsManager.getKeyCode("right");
 		downKey = SettingsManager.getKeyCode("pattack");
 		upKey = SettingsManager.getKeyCode("jump");
-		
-		
+
+
 	}
 
 	public void keyPressed(KeyEvent arg0) {
 
+		int keyCode = arg0.getKeyCode();
 
-		
-		
+		if(keyCode == leftKey) { left = true;
+		} else if(keyCode == rightKey) {right = true;
+		} else if(keyCode == upKey) {up = true;
+		} else if(keyCode == downKey) {down = true;
+		}
+
 	}
 
 
 	public void keyReleased(KeyEvent arg0) {
 
+		int keyCode = arg0.getKeyCode();
 
+		if(keyCode == leftKey) { left = false;
+		} else if(keyCode == rightKey) {right = false;
+		} else if(keyCode == upKey) {up = false;
+		} else if(keyCode == downKey) {down = false;
+		}
 
 	}
 
@@ -54,6 +65,23 @@ public class KeyController implements KeyListener{
 
 		DIRECTION RESULT = DIRECTION.STILL;
 
+		if(up == true) {
+			if(right == true) {
+				RESULT = DIRECTION.NORTH_WEST;
+			} else if(left == true) {
+				RESULT = DIRECTION.NORTH_EAST;
+			} else {
+				RESULT = DIRECTION.NORTH;
+			}
+		} else if(down == true) {
+			if(right == true) {
+				RESULT = DIRECTION.SOUTH_WEST;
+			} else if(left == true) {
+				RESULT = DIRECTION.SOUTH_EAST;
+			} else {
+				RESULT = DIRECTION.SOUTH;
+			}
+		}
 
 
 		return RESULT;

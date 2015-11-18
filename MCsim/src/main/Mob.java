@@ -71,6 +71,48 @@ protected String TypeName;
 
 		
 	}
+	
+	public void setAsset(DIRECTION GIVEN_DIRECTION) {
+
+		//Check to see if direction has changed
+		if(GIVEN_DIRECTION != MOB_DIRECTION) {
+
+			MOB_DIRECTION = GIVEN_DIRECTION;
+
+			switch(MOB_DIRECTION) {
+			case EAST:
+				currentAsset = Assets[0];
+				break;
+			case NORTH:
+				currentAsset = Assets[1];
+				break;
+			case NORTH_EAST:
+				currentAsset = Assets[2];
+				break;
+			case NORTH_WEST:
+				currentAsset = Assets[3];
+				break;
+			case SOUTH:
+				currentAsset = Assets[4];
+				break;
+			case SOUTH_EAST:
+				currentAsset = Assets[5];
+				break;
+			case SOUTH_WEST:
+				currentAsset = Assets[6];
+				break;
+			case STILL:
+				break;
+			case WEST:
+				currentAsset = Assets[8];
+				break;
+			default:
+				break;
+
+			}
+
+		}
+	}
 
 	public Graphics2D render(Graphics2D g2d) {
 

@@ -1,41 +1,71 @@
 package main;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 public class Player extends Mob {
 
 	private KeyController key;
 
-	public Player(int spawnPosX, int spawnPosY, String givenAssetName, int givenSpeedMultipler) {
-		super(spawnPosX, spawnPosY, givenAssetName, givenSpeedMultipler);
-	}
+	public Player(int spawnPosX, int spawnPosY) {
 
-	public void loadAssets() {
+		super(spawnPosX, spawnPosY, "player");
 
-		try {
-			//Still doesn't need an asset as the last used one will be kept
-			Assets[1] = ImageIO.read(new File("res/player/autumn.png")); //NORTH
-			Assets[2] = ImageIO.read(new File("res/player/autumn.png")); //NORTH_EAST
-			Assets[3] = ImageIO.read(new File("res/player/autumn.png")); //EAST
-			Assets[4] = ImageIO.read(new File("res/player/autumn.png")); //SOUTH_EAST
-			Assets[5] = ImageIO.read(new File("res/player/autumn.png")); //SOUTH
-			Assets[6] = ImageIO.read(new File("res/player/autumn.png")); //SOUTH_WEST
-			Assets[7] = ImageIO.read(new File("res/player/autumn.png")); //WEST
-			Assets[8] = ImageIO.read(new File("res/player/autumn.png")); //NORTH_WEST
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		speedMultiplier = 3;
 
 	}
 
 	public void getInputs() {
 
+		setAsset(key.getCurrentDirection());
 
-
-
+		//TextBox stuff
+		
+		int ranInt = RanGen.nextInt(100);
+		
+		if(textBoxLifetime < 0 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
+			
+			ranInt = (int) ranInt / 10;
+			
+			//TODO NEED TO DECIDE ON POSSIBLE PHRASES FOR THE PLAYER
+			
+			switch (ranInt) {
+			case 0:
+				textBoxString = "";
+				break;
+			case 1:
+				textBoxString = "";
+				break;
+			case 2:
+				textBoxString = "";
+				break;
+			case 3:
+				textBoxString = "";
+				break;
+			case 4:
+				textBoxString = "";
+				break;
+			case 5:
+				textBoxString = "";
+				break;
+			case 6:
+				textBoxString = "";
+				break;
+			case 7:
+				textBoxString = "";
+				break;
+			case 8:
+				textBoxString = "";
+				break;
+			case 9:
+				textBoxString = "";
+				break;
+			case 10:
+				textBoxString = "";
+				break;
+			}
+			
+		}
+		
+		
+		
 	}
 
 }

@@ -65,6 +65,8 @@ public class KeyController implements KeyListener{
 
 		DIRECTION RESULT = DIRECTION.STILL;
 
+		
+		//Resolve direction from which keys are pressed
 		if(up == true) {
 			if(right == true) {
 				RESULT = DIRECTION.NORTH_WEST;
@@ -81,8 +83,11 @@ public class KeyController implements KeyListener{
 			} else {
 				RESULT = DIRECTION.SOUTH;
 			}
+		} else if(left == true) {
+			RESULT = DIRECTION.WEST;
+		} else if(right == true) {
+			RESULT = DIRECTION.EAST;
 		}
-
 
 		return RESULT;
 	}

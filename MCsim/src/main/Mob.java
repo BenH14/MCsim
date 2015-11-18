@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -30,10 +31,15 @@ public abstract class Mob {
 	//LINKED LIST
 	public Mob next;
 
-	//Identification
+	//IDENTIFICATION
 	protected String TypeName;
 
+	//UTIL
+	protected Random RanGen;
+
 	public Mob(int spawnPosX, int spawnPosY, String GivenTypeName) {
+
+		RanGen = new Random();
 
 		x = spawnPosX;
 		y = spawnPosY;
@@ -56,6 +62,8 @@ public abstract class Mob {
 		Assets = new BufferedImage[8];
 
 		try {
+
+			//DIRECTIONS
 			//Still doesn't need an asset as the last used one will be kept
 			Assets[0] = ImageIO.read(new File("res/" + TypeName + "/NORTH.png")); //NORTH
 			Assets[1] = ImageIO.read(new File("res/" + TypeName + "/NORTH_EAST.png")); //NORTH_EAST
@@ -65,6 +73,10 @@ public abstract class Mob {
 			Assets[5] = ImageIO.read(new File("res/" + TypeName + "/SOUTH_WEST.png")); //SOUTH_WEST
 			Assets[6] = ImageIO.read(new File("res/" + TypeName + "/WEST.png")); //WEST
 			Assets[7] = ImageIO.read(new File("res/" + TypeName + "/NORTH_WEST.png")); //NORTH_WEST
+
+			//TEXT BOX
+			textBoxImage = ImageIO.read(new File("res/textbox.png"));
+
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -120,7 +132,13 @@ public abstract class Mob {
 		g2d.drawImage(currentAsset,(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
 
 		//Draws text box if it still has a lifetime
-		if(textBoxLifetime != 0){g2d.drawImage(textBoxImage,((int) x * scaleFactor[0]) +  20,((int) y * scaleFactor[1]) + 20 ,(int) 2000 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);}
+		if(textBoxLifetime != 0){
+
+			g2d.drawImage(textBoxImage,((int) x * scaleFactor[0]) +  20,((int) y * scaleFactor[1]) + 20 ,(int) 2000 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
+
+			g2d.drawString(textBoxString,((int) x * scaleFactor[0]) +  20,((int) y * scaleFactor[1]) + 20);
+
+		}
 
 		return g2d;
 

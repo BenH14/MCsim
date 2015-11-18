@@ -8,7 +8,7 @@ public class Player extends Mob {
 
 		super(spawnPosX, spawnPosY, "player");
 
-		speedMultiplier = 2;
+		speedMultiplier = 3;
 
 	}
 
@@ -16,6 +16,7 @@ public class Player extends Mob {
 
 		setAsset(key.getCurrentDirection());
 
+		ranGen
 
 	}
 

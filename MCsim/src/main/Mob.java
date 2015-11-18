@@ -30,6 +30,7 @@ public abstract class Mob {
 
 	//LINKED LIST
 	public Mob next;
+	public Mob prev;
 
 	//IDENTIFICATION
 	protected String TypeName;

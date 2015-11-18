@@ -16,7 +16,13 @@ public class Player extends Mob {
 
 		setAsset(key.getCurrentDirection());
 
-		ranGen
+		int ranInt = RanGen.nextInt(100);
+		
+		if(textBoxLifetime < 0 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
+			
+			
+			
+		}
 
 	}
 

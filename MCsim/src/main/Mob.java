@@ -29,6 +29,9 @@ public abstract class Mob {
 
 	//LINKED LIST
 	public Mob next;
+	
+	//Identification
+protected String TypeName;
 
 	public Mob(int spawnPosX, int spawnPosY, String givenAssetName, int givenSpeedMultipler) {
 
@@ -48,7 +51,26 @@ public abstract class Mob {
 
 	}
 
-	public abstract void loadAssets();
+	public void loadAssets() {
+	
+		Assets = new BufferedImage[8];
+		
+		try {
+			//Still doesn't need an asset as the last used one will be kept
+			Assets[0] = ImageIO.read(new File("res/" + TypeName + "/NORTH.png")); //NORTH
+			Assets[1] = ImageIO.read(new File("res/" + TypeName + "/NORTH_EAST.png")); //NORTH_EAST
+			Assets[2] = ImageIO.read(new File("res/" + TypeName + "/EAST.png")); //EAST
+			Assets[3] = ImageIO.read(new File("res/" + TypeName + "/SOUTH_EAST.png")); //SOUTH_EAST
+			Assets[4] = ImageIO.read(new File("res/" + TypeName + "/SOUTH.png")); //SOUTH
+			Assets[5] = ImageIO.read(new File("res/" + TypeName + "/SOUTH_WEST.png")); //SOUTH_WEST
+			Assets[6] = ImageIO.read(new File("res/" + TypeName + "/WEST.png")); //WEST
+			Assets[7] = ImageIO.read(new File("res/" + TypeName + "/NORTH_WEST.png")); //NORTH_WEST
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		
+	}
 
 	public Graphics2D render(Graphics2D g2d) {
 

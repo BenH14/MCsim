@@ -29,9 +29,9 @@ public abstract class Mob {
 
 	//LINKED LIST
 	public Mob next;
-	
+
 	//Identification
-protected String TypeName;
+	protected String TypeName;
 
 	public Mob(int spawnPosX, int spawnPosY, String givenAssetName, int givenSpeedMultipler) {
 
@@ -52,9 +52,9 @@ protected String TypeName;
 	}
 
 	public void loadAssets() {
-	
+
 		Assets = new BufferedImage[8];
-		
+
 		try {
 			//Still doesn't need an asset as the last used one will be kept
 			Assets[0] = ImageIO.read(new File("res/" + TypeName + "/NORTH.png")); //NORTH
@@ -69,9 +69,9 @@ protected String TypeName;
 			ex.printStackTrace();
 		}
 
-		
+
 	}
-	
+
 	public void setAsset(DIRECTION GIVEN_DIRECTION) {
 
 		//Check to see if direction has changed
@@ -101,10 +101,10 @@ protected String TypeName;
 			case SOUTH_WEST:
 				currentAsset = Assets[6];
 				break;
-			case STILL:
-				break;
 			case WEST:
-				currentAsset = Assets[8];
+				currentAsset = Assets[7];
+				break;
+			case STILL:
 				break;
 			default:
 				break;

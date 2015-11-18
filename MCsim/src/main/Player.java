@@ -12,8 +12,7 @@ public class Player extends Mob {
 
 		setAsset(key.getCurrentDirection());
 
-
-
+		
 	}
 
 }

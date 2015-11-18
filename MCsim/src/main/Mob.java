@@ -33,14 +33,14 @@ public abstract class Mob {
 	//Identification
 	protected String TypeName;
 
-	public Mob(int spawnPosX, int spawnPosY, String givenAssetName, int givenSpeedMultipler) {
+	public Mob(int spawnPosX, int spawnPosY, String GivenTypeName) {
 
 		x = spawnPosX;
 		y = spawnPosY;
 
 		MOB_DIRECTION = DIRECTION.STILL;
 
-		speedMultiplier = givenSpeedMultipler;
+		TypeName = GivenTypeName;
 
 		loadAssets();
 

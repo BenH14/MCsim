@@ -193,6 +193,7 @@ public abstract class Mob {
 		}
 	}
 
+	//This should get the direction of the mob, set the assset and set up textboxes
 	public abstract void getInputs();
 
 }

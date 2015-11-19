@@ -240,7 +240,7 @@ public abstract class Mob {
 					textBoxString = "Google it, yeah?";
 					break;
 				}
-			} else {
+			} else { //TODO decide on enemy text box contents
 				switch (ranInt) {
 				case 0:
 					textBoxString = "I just need to print it off";
@@ -280,7 +280,7 @@ public abstract class Mob {
 		}
 	}
 
-	//This should get the direction of the mob, set the assset and set up textboxes
+	//This should get the direction of the mob, set the asset and set up textboxes
 	public abstract void getInputs();
 
 }

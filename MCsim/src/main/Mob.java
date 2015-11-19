@@ -193,6 +193,93 @@ public abstract class Mob {
 		}
 	}
 
+	public void setTextBox() {
+
+		int ranInt = RanGen.nextInt(100);
+
+		if(textBoxLifetime < 0 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
+
+			ranInt = (int) ranInt / 10;
+
+			textBoxLifetime = 120;
+
+
+			if(TypeName == "player") {
+				switch (ranInt) {
+				case 0:
+					textBoxString = "Wheres your coursework?";
+					break;
+				case 1:
+					textBoxString = "Jamie that breaks the chairs, yeah?";
+					break;
+				case 2:
+					textBoxString = "Ben, I don't want to hear any more from you";
+					break;
+				case 3:
+					textBoxString = "Need it by the end of the week, monday at the latest";
+					break;
+				case 4:
+					textBoxString = "We don't need a running commentary";
+					break;
+				case 5:
+					textBoxString = "Lets not waste any more time, yeah?";
+					break;
+				case 6:
+					textBoxString = "Ahad, wheres your extended essay?";
+					break;
+				case 7:
+					textBoxString = "Correct format is 120% of the marks";
+					break;
+				case 8:
+					textBoxString = "Hindolo, this isn't a maths lesson";
+					break;
+				case 9:
+					textBoxString = "Just do it";
+					break;
+				case 10:
+					textBoxString = "Google it, yeah?";
+					break;
+				}
+			} else {
+				switch (ranInt) {
+				case 0:
+					textBoxString = "I just need to print it off";
+					break;
+				case 1:
+					textBoxString = "Its on my computer at home";
+					break;
+				case 2:
+					textBoxString = "My printer is broken";
+					break;
+				case 3:
+					textBoxString = "The program is done, I just need to do the documentation";
+					break;
+				case 4:
+					textBoxString = "";
+					break;
+				case 5:
+					textBoxString = "";
+					break;
+				case 6:
+					textBoxString = "";
+					break;
+				case 7:
+					textBoxString = "";
+					break;
+				case 8:
+					textBoxString = "";
+					break;
+				case 9:
+					textBoxString = "";
+					break;
+				case 10:
+					textBoxString = "";
+					break;
+				}
+			}
+		}
+	}
+
 	//This should get the direction of the mob, set the assset and set up textboxes
 	public abstract void getInputs();
 

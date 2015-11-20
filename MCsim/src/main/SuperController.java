@@ -18,6 +18,8 @@ public class SuperController {
 	private Menu mainMenu;
 
 	private Mob mobHead;
+	
+	private KeyController mainKey;
 
 	public SuperController() {
 
@@ -34,7 +36,9 @@ public class SuperController {
 		pause = true;
 		exit = false;
 		
-		mainMenu = new Menu();
+		mainKey = new KeyController();
+		
+		mainMenu = new Menu(mainKey);
 
 	}
 

@@ -7,16 +7,16 @@ import settings.SettingsManager;
 
 public class KeyController implements KeyListener{
 
-	private boolean up;
+	public boolean up;
 	private final int upKey;
 
-	private boolean down;
+	public boolean down;
 	private final int downKey;
 
-	private boolean left;
+	public boolean left;
 	private final int leftKey;
 
-	private boolean right;
+	public boolean right;
 	private final int rightKey;
 
 	public KeyController() {

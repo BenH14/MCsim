@@ -4,12 +4,14 @@ public class Player extends Mob {
 
 	private KeyController key;
 
-	public Player(int spawnPosX, int spawnPosY) {
+	public Player(int spawnPosX, int spawnPosY, KeyController givenKey) {
 
 		super(spawnPosX, spawnPosY, "player");
 
 		speedMultiplier = 3;
 
+		key = givenKey;
+		
 	}
 
 	public void getInputs() {

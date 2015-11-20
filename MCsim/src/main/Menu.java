@@ -12,21 +12,27 @@ public class Menu {
 	public boolean endGame;
 	public boolean startGame;
 
-	public int choice;
+	private int choice;
+	private KeyController key;
 
-	public Menu() {
+	public Menu(KeyController givenKey) {
 
 		choice = 0;
 
 		endGame = false;
 		startGame = false;
 
+		key = givenKey;
+
 	}
 
 	public void tick() {
 
-
-
+		if(key.up == true) {
+			choice = 0;
+		} else if(key.down == true) {
+			choice = 1;
+		}
 
 		if(ticks < 600) {ticks++;} else {ticks = 0;}
 
@@ -46,7 +52,7 @@ public class Menu {
 		g2d.drawString("Collins Simulator", 60, 160 + titleDeviation);
 
 		g2d.setFont(new Font("DialogInput", Font.BOLD, 60));
-		
+
 		if(choice == 0) {
 			g2d.drawString("[COLLECT COURSEWORK]", 60, 500 + titleDeviation);
 			g2d.drawString("HAVE DOOR FITTED", 60, 600);

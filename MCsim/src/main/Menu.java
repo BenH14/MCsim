@@ -46,10 +46,14 @@ public class Menu {
 		g2d.drawString("Collins Simulator", 60, 160 + titleDeviation);
 
 		g2d.setFont(new Font("DialogInput", Font.BOLD, 60));
-		g2d.drawString("COLLECT COURSEWORK", 60, 500 + titleDeviation);
-		g2d.drawString("HAVE DOOR FITTED", 60, 600 + titleDeviation);
-		
-		
+		if(choice == 0) {
+			g2d.drawString("[COLLECT COURSEWORK]", 60, 500 + titleDeviation);
+			g2d.drawString("HAVE DOOR FITTED", 60, 600);
+		} else {
+			g2d.drawString("COLLECT COURSEWORK", 60, 500);
+			g2d.drawString("[HAVE DOOR FITTED]", 60, 600 + titleDeviation);	
+		}
+
 
 		return g2d;
 	}

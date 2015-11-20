@@ -18,7 +18,7 @@ public class SuperController {
 	private Menu mainMenu;
 
 	private Mob mobHead;
-	
+
 	private KeyController mainKey;
 
 	public SuperController() {
@@ -35,15 +35,15 @@ public class SuperController {
 
 		pause = true;
 		exit = false;
-		
+
 		mainKey = new KeyController();
-		
+
 		mainMenu = new Menu(mainKey);
 
 	}
 
 	public void loop() {
-		
+
 		Thread renderThread = new Thread(renderLoop);
 		Thread.currentThread().setPriority(10);
 		renderThread.setPriority(9);
@@ -53,7 +53,7 @@ public class SuperController {
 
 			//Main Update Loop
 			double tickStartTime = System.currentTimeMillis();
-			
+
 			if(pause == false) {
 
 				//Tick all
@@ -104,8 +104,6 @@ public class SuperController {
 	Runnable renderLoop = new Runnable() {
 		public void run() {
 			while(exit == false) {
-				
-				System.out.println("render loop");
 
 				//An image that everything is drawn onto before being drawn onto the actual frame
 				BufferedImage stagingImage = new BufferedImage(SettingsManager.getResX(),SettingsManager.getResY(), BufferedImage.TYPE_3BYTE_BGR);
@@ -117,7 +115,6 @@ public class SuperController {
 				if(pause == false) {
 					//Render Game	
 				} else {
-					System.out.println("rendering menu");
 					g2d = mainMenu.render(g2d);
 				}
 

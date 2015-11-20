@@ -71,7 +71,6 @@ public class SuperController {
 				exit = mainMenu.endGame;
 				pause = !mainMenu.startGame;
 
-
 			}
 
 			double sleepTime = (1000/60) - (System.currentTimeMillis() - tickStartTime);

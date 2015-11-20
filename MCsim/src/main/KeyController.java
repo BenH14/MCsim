@@ -18,6 +18,8 @@ public class KeyController implements KeyListener{
 
 	public boolean right;
 	private final int rightKey;
+	
+	public boolean enter;
 
 	public KeyController() {
 		
@@ -32,10 +34,11 @@ public class KeyController implements KeyListener{
 
 		int keyCode = arg0.getKeyCode();
 		
-		if(keyCode == leftKey) { left = true;
+		if(keyCode == leftKey) {left = true;
 		} else if(keyCode == rightKey) {right = true;
 		} else if(keyCode == upKey) {up = true;
 		} else if(keyCode == downKey) {down = true;
+		} else if(keyCode == 10) {enter = true;
 		}
 
 	}
@@ -49,6 +52,7 @@ public class KeyController implements KeyListener{
 		} else if(keyCode == rightKey) {right = false;
 		} else if(keyCode == upKey) {up = false;
 		} else if(keyCode == downKey) {down = false;
+		} else if(keyCode == 13) {enter = false;
 		}
 
 	}

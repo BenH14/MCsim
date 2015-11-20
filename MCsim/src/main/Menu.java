@@ -35,7 +35,11 @@ public class Menu {
 		}
 
 		if(ticks < 600) {ticks++;} else {ticks = 0;}
+		
+		if(choice == 0) {startGame = key.enter;}
+		else {endGame = key.enter;}
 
+		
 	}
 
 	public Graphics2D render(Graphics2D g2d) {
@@ -60,8 +64,7 @@ public class Menu {
 			g2d.drawString("COLLECT COURSEWORK", 60, 500);
 			g2d.drawString("[HAVE DOOR FITTED]", 60, 600 + titleDeviation);	
 		}
-
-
+		
 		return g2d;
 	}
 

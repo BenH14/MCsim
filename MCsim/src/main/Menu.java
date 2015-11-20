@@ -34,18 +34,22 @@ public class Menu {
 
 	public Graphics2D render(Graphics2D g2d) {
 
-		g2d.setColor(Color.black);
-		g2d.drawRect(0, 0, 1000, 1500);
-		
+		int titleDeviation = (int) (Math.sin(ticks / 10) * 10) - 5;
+
 		g2d.setColor(Color.WHITE);
-		g2d.setFont(new Font("DialogInput", Font.BOLD, 12));
-		g2d.drawString("Mr", 60, 60);
-		g2d.drawString("2016", 160, 250);
+
+		g2d.setFont(new Font("DialogInput", Font.BOLD, 48));
+		g2d.drawString("Mr", 100 - titleDeviation, 80);
+		g2d.drawString("2016", 600 + titleDeviation, 220);
 
 		g2d.setFont(new Font("DialogInput", Font.BOLD + Font.ITALIC, 72));
-		g2d.drawString("Collins Simulator", 60,(int) 180 + ((ticks/10) - 30));
+		g2d.drawString("Collins Simulator", 60, 160 + titleDeviation);
 
-
+		g2d.setFont(new Font("DialogInput", Font.BOLD, 60));
+		g2d.drawString("COLLECT COURSEWORK", 60, 500 + titleDeviation);
+		g2d.drawString("HAVE DOOR FITTED", 60, 600 + titleDeviation);
+		
+		
 
 		return g2d;
 	}

@@ -10,10 +10,12 @@ import settings.SettingsManager;
 
 public class SuperController {
 
-	private boolean endGame;
+	private boolean pause;
+	private boolean exit;
 	private int renderSleepTime;
 
 	private Window mainWindow; 
+	private Menu mainMenu;
 
 	private Mob mobHead;
 
@@ -21,7 +23,7 @@ public class SuperController {
 
 		SettingsManager.init();
 
-		mainWindow = new Window("PolyScript Game");
+		mainWindow = new Window("MCSim 2016");
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainWindow.setSize(SettingsManager.getResX(), SettingsManager.getResY());
 		mainWindow.setLocationRelativeTo(null);
@@ -29,28 +31,42 @@ public class SuperController {
 
 		mainWindow.setVisible(true);
 
-		endGame = false;
+		pause = true;
+		exit = false;
 
 	}
 
 	public void loop() {
-
+		
 		Thread renderThread = new Thread(renderLoop);
 		Thread.currentThread().setPriority(10);
 		renderThread.setPriority(9);
 		renderThread.start();		
 
-		while(endGame == false) {
+		while(exit == false) {
+
 			//Main Update Loop
 			double tickStartTime = System.currentTimeMillis();
+System.out.println("loop");
+			if(pause == true) {
 
-			//Tick all
-			Mob tempMob = mobHead;
-			while(tempMob != null) {
-				tempMob.tick();
-				tempMob = tempMob.next;
+				//Tick all
+				Mob tempMob = mobHead;
+				while(tempMob != null) {
+					tempMob.tick();
+					tempMob = tempMob.next;
+				}
+
+			} else {
+
+				System.out.println("ticking menu");
+				mainMenu.tick();
+
+				exit = mainMenu.endGame;
+				pause = !mainMenu.startGame;
+
+
 			}
-
 
 			double sleepTime = (1000/60) - (System.currentTimeMillis() - tickStartTime);
 
@@ -64,6 +80,7 @@ public class SuperController {
 					renderSleepTime = (int) (sleepTime * -1);
 				}
 			} catch (InterruptedException e) {e.printStackTrace();}
+
 
 		}
 
@@ -81,7 +98,7 @@ public class SuperController {
 
 	Runnable renderLoop = new Runnable() {
 		public void run() {
-			while(endGame == false) {				
+			while(pause == false) {				
 
 				//An image that everything is drawn onto before being drawn onto the actual frame
 				BufferedImage stagingImage = new BufferedImage(SettingsManager.getResX(),SettingsManager.getResY(), BufferedImage.TYPE_3BYTE_BGR);
@@ -90,8 +107,12 @@ public class SuperController {
 				//Set rendering hints
 				g2d = SettingsManager.setRenderingHints(g2d);
 
-				//Render Everything
-
+				if(pause == false) {
+					//Render Game	
+				} else {
+					System.out.println("rendering menu");
+					g2d = mainMenu.render(g2d);
+				}
 
 				//Draw the actual image onto the frame
 				g2d = (Graphics2D) mainWindow.getGraphics();

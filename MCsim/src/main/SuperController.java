@@ -37,6 +37,7 @@ public class SuperController {
 		exit = false;
 
 		mainKey = new KeyController();
+		mainWindow.addKeyListener(mainKey);
 
 		mainMenu = new Menu(mainKey);
 

@@ -20,19 +20,18 @@ public class KeyController implements KeyListener{
 	private final int rightKey;
 
 	public KeyController() {
-
+		
 		leftKey = SettingsManager.getKeyCode("left");
 		rightKey = SettingsManager.getKeyCode("right");
-		downKey = SettingsManager.getKeyCode("pattack");
-		upKey = SettingsManager.getKeyCode("jump");
-
+		downKey = SettingsManager.getKeyCode("down");
+		upKey = SettingsManager.getKeyCode("up");
 
 	}
 
 	public void keyPressed(KeyEvent arg0) {
 
 		int keyCode = arg0.getKeyCode();
-
+		
 		if(keyCode == leftKey) { left = true;
 		} else if(keyCode == rightKey) {right = true;
 		} else if(keyCode == upKey) {up = true;

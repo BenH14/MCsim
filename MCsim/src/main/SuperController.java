@@ -33,6 +33,8 @@ public class SuperController {
 
 		pause = true;
 		exit = false;
+		
+		mainMenu = new Menu();
 
 	}
 
@@ -47,8 +49,8 @@ public class SuperController {
 
 			//Main Update Loop
 			double tickStartTime = System.currentTimeMillis();
-System.out.println("loop");
-			if(pause == true) {
+			
+			if(pause == false) {
 
 				//Tick all
 				Mob tempMob = mobHead;
@@ -59,7 +61,6 @@ System.out.println("loop");
 
 			} else {
 
-				System.out.println("ticking menu");
 				mainMenu.tick();
 
 				exit = mainMenu.endGame;
@@ -98,7 +99,9 @@ System.out.println("loop");
 
 	Runnable renderLoop = new Runnable() {
 		public void run() {
-			while(pause == false) {				
+			while(exit == false) {
+				
+				System.out.println("render loop");
 
 				//An image that everything is drawn onto before being drawn onto the actual frame
 				BufferedImage stagingImage = new BufferedImage(SettingsManager.getResX(),SettingsManager.getResY(), BufferedImage.TYPE_3BYTE_BGR);

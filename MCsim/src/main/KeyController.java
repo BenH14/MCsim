@@ -7,36 +7,38 @@ import settings.SettingsManager;
 
 public class KeyController implements KeyListener{
 
-	private boolean up;
+	public boolean up;
 	private final int upKey;
 
-	private boolean down;
+	public boolean down;
 	private final int downKey;
 
-	private boolean left;
+	public boolean left;
 	private final int leftKey;
 
-	private boolean right;
+	public boolean right;
 	private final int rightKey;
+	
+	public boolean enter;
 
 	public KeyController() {
-
+		
 		leftKey = SettingsManager.getKeyCode("left");
 		rightKey = SettingsManager.getKeyCode("right");
-		downKey = SettingsManager.getKeyCode("pattack");
-		upKey = SettingsManager.getKeyCode("jump");
-
+		downKey = SettingsManager.getKeyCode("down");
+		upKey = SettingsManager.getKeyCode("up");
 
 	}
 
 	public void keyPressed(KeyEvent arg0) {
 
 		int keyCode = arg0.getKeyCode();
-
-		if(keyCode == leftKey) { left = true;
+		
+		if(keyCode == leftKey) {left = true;
 		} else if(keyCode == rightKey) {right = true;
 		} else if(keyCode == upKey) {up = true;
 		} else if(keyCode == downKey) {down = true;
+		} else if(keyCode == 10) {enter = true;
 		}
 
 	}
@@ -50,6 +52,7 @@ public class KeyController implements KeyListener{
 		} else if(keyCode == rightKey) {right = false;
 		} else if(keyCode == upKey) {up = false;
 		} else if(keyCode == downKey) {down = false;
+		} else if(keyCode == 13) {enter = false;
 		}
 
 	}

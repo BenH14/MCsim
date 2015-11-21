@@ -70,6 +70,10 @@ public class SuperController {
 
 				exit = mainMenu.endGame;
 				pause = !mainMenu.startGame;
+				
+				if(pause == false) {
+					mobHead = new Player(100,100, mainKey);
+				}
 
 			}
 
@@ -114,6 +118,8 @@ public class SuperController {
 
 				if(pause == false) {
 					//Render Game
+					
+					
 					
 					Mob tempMob = mobHead;
 					while(tempMob != null) {

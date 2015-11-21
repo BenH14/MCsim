@@ -23,8 +23,7 @@ public class Animator {
 	
 	public Animator(String filePath, int givenSpriteSizeX, int givenSpriteSizeY) {
 
-		try {SpriteSheet = ImageIO.read(new File("res/" + filePath));} catch (IOException e) {e.printStackTrace();}
-
+		try {SpriteSheet = ImageIO.read(new File("res/" + filePath));
 		spriteSizeX = givenSpriteSizeX;
 		spriteSizeY = givenSpriteSizeY;
 
@@ -33,6 +32,9 @@ public class Animator {
 		stagesPerRow = SpriteSheet.getHeight() / spriteSizeX;
 
 		totalStages = stagesPerRow * (SpriteSheet.getWidth() / spriteSizeY);
+		
+		} catch (Exception e) {e.printStackTrace();}
+
 
 	}
 

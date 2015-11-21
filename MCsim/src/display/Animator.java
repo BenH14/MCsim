@@ -17,6 +17,10 @@ public class Animator {
 	private int totalStages;
 	private int stagesPerRow;
 
+	public Animator(String filePath) {
+		this(filePath, 100,100); //If no sprite sizes are given, use 100x100
+	}
+	
 	public Animator(String filePath, int givenSpriteSizeX, int givenSpriteSizeY) {
 
 		try {SpriteSheet = ImageIO.read(new File("res/" + filePath));} catch (IOException e) {e.printStackTrace();}

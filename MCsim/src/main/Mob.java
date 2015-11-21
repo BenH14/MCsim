@@ -128,11 +128,11 @@ public abstract class Mob {
 	public Graphics2D render(Graphics2D g2d) {
 
 		//Renders the currently selected image to the screen
-//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
+		//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
 		g2d.setColor(Color.WHITE);
 		g2d.drawRect((int) x * scaleFactor[0],(int) y * scaleFactor[1], 20, 20);
-g2d.drawRect(100, 100, 100, 100);
-g2d.setColor(Color.BLACK);
+		g2d.drawRect(100, 100, 100, 100);
+		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
 		if(textBoxLifetime != 0){
 

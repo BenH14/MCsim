@@ -200,6 +200,14 @@ public abstract class Mob {
 				break;
 
 			}
+		} else if(x < 0) {
+			x = 1;
+		} else if(x > 1000) {
+			x = 999;
+		} else if(y < 0) {
+			y = 1;
+		} else if(y > 500) {
+			y = 499;
 		}
 
 		tickCount++;

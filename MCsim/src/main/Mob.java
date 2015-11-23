@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,6 +9,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import display.Animator;
 import settings.SettingsManager;
 
 public abstract class Mob {
@@ -19,8 +21,8 @@ public abstract class Mob {
 	protected int speedMultiplier;
 
 	//ASSETS
-	protected BufferedImage Assets[];
-	protected BufferedImage currentAsset;
+	protected Animator Animators[];
+	protected Animator CurrentAnimator;
 	protected int scaleFactor[];
 
 	//TEXT BOX
@@ -37,15 +39,17 @@ public abstract class Mob {
 
 	//UTIL
 	protected Random RanGen;
+	protected int tickCount;
 
 	public Mob(int spawnPosX, int spawnPosY, String GivenTypeName) {
 
 		RanGen = new Random();
+		tickCount = 0;
 
 		x = spawnPosX;
 		y = spawnPosY;
 
-		MOB_DIRECTION = DIRECTION.STILL;
+		MOB_DIRECTION = DIRECTION.STILL;	
 
 		TypeName = GivenTypeName;
 
@@ -60,27 +64,21 @@ public abstract class Mob {
 
 	public void loadAssets() {
 
-		Assets = new BufferedImage[8];
+		Animators = new Animator[8];
 
-		try {
+		//DIRECTIONS
+		//Still doesn't need an asset as the last used one will be kept
+		Animators[0] = new Animator(TypeName + "/NORTH.png"); //NORTH
+		Animators[1] = new Animator(TypeName + "/NORTH_EAST.png"); //NORTH_EAST
+		Animators[2] = new Animator(TypeName + "/EAST.png"); //EAST
+		Animators[3] = new Animator(TypeName + "/SOUTH_EAST.png"); //SOUTH_EAST
+		Animators[4] = new Animator(TypeName + "/SOUTH.png"); //SOUTH
+		Animators[5] = new Animator(TypeName + "/SOUTH_WEST.png"); //SOUTH_WEST
+		Animators[6] = new Animator(TypeName + "/WEST.png"); //WEST
+		Animators[7] = new Animator(TypeName + "/NORTH_WEST.png"); //NORTH_WEST
 
-			//DIRECTIONS
-			//Still doesn't need an asset as the last used one will be kept
-			Assets[0] = ImageIO.read(new File("res/" + TypeName + "/NORTH.png")); //NORTH
-			Assets[1] = ImageIO.read(new File("res/" + TypeName + "/NORTH_EAST.png")); //NORTH_EAST
-			Assets[2] = ImageIO.read(new File("res/" + TypeName + "/EAST.png")); //EAST
-			Assets[3] = ImageIO.read(new File("res/" + TypeName + "/SOUTH_EAST.png")); //SOUTH_EAST
-			Assets[4] = ImageIO.read(new File("res/" + TypeName + "/SOUTH.png")); //SOUTH
-			Assets[5] = ImageIO.read(new File("res/" + TypeName + "/SOUTH_WEST.png")); //SOUTH_WEST
-			Assets[6] = ImageIO.read(new File("res/" + TypeName + "/WEST.png")); //WEST
-			Assets[7] = ImageIO.read(new File("res/" + TypeName + "/NORTH_WEST.png")); //NORTH_WEST
-
-			//TEXT BOX
-			textBoxImage = ImageIO.read(new File("res/textbox.png"));
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		//TEXT BOX
+		try {textBoxImage = ImageIO.read(new File("res/textbox.png"));} catch (IOException e) {e.printStackTrace();}
 
 
 	}
@@ -94,28 +92,28 @@ public abstract class Mob {
 
 			switch(MOB_DIRECTION) {
 			case EAST:
-				currentAsset = Assets[0];
+				CurrentAnimator = Animators[0];
 				break;
 			case NORTH:
-				currentAsset = Assets[1];
+				CurrentAnimator = Animators[1];
 				break;
 			case NORTH_EAST:
-				currentAsset = Assets[2];
+				CurrentAnimator = Animators[2];
 				break;
 			case NORTH_WEST:
-				currentAsset = Assets[3];
+				CurrentAnimator = Animators[3];
 				break;
 			case SOUTH:
-				currentAsset = Assets[4];
+				CurrentAnimator = Animators[4];
 				break;
 			case SOUTH_EAST:
-				currentAsset = Assets[5];
+				CurrentAnimator = Animators[5];
 				break;
 			case SOUTH_WEST:
-				currentAsset = Assets[6];
+				CurrentAnimator = Animators[6];
 				break;
 			case WEST:
-				currentAsset = Assets[7];
+				CurrentAnimator = Animators[7];
 				break;
 			case STILL:
 				break;
@@ -129,9 +127,15 @@ public abstract class Mob {
 
 	public Graphics2D render(Graphics2D g2d) {
 
+		scaleFactor[0] = 1;
+		scaleFactor[1] = 1;
+		
 		//Renders the currently selected image to the screen
-		g2d.drawImage(currentAsset,(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
-
+		//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
+		g2d.setColor(Color.WHITE);
+		g2d.drawRect((int) x * scaleFactor[0],(int) y * scaleFactor[1], 20, 20);
+		g2d.drawString(MOB_DIRECTION.toString(), 100, 100);
+		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
 		if(textBoxLifetime != 0){
 
@@ -148,6 +152,12 @@ public abstract class Mob {
 	public void tick() {
 
 		getInputs();
+		
+		if(tickCount == 120) {
+			tickCount = 0;
+		} else if(tickCount % 20 == 0) {
+//			CurrentAnimator.nextSprite();
+		}
 
 		if(textBoxLifetime  != 0) {
 			textBoxLifetime--;
@@ -171,14 +181,14 @@ public abstract class Mob {
 				y = y - speedMultiplier;
 				break;
 			case SOUTH:
-				y = y - speedMultiplier;
+				y = y + speedMultiplier;
 				break;
 			case SOUTH_EAST:
 				x = x + speedMultiplier;
-				y = y - speedMultiplier;
+				y = y + speedMultiplier;
 				break;
 			case SOUTH_WEST:
-				y = y - speedMultiplier;
+				y = y + speedMultiplier;
 				x = x - speedMultiplier;
 				break;
 			case STILL:
@@ -190,7 +200,18 @@ public abstract class Mob {
 				break;
 
 			}
+		} else if(x < 0) {
+			x = 1;
+		} else if(x > 1000) {
+			x = 999;
+		} else if(y < 0) {
+			y = 1;
+		} else if(y > 500) {
+			y = 499;
 		}
+
+		tickCount++;
+
 	}
 
 	public void setTextBox() {

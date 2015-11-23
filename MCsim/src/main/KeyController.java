@@ -72,17 +72,17 @@ public class KeyController implements KeyListener{
 		//Resolve direction from which keys are pressed
 		if(up == true) {
 			if(right == true) {
-				RESULT = DIRECTION.NORTH_WEST;
-			} else if(left == true) {
 				RESULT = DIRECTION.NORTH_EAST;
+			} else if(left == true) {
+				RESULT = DIRECTION.NORTH_WEST;
 			} else {
 				RESULT = DIRECTION.NORTH;
 			}
 		} else if(down == true) {
 			if(right == true) {
-				RESULT = DIRECTION.SOUTH_WEST;
-			} else if(left == true) {
 				RESULT = DIRECTION.SOUTH_EAST;
+			} else if(left == true) {
+				RESULT = DIRECTION.SOUTH_WEST;
 			} else {
 				RESULT = DIRECTION.SOUTH;
 			}

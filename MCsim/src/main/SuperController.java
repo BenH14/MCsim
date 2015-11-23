@@ -70,6 +70,10 @@ public class SuperController {
 
 				exit = mainMenu.endGame;
 				pause = !mainMenu.startGame;
+				
+				if(pause == false) {
+					mobHead = new Player(100,100, mainKey);
+				}
 
 			}
 
@@ -113,7 +117,16 @@ public class SuperController {
 				g2d = SettingsManager.setRenderingHints(g2d);
 
 				if(pause == false) {
-					//Render Game	
+					//Render Game
+					
+					
+					
+					Mob tempMob = mobHead;
+					while(tempMob != null) {
+						g2d = tempMob.render(g2d);
+						tempMob = tempMob.next;
+					}
+					
 				} else {
 					g2d = mainMenu.render(g2d);
 				}

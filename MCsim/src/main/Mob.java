@@ -134,11 +134,7 @@ public abstract class Mob {
 		//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
 		g2d.setColor(Color.WHITE);
 		g2d.drawRect((int) x * scaleFactor[0],(int) y * scaleFactor[1], 20, 20);
-		System.out.println(x);
-		System.out.println(x * scaleFactor[0]);
-		System.out.println(y);
-		System.out.println(y * scaleFactor[1]);
-		g2d.drawRect(100, 100, 100, 100);
+		g2d.drawString(MOB_DIRECTION.toString(), 100, 100);
 		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
 		if(textBoxLifetime != 0){
@@ -185,14 +181,14 @@ public abstract class Mob {
 				y = y - speedMultiplier;
 				break;
 			case SOUTH:
-				y = y - speedMultiplier;
+				y = y + speedMultiplier;
 				break;
 			case SOUTH_EAST:
 				x = x + speedMultiplier;
-				y = y - speedMultiplier;
+				y = y + speedMultiplier;
 				break;
 			case SOUTH_WEST:
-				y = y - speedMultiplier;
+				y = y + speedMultiplier;
 				x = x - speedMultiplier;
 				break;
 			case STILL:

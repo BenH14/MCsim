@@ -200,13 +200,13 @@ public abstract class Mob {
 				break;
 
 			}
-		} else if(x < 0) {
+		} else if(x < 1) {
 			x = 1;
-		} else if(x > 1000) {
+		} else if(x > 999) {
 			x = 999;
-		} else if(y < 0) {
+		} else if(y < 1) {
 			y = 1;
-		} else if(y > 500) {
+		} else if(y > 499) {
 			y = 499;
 		}
 

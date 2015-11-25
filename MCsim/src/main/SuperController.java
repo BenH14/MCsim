@@ -24,7 +24,7 @@ public class SuperController {
 	private KeyController mainKey;
 
 	private int FPS;
-	private int TPS;
+	private double TPS;
 
 	public SuperController() {
 
@@ -91,7 +91,7 @@ public class SuperController {
 			double sleepTime = (1000.0/60) - (System.currentTimeMillis() - tickStartTime);
 
 
-			TPS = (int) (1/(sleepTime / 1000));
+			TPS = 1/(sleepTime / 1000);
 
 			try {
 				if(sleepTime > 0 ) {
@@ -163,7 +163,7 @@ public class SuperController {
 					catch (InterruptedException e) {e.printStackTrace();}
 				}
 
-				FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000));
+				FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000.0));
 
 			}
 		}

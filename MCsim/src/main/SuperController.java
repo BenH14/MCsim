@@ -162,7 +162,6 @@ public class SuperController {
 						
 						g2d.dispose();
 						
-						renderSleepTime = 5;
 						if(renderSleepTime > 0) {
 							try {Thread.sleep(renderSleepTime);}
 							catch (InterruptedException e) {e.printStackTrace();}

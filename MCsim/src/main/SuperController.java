@@ -53,8 +53,8 @@ public class SuperController {
 		Thread renderThread = new Thread(renderLoop);
 		Thread.currentThread().setPriority(10);
 		renderThread.setPriority(9);
-		renderThread.start();		
-
+		renderThread.start();
+		
 		while(exit == false) {
 
 			//Main Update Loop

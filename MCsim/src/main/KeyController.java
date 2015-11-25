@@ -19,6 +19,8 @@ public class KeyController implements KeyListener{
 	public boolean right;
 	private final int rightKey;
 	
+	public boolean exit;
+	
 	public boolean enter;
 
 	public KeyController() {
@@ -39,6 +41,7 @@ public class KeyController implements KeyListener{
 		} else if(keyCode == upKey) {up = true;
 		} else if(keyCode == downKey) {down = true;
 		} else if(keyCode == 10) {enter = true;
+		} else if(keyCode == 27) {exit = true;
 		}
 
 	}
@@ -52,7 +55,8 @@ public class KeyController implements KeyListener{
 		} else if(keyCode == rightKey) {right = false;
 		} else if(keyCode == upKey) {up = false;
 		} else if(keyCode == downKey) {down = false;
-		} else if(keyCode == 13) {enter = false;
+		} else if(keyCode == 10) {enter = false;
+		} else if(keyCode == 27) {exit = false;
 		}
 
 	}

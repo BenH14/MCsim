@@ -60,6 +60,12 @@ public class SuperController {
 
 			if(pause == false) {
 
+				
+				if(mainKey.exit == true){
+					pause = true;
+					mainMenu.startGame = false;
+				}
+				
 				//Tick all
 				Mob tempMob = mobHead;
 				while(tempMob != null) {

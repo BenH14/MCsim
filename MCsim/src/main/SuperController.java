@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -20,7 +22,7 @@ public class SuperController {
 	private Mob mobHead;
 
 	private KeyController mainKey;
-	
+
 	private int FPS;
 	private int TPS;
 
@@ -60,12 +62,12 @@ public class SuperController {
 
 			if(pause == false) {
 
-				
+
 				if(mainKey.exit == true){
 					pause = true;
 					mainMenu.startGame = false;
 				}
-				
+
 				//Tick all
 				Mob tempMob = mobHead;
 				while(tempMob != null) {
@@ -79,7 +81,7 @@ public class SuperController {
 
 				exit = mainMenu.endGame;
 				pause = !mainMenu.startGame;
-				
+
 				if(pause == false) {
 					mobHead = new Player(100,100, mainKey);
 				}
@@ -95,7 +97,7 @@ public class SuperController {
 				if(sleepTime > 0 ) {
 					Thread.sleep((int) (sleepTime));
 				} else {
-					renderSleepTime = (int) (sleepTime * -1);
+//					renderSleepTime = (int) (sleepTime * -1);
 				}
 			} catch (InterruptedException e) {e.printStackTrace();}
 
@@ -118,6 +120,8 @@ public class SuperController {
 		public void run() {
 			while(exit == false) {
 
+				double startTime = System.nanoTime();
+
 				//An image that everything is drawn onto before being drawn onto the actual frame
 				BufferedImage stagingImage = new BufferedImage(SettingsManager.getResX(),SettingsManager.getResY(), BufferedImage.TYPE_3BYTE_BGR);
 				Graphics2D g2d = (Graphics2D) stagingImage.getGraphics();
@@ -127,18 +131,25 @@ public class SuperController {
 
 				if(pause == false) {
 					//Render Game
-					
-					
-					
+
+
+
 					Mob tempMob = mobHead;
 					while(tempMob != null) {
 						g2d = tempMob.render(g2d);
 						tempMob = tempMob.next;
 					}
-					
+
 				} else {
 					g2d = mainMenu.render(g2d);
 				}
+
+				//Draw TPS and FPS
+				g2d.setFont(new Font("DialogInput", Font.PLAIN, 12));
+				g2d.setColor(Color.CYAN);
+				g2d.drawString("TPS = " + TPS, 10, 10);
+				g2d.drawString("FPS = " + FPS, 10, 20);
+				g2d.drawString("ST = " + renderSleepTime, 10, 30);
 
 				//Draw the actual image onto the frame
 				g2d = (Graphics2D) mainWindow.getGraphics();
@@ -152,6 +163,7 @@ public class SuperController {
 					catch (InterruptedException e) {e.printStackTrace();}
 				}
 
+				FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000));
 
 			}
 		}

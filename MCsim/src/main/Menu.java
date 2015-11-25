@@ -44,7 +44,7 @@ public class Menu {
 
 	public Graphics2D render(Graphics2D g2d) {
 
-		int titleDeviation = (int) (Math.sin(ticks / 10) * 10) - 5;
+		int titleDeviation = (int) (Math.sin(ticks / 10.0) * 10.0) - 5;
 
 		g2d.setColor(Color.WHITE);
 

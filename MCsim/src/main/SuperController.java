@@ -20,6 +20,9 @@ public class SuperController {
 	private Mob mobHead;
 
 	private KeyController mainKey;
+	
+	private int FPS;
+	private int TPS;
 
 	public SuperController() {
 
@@ -77,10 +80,10 @@ public class SuperController {
 
 			}
 
-			double sleepTime = (1000/60) - (System.currentTimeMillis() - tickStartTime);
+			double sleepTime = (1000.0/60) - (System.currentTimeMillis() - tickStartTime);
 
 
-			//			System.out.println("TPS = " + (1/(sleepTime / 1000)));
+			TPS = (int) (1/(sleepTime / 1000));
 
 			try {
 				if(sleepTime > 0 ) {

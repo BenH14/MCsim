@@ -3,7 +3,9 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 import javax.swing.JFrame;
 
@@ -16,7 +18,8 @@ public class SuperController {
 	private boolean exit;
 	private int renderSleepTime;
 
-	private Window mainWindow; 
+	private Window mainWindow;
+	private BufferStrategy BuffStrat;
 	private Menu mainMenu;
 
 	private Mob mobHead;
@@ -38,6 +41,9 @@ public class SuperController {
 
 		mainWindow.setVisible(true);
 
+		mainWindow.createBufferStrategy(2);
+		BuffStrat = mainWindow.getBufferStrategy();
+
 		pause = true;
 		exit = false;
 
@@ -54,7 +60,7 @@ public class SuperController {
 		Thread.currentThread().setPriority(10);
 		renderThread.setPriority(9);
 		renderThread.start();
-		
+
 		while(exit == false) {
 
 			//Main Update Loop
@@ -97,7 +103,7 @@ public class SuperController {
 				if(sleepTime > 0 ) {
 					Thread.sleep((int) (sleepTime));
 				} else {
-//					renderSleepTime = (int) (sleepTime * -1);
+					//					renderSleepTime = (int) (sleepTime * -1);
 				}
 			} catch (InterruptedException e) {e.printStackTrace();}
 

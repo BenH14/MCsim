@@ -126,51 +126,55 @@ public class SuperController {
 		public void run() {
 			while(exit == false) {
 
-				double startTime = System.nanoTime();
+				Graphics2D g2d;
 
-				//An image that everything is drawn onto before being drawn onto the actual frame
-				BufferedImage stagingImage = new BufferedImage(SettingsManager.getResX(),SettingsManager.getResY(), BufferedImage.TYPE_3BYTE_BGR);
-				Graphics2D g2d = (Graphics2D) stagingImage.getGraphics();
+				do {
+					do {
+						
+						double startTime = System.nanoTime();
+						
+						g2d = (Graphics2D) BuffStrat.getDrawGraphics();
+						
+						//Set rendering hints
+						g2d = SettingsManager.setRenderingHints(g2d);
 
-				//Set rendering hints
-				g2d = SettingsManager.setRenderingHints(g2d);
+						g2d.fillRect(0, 0, SettingsManager.getResX(), SettingsManager.getResY());
+						
+						if(pause == false) {
+							//Render Game
+							Mob tempMob = mobHead;
+							while(tempMob != null) {
+								g2d = tempMob.render(g2d);
+								tempMob = tempMob.next;
+							}
 
-				if(pause == false) {
-					//Render Game
+						} else {
+							//Render Menu
+							g2d = mainMenu.render(g2d);
+						}
 
+						//Draw TPS and FPS
+						g2d.setFont(new Font("DialogInput", Font.PLAIN, 12));
+						g2d.setColor(Color.CYAN);
+						g2d.drawString("TPS = " + TPS, 10, 10);
+						g2d.drawString("FPS = " + FPS, 10, 20);
+						g2d.drawString("ST = " + renderSleepTime, 10, 30);
+						
+						g2d.dispose();
+						
+						renderSleepTime = 5;
+						if(renderSleepTime > 0) {
+							try {Thread.sleep(renderSleepTime);}
+							catch (InterruptedException e) {e.printStackTrace();}
+						}
 
+						FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000.0));
+						
+					} while (BuffStrat.contentsRestored());
 
-					Mob tempMob = mobHead;
-					while(tempMob != null) {
-						g2d = tempMob.render(g2d);
-						tempMob = tempMob.next;
-					}
+					BuffStrat.show();
 
-				} else {
-					g2d = mainMenu.render(g2d);
-				}
-
-				//Draw TPS and FPS
-				g2d.setFont(new Font("DialogInput", Font.PLAIN, 12));
-				g2d.setColor(Color.CYAN);
-				g2d.drawString("TPS = " + TPS, 10, 10);
-				g2d.drawString("FPS = " + FPS, 10, 20);
-				g2d.drawString("ST = " + renderSleepTime, 10, 30);
-
-				//Draw the actual image onto the frame
-				g2d = (Graphics2D) mainWindow.getGraphics();
-				g2d.drawImage(stagingImage, 0 , 0 , null );	
-
-
-				g2d.dispose();
-
-				if(renderSleepTime > 0) {
-					try {Thread.sleep(renderSleepTime);}
-					catch (InterruptedException e) {e.printStackTrace();}
-				}
-
-				FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000.0));
-
+				} while (BuffStrat.contentsLost());				
 			}
 		}
 	};

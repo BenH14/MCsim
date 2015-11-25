@@ -23,7 +23,7 @@ public abstract class Mob {
 	//ASSETS
 	protected Animator Animators[];
 	protected Animator CurrentAnimator;
-	protected int scaleFactor[];
+	protected double scaleFactor[];
 
 	//TEXT BOX
 	protected BufferedImage textBoxImage;
@@ -55,10 +55,13 @@ public abstract class Mob {
 
 		loadAssets();
 
-		scaleFactor = new int[2];
+		scaleFactor = new double[2];
 
-		scaleFactor[0] = 1000 / SettingsManager.getResX();
-		scaleFactor[1] = 500 / SettingsManager.getResY();
+		scaleFactor[0] = SettingsManager.getResX() / 1000.0;
+		System.out.println(scaleFactor[0]);
+		System.out.println(1000/SettingsManager.getResX());
+		System.out.println(SettingsManager.getResX());
+		scaleFactor[1] = SettingsManager.getResY() / 500.0;
 
 	}
 
@@ -127,21 +130,19 @@ public abstract class Mob {
 
 	public Graphics2D render(Graphics2D g2d) {
 
-		scaleFactor[0] = 1;
-		scaleFactor[1] = 1;
 		
 		//Renders the currently selected image to the screen
 		//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
 		g2d.setColor(Color.WHITE);
-		g2d.drawRect((int) x * scaleFactor[0],(int) y * scaleFactor[1], 20, 20);
+		g2d.drawRect((int) (x * scaleFactor[0]),(int) (y * scaleFactor[1]), 20, 20);
 		g2d.drawString(MOB_DIRECTION.toString(), 100, 100);
 		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
 		if(textBoxLifetime != 0){
 
-			g2d.drawImage(textBoxImage,((int) x * scaleFactor[0]) +  20,((int) y * scaleFactor[1]) + 20 ,(int) 2000 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
+			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (2000 * scaleFactor[0]) ,(int) (50 * scaleFactor[0]), null);
 
-			g2d.drawString(textBoxString,((int) x * scaleFactor[0]) +  20,((int) y * scaleFactor[1]) + 20);
+			g2d.drawString(textBoxString,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20);
 
 		}
 
@@ -200,13 +201,13 @@ public abstract class Mob {
 				break;
 
 			}
-		} else if(x < 0) {
+		} else if(x < 1) {
 			x = 1;
-		} else if(x > 1000) {
+		} else if(x > 999) {
 			x = 999;
-		} else if(y < 0) {
+		} else if(y < 1) {
 			y = 1;
-		} else if(y > 500) {
+		} else if(y > 499) {
 			y = 499;
 		}
 
@@ -276,7 +277,7 @@ public abstract class Mob {
 					textBoxString = "The program is done, I just need to do the documentation";
 					break;
 				case 4:
-					textBoxString = "";
+					textBoxString = "I am doing it right now";
 					break;
 				case 5:
 					textBoxString = "";

@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.nio.Buffer;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -24,7 +23,11 @@ public class SuperController {
 
 	private Mob mobHead;
 
+	private int gameTime;
+
 	private KeyController mainKey;
+
+	private Random ranGen;
 
 	private int FPS;
 	private double TPS;
@@ -32,6 +35,8 @@ public class SuperController {
 	public SuperController() {
 
 		SettingsManager.init();
+
+		ranGen = new Random();
 
 		mainWindow = new Window("MCSim 2016");
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,6 +56,31 @@ public class SuperController {
 		mainWindow.addKeyListener(mainKey);
 
 		mainMenu = new Menu(mainKey);
+
+	}
+
+	private void doSpawning(boolean force) {
+
+		int ranInt = ranGen.nextInt(1000);
+
+		if(ranInt == 420 || force) {
+
+			//Add new enemy
+			if(mobHead == null) {
+
+				Mob temp = mobHead.next;
+				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
+				mobHead.next.prev = mobHead;
+				mobHead.next.next = temp;
+				temp.prev = mobHead.next;
+
+			} else {
+
+				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
+				mobHead.next.prev = mobHead;
+				
+			}
+		}
 
 	}
 
@@ -81,6 +111,8 @@ public class SuperController {
 					tempMob = tempMob.next;
 				}
 
+				doSpawning(false);
+
 			} else {
 
 				mainMenu.tick();
@@ -89,7 +121,16 @@ public class SuperController {
 				pause = !mainMenu.startGame;
 
 				if(pause == false) {
+					//Start Game 
 					mobHead = new Player(100,100, mainKey);
+
+					doSpawning(true);
+					doSpawning(true);
+					doSpawning(true);
+					doSpawning(true);
+					doSpawning(true);
+
+					gameTime = 0;
 				}
 
 			}
@@ -130,16 +171,16 @@ public class SuperController {
 
 				do {
 					do {
-						
+
 						double startTime = System.nanoTime();
-						
+
 						g2d = (Graphics2D) BuffStrat.getDrawGraphics();
-						
+
 						//Set rendering hints
 						g2d = SettingsManager.setRenderingHints(g2d);
 
 						g2d.fillRect(0, 0, SettingsManager.getResX(), SettingsManager.getResY());
-						
+
 						if(pause == false) {
 							//Render Game
 							Mob tempMob = mobHead;
@@ -159,16 +200,16 @@ public class SuperController {
 						g2d.drawString("TPS = " + TPS, 10, 10);
 						g2d.drawString("FPS = " + FPS, 10, 20);
 						g2d.drawString("ST = " + renderSleepTime, 10, 30);
-						
+
 						g2d.dispose();
-						
+
 						if(renderSleepTime > 0) {
 							try {Thread.sleep(renderSleepTime);}
 							catch (InterruptedException e) {e.printStackTrace();}
 						}
 
 						FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000.0));
-						
+
 					} while (BuffStrat.contentsRestored());
 
 					BuffStrat.show();

@@ -11,5 +11,7 @@ public enum DIRECTION {
 	WEST,
 	NORTH_WEST,
 	STILL,
+	SPAWNING,
+	DYING,
 	
 }

@@ -140,7 +140,7 @@ public abstract class Mob {
 		//Draws text box if it still has a lifetime
 		if(textBoxLifetime != 0 && false){//TODO
 
-			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (2000 * scaleFactor[0]) ,(int) (50 * scaleFactor[0]), null);
+			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (200 * scaleFactor[0]) ,(int) (50 * scaleFactor[0]), null);
 
 			g2d.drawString(textBoxString,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20);
 

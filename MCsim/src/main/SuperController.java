@@ -68,12 +68,15 @@ public class SuperController {
 			//Add new enemy
 			if(mobHead.next != null) {
 
+				//Create Mob
 				Mob temp = mobHead.next;
 				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
 				mobHead.next.prev = mobHead;
 				mobHead.next.next = temp;
 				temp.prev = mobHead.next;
 
+				mobHead.next.MOB_DIRECTION = DIRECTION.SPAWNING;
+				
 			} else {
 
 				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));

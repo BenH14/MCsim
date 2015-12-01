@@ -47,6 +47,7 @@ public abstract class Mob {
 		tickCount = 0;
 
 		x = spawnPosX;
+		
 		y = spawnPosY;
 
 		MOB_DIRECTION = DIRECTION.STILL;	
@@ -135,10 +136,9 @@ public abstract class Mob {
 		//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
 		g2d.setColor(Color.WHITE);
 		g2d.drawRect((int) (x * scaleFactor[0]),(int) (y * scaleFactor[1]), 20, 20);
-		g2d.drawString(MOB_DIRECTION.toString(), 100, 100);
 		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
-		if(textBoxLifetime != 0){
+		if(textBoxLifetime != 0 && false){//TODO
 
 			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (2000 * scaleFactor[0]) ,(int) (50 * scaleFactor[0]), null);
 
@@ -165,7 +165,7 @@ public abstract class Mob {
 		}
 
 		//Works out where to move the mob
-		if(x > 0 && x < 1000 && y > 0 && y < 500) {
+		if(x > 0 && x < 980 && y > 0 && y < 460) {
 			switch(MOB_DIRECTION){
 			case EAST:
 				x = x + speedMultiplier;
@@ -203,12 +203,12 @@ public abstract class Mob {
 			}
 		} else if(x < 1) {
 			x = 1;
-		} else if(x > 999) {
-			x = 999;
+		} else if(x > 980) {
+			x = 979;
 		} else if(y < 1) {
 			y = 1;
-		} else if(y > 499) {
-			y = 499;
+		} else if(y > 459) {
+			y = 459;
 		}
 
 		tickCount++;

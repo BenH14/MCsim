@@ -63,10 +63,10 @@ public class SuperController {
 
 		int ranInt = ranGen.nextInt(1000);
 
-		if(ranInt == 420 || force) {
+		if((ranInt % 250) == 0 || force) {
 
 			//Add new enemy
-			if(mobHead == null) {
+			if(mobHead.next != null) {
 
 				Mob temp = mobHead.next;
 				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
@@ -124,8 +124,6 @@ public class SuperController {
 					//Start Game 
 					mobHead = new Player(100,100, mainKey);
 
-					doSpawning(true);
-					doSpawning(true);
 					doSpawning(true);
 					doSpawning(true);
 					doSpawning(true);

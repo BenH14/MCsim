@@ -1,6 +1,7 @@
 package effects;
 
-import java.awt.image.BufferStrategy;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public class EffectManager {
 
@@ -9,12 +10,16 @@ public class EffectManager {
 
 
 	}
+	
+	public void tick() {
+		
+	}
 
-	public BufferStrategy process(BufferStrategy bs) {
+	public BufferedImage process(BufferedImage img) {
 		
-		
-		
-		return bs;
+		Graphics2D g2d = (Graphics2D) img.getGraphics();		
+				
+		return img;
 	}
 
 }

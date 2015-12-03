@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -175,11 +176,13 @@ public class SuperController {
 
 						double startTime = System.nanoTime();
 
-						g2d = (Graphics2D) BuffStrat.getDrawGraphics();
+						BufferedImage img = new BufferedImage(SettingsManager.getResX(), SettingsManager.getResY(), BufferedImage.TYPE_3BYTE_BGR);
+						g2d = (Graphics2D) img.getGraphics();
 
 						//Set rendering hints
 						g2d = SettingsManager.setRenderingHints(g2d);
 
+						g2d.setColor(Color.BLACK);
 						g2d.fillRect(0, 0, SettingsManager.getResX(), SettingsManager.getResY());
 
 						if(pause == false) {
@@ -211,6 +214,10 @@ public class SuperController {
 
 						FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000.0));
 
+						g2d = (Graphics2D) BuffStrat.getDrawGraphics();
+						g2d.drawImage(img,0,0,null);
+						g2d.dispose();
+						
 					} while (BuffStrat.contentsRestored());
 
 					BuffStrat.show();

@@ -7,6 +7,7 @@ public abstract class Effect {
 	//Linked List
 	public Effect next;
 	
+	//how long the effect should appear for
 	public int lifeTime;
 	
 	public abstract void tick();

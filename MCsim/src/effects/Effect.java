@@ -11,6 +11,6 @@ public abstract class Effect {
 	public int lifeTime;
 	
 	public abstract void tick();
-	public abstract BufferedImage render(BufferedImage g2d);
+	public abstract BufferedImage render(BufferedImage img);
 	
 }

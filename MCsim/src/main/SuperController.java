@@ -25,7 +25,7 @@ public class SuperController {
 
 	private Mob mobHead;
 
-	private int gameTime;
+	private StatisticsContainer stats;
 
 	private KeyController mainKey;
 

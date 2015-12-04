@@ -9,8 +9,6 @@ public class EffectManager {
 
 	public static void init() {
 
-		effectHead = new ScreenShake(1200);
-
 	}
 
 	public static void tick() {
@@ -20,13 +18,18 @@ public class EffectManager {
 		while(tempEffect != null) {
 			tempEffect.tick();
 
-			if(tempEffect.lifeTime == 0) { //TODO Properly Implement
+			if(tempEffect.lifeTime == 0) {
 				//Remove effect
-				if(tempEffect.next != null && tempEffect.prev != null) {
-					tempEffect.next.prev = tempEffect.prev;
-					tempEffect.prev.next = tempEffect.next;
-				} else if (tempEffect == effectHead) {
+				if(tempEffect.next == null && tempEffect.prev == null) {
+					//If node is first in linked list
 					effectHead = null;
+				} else {
+					if(tempEffect.prev != null) {
+						tempEffect.prev.next = tempEffect.next;
+					}
+					if(tempEffect.next != null) {
+						tempEffect.next.prev = tempEffect.prev;
+					}
 				}
 
 			}

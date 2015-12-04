@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import display.Window;
+import effects.EffectManager;
 import settings.SettingsManager;
 
 public class SuperController {
@@ -57,6 +58,8 @@ public class SuperController {
 		mainWindow.addKeyListener(mainKey);
 
 		mainMenu = new Menu(mainKey);
+		
+		EffectManager.init();
 
 	}
 
@@ -115,6 +118,8 @@ public class SuperController {
 					tempMob = tempMob.next;
 				}
 
+				EffectManager.tick();
+				
 				doSpawning(false);
 
 			} else {
@@ -214,6 +219,8 @@ public class SuperController {
 
 						FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000.0));
 
+						img = EffectManager.process(img);
+						
 						g2d = (Graphics2D) BuffStrat.getDrawGraphics();
 						g2d.drawImage(img,0,0,null);
 						g2d.dispose();

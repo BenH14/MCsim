@@ -11,6 +11,8 @@ public class ScreenShake extends Effect{
 
 	public ScreenShake(int givenLifeTime) {
 		super(givenLifeTime);
+		
+		ranGen = new Random();
 	}
 	
 	public void tick() {
@@ -19,8 +21,8 @@ public class ScreenShake extends Effect{
 			lifeTime--;
 		}
 		
-		offset = ranGen.nextInt(20);
-		offset = offset - 10;
+		offset = ranGen.nextInt(10);
+		offset = offset - 5;
 
 	}
 
@@ -28,7 +30,9 @@ public class ScreenShake extends Effect{
 		
 		Graphics2D g2d = (Graphics2D) img.getGraphics();
 		
-		g2d.drawImage(img, offset, offset, null);
+		g2d.translate(offset,(offset - 5));
+		
+		g2d.drawImage(img, 0, 0, null);
 		
 		g2d.dispose();
 		

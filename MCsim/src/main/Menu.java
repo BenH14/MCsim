@@ -4,6 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import settings.SettingsManager;
 
 public class Menu {
 
@@ -14,6 +20,8 @@ public class Menu {
 
 	private int choice;
 	private KeyController key;
+	
+	private BufferedImage backgroundImage;
 
 	public Menu(KeyController givenKey) {
 
@@ -23,6 +31,12 @@ public class Menu {
 		startGame = false;
 
 		key = givenKey;
+		
+		try {
+			backgroundImage = ImageIO.read(new File("res/background.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -46,7 +60,9 @@ public class Menu {
 
 		int titleDeviation = (int) (Math.sin(ticks / 10.0) * 10.0) - 5;
 
-		g2d.setColor(Color.WHITE);
+		g2d.drawImage(backgroundImage, 0,0,SettingsManager.getResX(),SettingsManager.getResY(), null);
+		
+		g2d.setColor(Color.BLACK);
 
 		g2d.setFont(new Font("DialogInput", Font.BOLD, 48));
 		g2d.drawString("Mr", 100 - titleDeviation, 80);

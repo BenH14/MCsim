@@ -5,7 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class EffectManager {
 	
-	Effect effectHead;
+	static Effect effectHead;
+	
 	
 	public static void init() {
 		
@@ -17,7 +18,12 @@ public class EffectManager {
 
 	public static BufferedImage process(BufferedImage img) {
 		
-			
+		Effect tempEffect = effectHead;
+		
+			while(tempEffect != null) {
+				tempEffect.render(img);
+				tempEffect = tempEffect.next;
+			}
 				
 		return img;
 	}

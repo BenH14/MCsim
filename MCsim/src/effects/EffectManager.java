@@ -17,7 +17,7 @@ public class EffectManager {
 
 	public static BufferedImage process(BufferedImage img) {
 		
-		Graphics2D g2d = (Graphics2D) img.getGraphics();		
+			
 				
 		return img;
 	}

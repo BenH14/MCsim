@@ -1,6 +1,6 @@
 package effects;
 
-import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public abstract class Effect {
 
@@ -11,6 +11,6 @@ public abstract class Effect {
 	public int lifeTime;
 	
 	public abstract void tick();
-	public abstract Graphics2D render(Graphics2D g2d);
+	public abstract BufferedImage render(BufferedImage g2d);
 	
 }

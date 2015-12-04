@@ -58,7 +58,7 @@ public class SuperController {
 		mainWindow.addKeyListener(mainKey);
 
 		mainMenu = new Menu(mainKey);
-		
+
 		EffectManager.init();
 
 	}
@@ -80,12 +80,12 @@ public class SuperController {
 				temp.prev = mobHead.next;
 
 				mobHead.next.MOB_DIRECTION = DIRECTION.SPAWNING;
-				
+
 			} else {
 
 				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
 				mobHead.next.prev = mobHead;
-				
+
 			}
 		}
 
@@ -119,7 +119,7 @@ public class SuperController {
 				}
 
 				EffectManager.tick();
-				
+
 				doSpawning(false);
 
 			} else {
@@ -219,12 +219,14 @@ public class SuperController {
 
 						FPS = (int) (1/ ((System.nanoTime() - startTime) / 1000000000.0));
 
-						img = EffectManager.process(img);
-						
+						if(pause == false) {
+							img = EffectManager.process(img);
+						}
+
 						g2d = (Graphics2D) BuffStrat.getDrawGraphics();
 						g2d.drawImage(img,0,0,null);
 						g2d.dispose();
-						
+
 					} while (BuffStrat.contentsRestored());
 
 					BuffStrat.show();

@@ -34,6 +34,7 @@ public class Menu {
 		
 		try {
 			backgroundImage = ImageIO.read(new File("res/background.png"));
+			backgroundImage.setAccelerationPriority(1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,9 +60,8 @@ public class Menu {
 	public Graphics2D render(Graphics2D g2d) {
 
 		int titleDeviation = (int) (Math.sin(ticks / 10.0) * 10.0) - 5;
-
-		g2d.drawImage(backgroundImage, 0,0,SettingsManager.getResX(),SettingsManager.getResY(), null);
 		
+		g2d.drawImage(backgroundImage, 0,0,SettingsManager.getResX(),SettingsManager.getResY(), null);
 		g2d.setColor(Color.BLACK);
 
 		g2d.setFont(new Font("DialogInput", Font.BOLD, 48));

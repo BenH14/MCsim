@@ -181,7 +181,7 @@ public class SuperController {
 
 						double startTime = System.nanoTime();
 
-						BufferedImage img = new BufferedImage(SettingsManager.getResX(), SettingsManager.getResY(), BufferedImage.TYPE_3BYTE_BGR);
+						BufferedImage img = new BufferedImage(SettingsManager.getResX(), SettingsManager.getResY(), BufferedImage.TYPE_INT_ARGB);
 						g2d = (Graphics2D) img.getGraphics();
 
 						//Set rendering hints

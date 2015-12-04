@@ -10,9 +10,18 @@ public class EffectManager {
 	
 	public static void init() {
 		
+		effectHead = new ScreenShake(1200);
+		
 	}
 	
 	public static void tick() {
+		
+		Effect tempEffect = effectHead;
+		
+		while(tempEffect != null) {
+			tempEffect.tick();
+			tempEffect = tempEffect.next;
+		}
 		
 	}
 

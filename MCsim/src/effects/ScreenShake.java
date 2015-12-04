@@ -9,8 +9,12 @@ public class ScreenShake extends Effect{
 	private Random ranGen;
 	private int offset;
 
+	public ScreenShake(int givenLifeTime) {
+		super(givenLifeTime);
+	}
+	
 	public void tick() {
-
+		
 		if(lifeTime != 0) {
 			lifeTime--;
 		}

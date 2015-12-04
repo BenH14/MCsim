@@ -17,7 +17,8 @@ public class StatisticsContainer {
 		
 		//Update Time
 		gameTime++;
-		gameTimeSecs = gameTimeSecs / 60;
+		gameTimeSecs = Math.floor((gameTime / 60.0) * 100) / 100;
+		
 		
 		
 	}

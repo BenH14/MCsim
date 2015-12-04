@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+import display.HUD;
 import display.Window;
 import effects.EffectManager;
 import settings.SettingsManager;
@@ -26,6 +27,8 @@ public class SuperController {
 	private Mob mobHead;
 
 	private StatisticsContainer stats;
+
+	private HUD ui;
 
 	private KeyController mainKey;
 
@@ -118,6 +121,7 @@ public class SuperController {
 					tempMob = tempMob.next;
 				}
 
+				stats.tick();
 				EffectManager.tick();
 
 				doSpawning(false);
@@ -130,6 +134,11 @@ public class SuperController {
 				pause = !mainMenu.startGame;
 
 				if(pause == false) {
+
+					stats = new StatisticsContainer();
+
+					ui = new HUD(stats);
+
 					//Start Game 
 					mobHead = new Player(100,100, mainKey);
 
@@ -137,7 +146,6 @@ public class SuperController {
 					doSpawning(true);
 					doSpawning(true);
 
-					gameTime = 0;
 				}
 
 			}
@@ -191,12 +199,18 @@ public class SuperController {
 						g2d.fillRect(0, 0, SettingsManager.getResX(), SettingsManager.getResY());
 
 						if(pause == false) {
+
+							if(stats.gameTime > 5) {
+								g2d = ui.render(g2d);
+							}
+
 							//Render Game
 							Mob tempMob = mobHead;
 							while(tempMob != null) {
 								g2d = tempMob.render(g2d);
 								tempMob = tempMob.next;
 							}
+
 
 						} else {
 							//Render Menu

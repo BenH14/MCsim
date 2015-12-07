@@ -27,8 +27,8 @@ public class HUD {
 		g2d.setFont(new Font("DialogInput", Font.BOLD, 28));
 		
 		//Draw Time remaining
-		g2d.setColor(Color.WHITE);
-		g2d.fillRoundRect(timePos[0], timePos[1], g2d.getFontMetrics().stringWidth("Time Remaining - 60.00") + 10, g2d.getFontMetrics().getHeight() + 10, 10, 10);
+		g2d.setColor(new Color(255,255,255,150));
+		g2d.fillRoundRect(timePos[0],timePos[1], g2d.getFontMetrics().stringWidth("Time Remaining - 60.00") + 10, g2d.getFontMetrics().getHeight() + 10, 10, 10);
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("Time Remaining - " + (60 - stats.gameTimeSecs), timePos[0] + 5, timePos[1] + g2d.getFontMetrics().getHeight());
 		

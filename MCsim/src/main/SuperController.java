@@ -131,9 +131,8 @@ public class SuperController {
 				mainMenu.tick();
 
 				exit = mainMenu.endGame;
-				pause = !mainMenu.startGame;
 
-				if(pause == false) {
+				if(mainMenu.startGame) {
 
 					stats = new StatisticsContainer();
 
@@ -145,6 +144,8 @@ public class SuperController {
 					doSpawning(true);
 					doSpawning(true);
 					doSpawning(true);
+					
+					pause = false;
 
 				}
 
@@ -200,10 +201,6 @@ public class SuperController {
 
 						if(pause == false) {
 
-							if(stats.gameTime > 5) {
-								g2d = ui.render(g2d);
-							}
-
 							//Render Game
 							Mob tempMob = mobHead;
 							while(tempMob != null) {
@@ -211,6 +208,8 @@ public class SuperController {
 								tempMob = tempMob.next;
 							}
 
+							//Render HUD
+							g2d = ui.render(g2d);
 
 						} else {
 							//Render Menu

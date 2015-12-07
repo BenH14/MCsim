@@ -59,9 +59,6 @@ public abstract class Mob {
 		scaleFactor = new double[2];
 
 		scaleFactor[0] = SettingsManager.getResX() / 1000.0;
-		System.out.println(scaleFactor[0]);
-		System.out.println(1000/SettingsManager.getResX());
-		System.out.println(SettingsManager.getResX());
 		scaleFactor[1] = SettingsManager.getResY() / 500.0;
 
 	}

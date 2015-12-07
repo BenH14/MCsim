@@ -53,11 +53,16 @@ public class EffectManager {
 
 	public static void addEffect(Effect e) {
 
-		e.next = effectHead.next;
-		if(e.next != null) {e.next.prev = e;}
-		effectHead.next = e;
-		e.prev = effectHead;
-
+		if(effectHead == null) {
+			effectHead = e;
+		} else {
+			if(e.next != null) {
+				e.next.prev = e;
+				e.next = effectHead.next;
+			}
+			effectHead.next = e;
+			e.prev = effectHead;
+		}
 	}
 
 }

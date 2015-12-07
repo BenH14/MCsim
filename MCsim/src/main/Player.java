@@ -21,6 +21,8 @@ public class Player extends Mob {
 		//TextBox stuff
 		setTextBox();
 
+		
+		
 	}
 
 

@@ -1,10 +1,15 @@
 package main;
 
+import effects.EffectManager;
+import effects.ProgressBar;
+
 public class Enemy extends Mob{
 
 	private Player mainPlayer;
 
 	private int instructionLifeTime;
+	
+	private boolean pbcreated;
 
 	public Enemy(int spawnPosX, int spawnPosY, Player givenPlayer) {
 
@@ -15,6 +20,8 @@ public class Enemy extends Mob{
 		mainPlayer = givenPlayer;
 
 		instructionLifeTime = 0;
+		
+		pbcreated = false;
 
 	}
 
@@ -74,6 +81,12 @@ public class Enemy extends Mob{
 			}
 
 
+		}
+		
+		if(deviation < 50 && pbcreated == false) {
+			EffectManager.addEffect(new ProgressBar(this, mainPlayer));
+		} else if(pbcreated = true) {
+			pbcreated = false;
 		}
 
 		setTextBox();

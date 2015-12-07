@@ -118,6 +118,14 @@ public class SuperController {
 				Mob tempMob = mobHead;
 				while(tempMob != null) {
 					tempMob.tick();
+					
+					if(tempMob.MOB_DIRECTION == DIRECTION.DYING) {
+						tempMob.prev.next = tempMob.next;
+						if(tempMob.next != null) {
+							tempMob.next.prev = tempMob.prev;
+						}
+					}
+					
 					tempMob = tempMob.next;
 				}
 

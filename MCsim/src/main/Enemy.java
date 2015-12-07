@@ -2,14 +2,16 @@ package main;
 
 import effects.EffectManager;
 import effects.ProgressBar;
+import effects.ScreenShake;
 
 public class Enemy extends Mob{
 
 	private Player mainPlayer;
 
 	private int instructionLifeTime;
-	
+
 	private boolean pbcreated;
+	private ProgressBar pb;
 
 	public Enemy(int spawnPosX, int spawnPosY, Player givenPlayer) {
 
@@ -20,7 +22,7 @@ public class Enemy extends Mob{
 		mainPlayer = givenPlayer;
 
 		instructionLifeTime = 0;
-		
+
 		pbcreated = false;
 
 	}
@@ -31,14 +33,12 @@ public class Enemy extends Mob{
 		int deltaY = y - mainPlayer.y;
 
 		double deviation = Math.sqrt(Math.pow(deltaX, 2)) + Math.sqrt(Math.pow(deltaY, 2)) + 0.0;
-		
+
 		if (deviation > 300) {
-			speedMultiplier = 2;
+			speedMultiplier = 1;
 		} else if (deviation > 200) {
-			speedMultiplier = 3;
-		} else if (deviation > 100) {
-			speedMultiplier = 4;
-		} 
+			speedMultiplier = 2;
+		}
 
 		if (instructionLifeTime == 0 || deviation < 50){//Work out direction if an instruction has not been issued recently or the player is very near;
 
@@ -82,11 +82,17 @@ public class Enemy extends Mob{
 
 
 		}
-		
+
 		if(deviation < 50 && pbcreated == false) {
-			EffectManager.addEffect(new ProgressBar(this, mainPlayer));
-		} else if(pbcreated = true) {
-			pbcreated = false;
+			pb = new ProgressBar(this, mainPlayer);
+			EffectManager.addEffect(pb);
+//			EffectManager.addEffect(new ScreenShake(120));
+			pbcreated = true;
+		} else if(pbcreated = true && pb != null) {
+			if(pb.lifeTime == 0) {
+				pb = null;
+				pbcreated = false;
+			}
 		}
 
 		setTextBox();

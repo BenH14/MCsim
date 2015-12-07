@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import main.DIRECTION;
 import main.Mob;
 import settings.SettingsManager;
 
@@ -35,6 +36,8 @@ public class ProgressBar extends Effect {
 				progress++;				
 			} else {
 				//TODO delete mob, increment score
+				lifeTime = 0;
+				Parent.MOB_DIRECTION = DIRECTION.DYING;
 			}
 		} else {
 			if(progress != 0) {
@@ -54,10 +57,13 @@ public class ProgressBar extends Effect {
 		g2d = SettingsManager.setRenderingHints(g2d);
 
 		g2d.setColor(new Color(255,255,255,150)); //Translucent White
-		g2d.fillRoundRect((int) ((Parent.x + 20) * scaleFactor[0]), (int) ((Parent.y - 20) * scaleFactor[1]), 120, 60, 10, 10);
-		g2d.setColor(new Color(255,0,0,255)); //Red
-		g2d.fillRect((int) ((Parent.x + 30) * scaleFactor[0]), (int) ((Parent.y - 35) * scaleFactor[1]), progress, 30);
+		g2d.fillRoundRect((int) ((Parent.x + 20) * scaleFactor[0]), (int) ((Parent.y - 20) * scaleFactor[1]), 220, 20, 10, 10);
+		
+		g2d.setColor(new Color(255,0,0)); //Red
+		g2d.fillRect((int) ((Parent.x + 20) * scaleFactor[0]) + 10, (int) ((Parent.y - 20) * scaleFactor[1]) + 5, progress * 2, 10);
 
+		g2d.dispose();
+		
 		return img;
 	}
 

@@ -8,9 +8,12 @@ public class ScreenShake extends Effect{
 
 	private Random ranGen;
 	private int offset;
+	private int strength;
 
-	public ScreenShake(int givenLifeTime) {
+	public ScreenShake(int givenLifeTime, int givenStrength) {
 		super(givenLifeTime);
+		
+		strength = givenStrength;
 		
 		ranGen = new Random();
 	}
@@ -21,7 +24,7 @@ public class ScreenShake extends Effect{
 			lifeTime--;
 		}
 		
-		offset = ranGen.nextInt(10);
+		offset = ranGen.nextInt(strength);
 		offset = offset - 5;
 
 	}

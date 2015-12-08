@@ -92,7 +92,7 @@ public class Enemy extends Mob{
 
 		if(deviation < 50) {
 
-			if(shake == null) {EffectManager.addEffect(shake = new ScreenShake(60));}
+			if(shake == null) {EffectManager.addEffect(shake = new ScreenShake(60, 5));}
 
 			if(pbcreated == false) {
 				pb = new ProgressBar(this, mainPlayer);

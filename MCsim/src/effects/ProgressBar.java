@@ -38,7 +38,6 @@ public class ProgressBar extends Effect {
 			} else {
 				lifeTime = 0;
 				Parent.MOB_DIRECTION = DIRECTION.DYING;
-				Shop.addGold(50);
 			}
 		} else {
 			if(progress != 0) {

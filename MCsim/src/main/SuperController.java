@@ -121,6 +121,7 @@ public class SuperController {
 					tempMob.tick();
 
 					if(tempMob.MOB_DIRECTION == DIRECTION.DYING) {
+						Shop.addGold(50);
 						tempMob.prev.next = tempMob.next;
 						if(tempMob.next != null) {
 							tempMob.next.prev = tempMob.prev;

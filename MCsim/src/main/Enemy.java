@@ -92,18 +92,21 @@ public class Enemy extends Mob{
 
 		if(deviation < 50) {
 
-			if(shake == null) {EffectManager.addEffect(shake = new ScreenShake(60, 5));}
-
 			if(pbcreated == false) {
 				pb = new ProgressBar(this, mainPlayer);
 				EffectManager.addEffect(pb);
 				pbcreated = true;
-			} else if(pbcreated = true && pb != null) {
+			}
+			
+			if(shake == null) {EffectManager.addEffect(shake = new ScreenShake(20,(int) pb.progress / 10));}
+			
+			if(pbcreated = true && pb != null) {
 				if(pb.lifeTime == 0) {
 					pb = null;
 					pbcreated = false;
 				}
 			}
+			
 		}
 
 		setTextBox();

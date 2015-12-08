@@ -24,8 +24,8 @@ public class ScreenShake extends Effect{
 			lifeTime--;
 		}
 		
-		offset = ranGen.nextInt(strength);
-		offset = offset - 5;
+		offset = ranGen.nextInt(strength + 1);
+		offset = (int) (offset -  strength / 2);
 
 	}
 

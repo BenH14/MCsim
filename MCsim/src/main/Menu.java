@@ -78,10 +78,14 @@ public class Menu {
 
 		if(choice == 0) {
 			g2d.drawString("[COLLECT COURSEWORK]", 60, 500 + titleDeviation);
-			g2d.drawString("HAVE DOOR FITTED", 60, 600);
-		} else {
+			g2d.drawString("TECHNICIANS", 60, 600);
+			g2d.drawString("HAVE DOOR FITTED", 60, 700);
+		} else if(choice == 1) {
 			g2d.drawString("COLLECT COURSEWORK", 60, 500);
 			g2d.drawString("[HAVE DOOR FITTED]", 60, 600 + titleDeviation);	
+		} else if(choice == 2) {
+			g2d.drawString("COLLECT COURSEWORK", 60, 500);
+			g2d.drawString("HAVE DOOR FITTED", 60, 600);
 		}
 
 		return g2d;

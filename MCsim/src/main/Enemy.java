@@ -12,6 +12,7 @@ public class Enemy extends Mob{
 
 	private boolean pbcreated;
 	private ProgressBar pb;
+	private ScreenShake shake;
 
 	public Enemy(int spawnPosX, int spawnPosY, Player givenPlayer) {
 
@@ -83,15 +84,25 @@ public class Enemy extends Mob{
 
 		}
 
-		if(deviation < 50 && pbcreated == false) {
-			pb = new ProgressBar(this, mainPlayer);
-			EffectManager.addEffect(pb);
-//			EffectManager.addEffect(new ScreenShake(120));
-			pbcreated = true;
-		} else if(pbcreated = true && pb != null) {
-			if(pb.lifeTime == 0) {
-				pb = null;
-				pbcreated = false;
+		if(shake != null) {
+			if(shake.lifeTime == 0) {
+				shake = null; 
+			}
+		}
+
+		if(deviation < 50) {
+
+			if(shake == null) {EffectManager.addEffect(shake = new ScreenShake(60));}
+
+			if(pbcreated == false) {
+				pb = new ProgressBar(this, mainPlayer);
+				EffectManager.addEffect(pb);
+				pbcreated = true;
+			} else if(pbcreated = true && pb != null) {
+				if(pb.lifeTime == 0) {
+					pb = null;
+					pbcreated = false;
+				}
 			}
 		}
 

@@ -56,10 +56,10 @@ public class EffectManager {
 		if(effectHead == null) {
 			effectHead = e;
 		} else {
-			if(e.next != null) {
-				e.next.prev = e;
-				e.next = effectHead.next;
+			if(effectHead.next != null) {
+				effectHead.next.prev = e;
 			}
+			e.next = effectHead.next;
 			effectHead.next = e;
 			e.prev = effectHead;
 		}

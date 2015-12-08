@@ -2,7 +2,6 @@ package main;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -11,6 +10,7 @@ public class Shop {
 
 	public static int gameLength;
 	public static int captureSpeed;
+	public static int gold;
 	
 	public static void init() {
 		
@@ -35,6 +35,10 @@ public class Shop {
 	
 	public static void saveFile() {
 		
+	}
+	
+	public static void addGold(int amount) {
+		gold = gold + amount;
 	}
 	
 }

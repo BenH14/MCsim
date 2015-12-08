@@ -134,8 +134,6 @@ public class SuperController {
 				EffectManager.tick();
 
 				doSpawning(false);
-
-				System.out.println(Shop.gameLength - stats.gameTimeSecs);
 				
 				if ((Shop.gameLength - stats.gameTimeSecs) < 0) {
 					//End Game if time has exceeded the allotted gamelength

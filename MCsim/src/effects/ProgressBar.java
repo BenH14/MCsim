@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import main.DIRECTION;
 import main.Mob;
+import main.Shop;
 import settings.SettingsManager;
 
 public class ProgressBar extends Effect {
@@ -35,9 +36,9 @@ public class ProgressBar extends Effect {
 			if(progress != 100) {
 				progress++;				
 			} else {
-				//TODO delete mob, increment score
 				lifeTime = 0;
 				Parent.MOB_DIRECTION = DIRECTION.DYING;
+				Shop.addGold(50);
 			}
 		} else {
 			if(progress != 0) {

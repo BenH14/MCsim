@@ -30,7 +30,7 @@ public class HUD {
 		g2d.setColor(new Color(255,255,255,150));
 		g2d.fillRoundRect(timePos[0],timePos[1], g2d.getFontMetrics().stringWidth("Time Remaining - 60.00") + 10, g2d.getFontMetrics().getHeight() + 10, 10, 10);
 		g2d.setColor(Color.BLACK);
-		g2d.drawString("Time Remaining - " + (Shop.gameLength - stats.gameTimeSecs), timePos[0] + 5, timePos[1] + g2d.getFontMetrics().getHeight());
+		g2d.drawString("Time Remaining - " + (Shop.gameLength- stats.gameTimeSecs), timePos[0] + 5, timePos[1] + g2d.getFontMetrics().getHeight());
 		
 		//Draw gold amount
 		g2d.setColor(new Color(255,255,255,150));

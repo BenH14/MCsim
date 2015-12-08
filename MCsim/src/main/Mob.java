@@ -17,7 +17,7 @@ public abstract class Mob {
 	//LOCATION
 	public int x;
 	public int y;
-	protected DIRECTION MOB_DIRECTION;
+	public DIRECTION MOB_DIRECTION;
 	protected int speedMultiplier;
 
 	//ASSETS
@@ -47,6 +47,7 @@ public abstract class Mob {
 		tickCount = 0;
 
 		x = spawnPosX;
+
 		y = spawnPosY;
 
 		MOB_DIRECTION = DIRECTION.STILL;	
@@ -58,9 +59,6 @@ public abstract class Mob {
 		scaleFactor = new double[2];
 
 		scaleFactor[0] = SettingsManager.getResX() / 1000.0;
-		System.out.println(scaleFactor[0]);
-		System.out.println(1000/SettingsManager.getResX());
-		System.out.println(SettingsManager.getResX());
 		scaleFactor[1] = SettingsManager.getResY() / 500.0;
 
 	}
@@ -130,17 +128,17 @@ public abstract class Mob {
 
 	public Graphics2D render(Graphics2D g2d) {
 
-		
+
 		//Renders the currently selected image to the screen
 		//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
 		g2d.setColor(Color.WHITE);
 		g2d.drawRect((int) (x * scaleFactor[0]),(int) (y * scaleFactor[1]), 20, 20);
-		g2d.drawString(MOB_DIRECTION.toString(), 100, 100);
+		g2d.drawString(MOB_DIRECTION.toString(),(int) (x * scaleFactor[0]),(int) (y * scaleFactor[1]));
 		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
-		if(textBoxLifetime != 0){
+		if(textBoxLifetime != 0 && false){//TODO
 
-			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (2000 * scaleFactor[0]) ,(int) (50 * scaleFactor[0]), null);
+			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (200 * scaleFactor[0]) ,(int) (50 * scaleFactor[0]), null);
 
 			g2d.drawString(textBoxString,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20);
 
@@ -152,67 +150,70 @@ public abstract class Mob {
 
 	public void tick() {
 
-		getInputs();
-		
-		if(tickCount == 120) {
-			tickCount = 0;
-		} else if(tickCount % 20 == 0) {
-//			CurrentAnimator.nextSprite();
-		}
+		if(MOB_DIRECTION != DIRECTION.DYING) {
 
-		if(textBoxLifetime  != 0) {
-			textBoxLifetime--;
-		}
+			getInputs();
 
-		//Works out where to move the mob
-		if(x > 0 && x < 1000 && y > 0 && y < 500) {
-			switch(MOB_DIRECTION){
-			case EAST:
-				x = x + speedMultiplier;
-				break;
-			case NORTH:
-				y = y - speedMultiplier;
-				break;
-			case NORTH_EAST:
-				y = y - speedMultiplier;
-				x = x + speedMultiplier;
-				break;
-			case NORTH_WEST:
-				x = x - speedMultiplier;
-				y = y - speedMultiplier;
-				break;
-			case SOUTH:
-				y = y + speedMultiplier;
-				break;
-			case SOUTH_EAST:
-				x = x + speedMultiplier;
-				y = y + speedMultiplier;
-				break;
-			case SOUTH_WEST:
-				y = y + speedMultiplier;
-				x = x - speedMultiplier;
-				break;
-			case STILL:
-				break;
-			case WEST:
-				x = x - speedMultiplier;
-				break;
-			default:
-				break;
-
+			if(tickCount == 120) {
+				tickCount = 0;
+			} else if(tickCount % 20 == 0) {
+				//			CurrentAnimator.nextSprite();
 			}
-		} else if(x < 1) {
-			x = 1;
-		} else if(x > 999) {
-			x = 999;
-		} else if(y < 1) {
-			y = 1;
-		} else if(y > 499) {
-			y = 499;
+
+			if(textBoxLifetime  != 0) {
+				textBoxLifetime--;
+			}
+
+			//Works out where to move the mob
+			if(x < 1) {
+				x = 1;
+			} else if(x > 980) {
+				x = 979;
+			} else if(y < 1) {
+				y = 1;
+			} else if(y > 460) {
+				y = 459;
+			} else {
+				switch(MOB_DIRECTION){
+				case EAST:
+					x = x + speedMultiplier;
+					break;
+				case NORTH:
+					y = y - speedMultiplier;
+					break;
+				case NORTH_EAST:
+					y = y - speedMultiplier;
+					x = x + speedMultiplier;
+					break;
+				case NORTH_WEST:
+					x = x - speedMultiplier;
+					y = y - speedMultiplier;
+					break;
+				case SOUTH:
+					y = y + speedMultiplier;
+					break;
+				case SOUTH_EAST:
+					x = x + speedMultiplier;
+					y = y + speedMultiplier;
+					break;
+				case SOUTH_WEST:
+					y = y + speedMultiplier;
+					x = x - speedMultiplier;
+					break;
+				case STILL:
+					break;
+				case WEST:
+					x = x - speedMultiplier;
+					break;
+				default:
+					break;
+
+				}
+			}
+
+			tickCount++;
+
 		}
-
-		tickCount++;
-
 	}
 
 	public void setTextBox() {

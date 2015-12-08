@@ -4,6 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import settings.SettingsManager;
 
 public class Menu {
 
@@ -15,6 +21,8 @@ public class Menu {
 	private int choice;
 	private KeyController key;
 
+	private BufferedImage backgroundImage;
+
 	public Menu(KeyController givenKey) {
 
 		choice = 0;
@@ -23,6 +31,16 @@ public class Menu {
 		startGame = false;
 
 		key = givenKey;
+
+		try {
+			//Load the image and resize it to the correct size
+			backgroundImage = ImageIO.read(new File("res/background.png"));
+			backgroundImage.setAccelerationPriority(1);
+			Graphics2D tempResizeG2d = (Graphics2D) backgroundImage.getGraphics();
+			tempResizeG2d.drawImage(backgroundImage, 0, 0, SettingsManager.getResX(), SettingsManager.getResY(), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -35,18 +53,19 @@ public class Menu {
 		}
 
 		if(ticks < 600) {ticks++;} else {ticks = 0;}
-		
+
 		if(choice == 0) {startGame = key.enter;}
 		else {endGame = key.enter;}
 
-		
+
 	}
 
 	public Graphics2D render(Graphics2D g2d) {
 
 		int titleDeviation = (int) (Math.sin(ticks / 10.0) * 10.0) - 5;
 
-		g2d.setColor(Color.WHITE);
+		g2d.drawImage(backgroundImage, 0,0, null);
+		g2d.setColor(Color.BLACK);
 
 		g2d.setFont(new Font("DialogInput", Font.BOLD, 48));
 		g2d.drawString("Mr", 100 - titleDeviation, 80);
@@ -64,7 +83,7 @@ public class Menu {
 			g2d.drawString("COLLECT COURSEWORK", 60, 500);
 			g2d.drawString("[HAVE DOOR FITTED]", 60, 600 + titleDeviation);	
 		}
-		
+
 		return g2d;
 	}
 

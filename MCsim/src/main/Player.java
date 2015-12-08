@@ -8,7 +8,7 @@ public class Player extends Mob {
 
 		super(spawnPosX, spawnPosY, "player");
 
-		speedMultiplier = 3;
+		speedMultiplier = 4;
 
 		key = givenKey;
 		
@@ -21,6 +21,8 @@ public class Player extends Mob {
 		//TextBox stuff
 		setTextBox();
 
+		
+		
 	}
 
 

@@ -63,6 +63,7 @@ public class SuperController {
 		mainMenu = new Menu(mainKey);
 
 		EffectManager.init();
+		Shop.init();
 
 	}
 
@@ -118,14 +119,14 @@ public class SuperController {
 				Mob tempMob = mobHead;
 				while(tempMob != null) {
 					tempMob.tick();
-					
+
 					if(tempMob.MOB_DIRECTION == DIRECTION.DYING) {
 						tempMob.prev.next = tempMob.next;
 						if(tempMob.next != null) {
 							tempMob.next.prev = tempMob.prev;
 						}
 					}
-					
+
 					tempMob = tempMob.next;
 				}
 
@@ -134,6 +135,12 @@ public class SuperController {
 
 				doSpawning(false);
 
+				System.out.println(Shop.gameLength - stats.gameTimeSecs);
+				
+				if ((Shop.gameLength - stats.gameTimeSecs) < 0) {
+					//End Game if time has exceeded the allotted gamelength
+					pause = true;
+				}
 			} else {
 
 				mainMenu.tick();
@@ -152,7 +159,7 @@ public class SuperController {
 					doSpawning(true);
 					doSpawning(true);
 					doSpawning(true);
-					
+
 					pause = false;
 
 				}

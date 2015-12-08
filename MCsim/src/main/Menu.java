@@ -77,15 +77,17 @@ public class Menu {
 		g2d.setFont(new Font("DialogInput", Font.BOLD, 60));
 
 		if(choice == 0) {
-			g2d.drawString("[COLLECT COURSEWORK]", 60, 500 + titleDeviation);
-			g2d.drawString("TECHNICIANS", 60, 600);
-			g2d.drawString("HAVE DOOR FITTED", 60, 700);
+			g2d.drawString("[COLLECT COURSEWORK]", 60, 450 + titleDeviation);
+			g2d.drawString("TECHNICIANS", 60, 550);
+			g2d.drawString("HAVE DOOR FITTED", 60, 650);
 		} else if(choice == 1) {
-			g2d.drawString("COLLECT COURSEWORK", 60, 500);
-			g2d.drawString("[HAVE DOOR FITTED]", 60, 600 + titleDeviation);	
+			g2d.drawString("COLLECT COURSEWORK", 60, 450);
+			g2d.drawString("[TECHNICIANS]", 60, 550 + titleDeviation);
+			g2d.drawString("HAVE DOOR FITTED", 60, 650);	
 		} else if(choice == 2) {
-			g2d.drawString("COLLECT COURSEWORK", 60, 500);
-			g2d.drawString("HAVE DOOR FITTED", 60, 600);
+			g2d.drawString("COLLECT COURSEWORK", 60, 450);
+			g2d.drawString("TECHNICIANS", 60, 550);
+			g2d.drawString("[HAVE DOOR FITTED]", 60, 650);
 		}
 
 		return g2d;

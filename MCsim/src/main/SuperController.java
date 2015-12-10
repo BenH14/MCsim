@@ -135,7 +135,7 @@ public class SuperController {
 				EffectManager.tick();
 
 				doSpawning(false);
-				
+
 				if ((Shop.gameLength - stats.gameTimeSecs) < 0) {
 					//End Game if time has exceeded the allotted gamelength
 					pause = true;
@@ -162,7 +162,6 @@ public class SuperController {
 					pause = false;
 
 				}
-
 			}
 
 			double sleepTime = (1000.0/60) - (System.currentTimeMillis() - tickStartTime);

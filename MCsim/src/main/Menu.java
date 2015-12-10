@@ -16,6 +16,7 @@ public class Menu {
 	private int ticks; //Should be incremented up to 600 (10 secs) then reset to 0
 
 	public boolean endGame;
+	public boolean goToShop;
 	public boolean startGame;
 
 	private int choice;
@@ -46,17 +47,22 @@ public class Menu {
 
 	public void tick() {
 
-		if(key.up == true) {
-			choice = 0;
-		} else if(key.down == true) {
-			choice = 1;
-		}
+		if(goToShop) {
+			Shop.tick(key);
+			goToShop = !key.exit;
+		} else {
+			if(key.up == true) {
+				if(choice != 0) {choice--;key.up = false;}
+			} else if(key.down == true) {
+				if(choice != 2) {choice++;key.down = false;}
+			}
 
-		if(ticks < 600) {ticks++;} else {ticks = 0;}
+			if(ticks < 600) {ticks++;} else {ticks = 0;}
 
-		if(choice == 0) {startGame = key.enter;}
-		else {endGame = key.enter;}
-
+			if(choice == 0) {startGame = key.enter;}
+			else if(choice == 1) {goToShop = key.enter;}
+			else {endGame = key.enter;}
+		} 
 
 	}
 
@@ -90,6 +96,10 @@ public class Menu {
 			g2d.drawString("[HAVE DOOR FITTED]", 60, 650);
 		}
 
+		if(goToShop) {
+			g2d = Shop.render(g2d);
+		}
+		
 		return g2d;
 	}
 

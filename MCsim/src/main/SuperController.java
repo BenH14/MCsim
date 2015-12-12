@@ -136,7 +136,7 @@ public class SuperController {
 
 				doSpawning(false);
 
-				if ((Shop.gameLength - stats.gameTimeSecs) < 0) {
+				if ((Shop.gameLengthVal - stats.gameTimeSecs) < 0) {
 					//End Game if time has exceeded the allotted gamelength
 					pause = true;
 				}

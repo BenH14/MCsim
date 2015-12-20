@@ -3,12 +3,10 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import java.io.InputStream;
+import java.util.Properties;
 
 import settings.SettingsManager;
 
@@ -81,7 +79,31 @@ public class Shop {
 
 	public static void readFile() throws IOException {
 
-		BufferedImage abc = ImageIO.read(new File("res/packground.png"));
+		Properties prop = new Properties();
+		InputStream in = null;
+		
+		try {
+			
+			in = new FileInputStream("save.properties");
+			
+			gold = Integer.parseInt(prop.getProperty("gold"));
+			gameLength = Integer.parseInt(prop.getProperty("gameLength"));
+			captureSpeed = Integer.parseInt(prop.getProperty("captureSpeed"));
+			spawnRate = Integer.parseInt(prop.getProperty("spawnRate"));
+			staticSpawn = Boolean.parseBoolean(prop.getProperty("staticSpawn"));
+			deadlines = Boolean.parseBoolean(prop.getProperty("deadlines"));
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException io){
+					io.printStackTrace();
+				}
+			}
+		}
 
 	}
 
@@ -109,7 +131,7 @@ public class Shop {
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("DialogInput", Font.BOLD + Font.ITALIC, 72));
 		g2d.drawString("SHOP",(int) (SettingsManager.getResX() / 2) - (g2d.getFontMetrics().stringWidth("SHOP") / 2), refLoc[1] - 10);
-
+		
 		//Titles
 		g2d.setColor(Color.BLACK);
 		g2d.setFont(new Font("DialogInput", Font.BOLD, 42));
@@ -142,6 +164,12 @@ public class Shop {
 		g2d.drawString("Increase the rate of Students spawning",refLoc[0] + 80,(int) scaleFactor[1] * 400);
 		g2d.drawString("Students spawn in a smaller space",refLoc[0] + 80,(int) scaleFactor[1] * 500);
 		g2d.drawString("",refLoc[0] + 80,(int) scaleFactor[1] * 600);
+		
+		//Show gold
+		g2d.setColor(Color.YELLOW);
+		g2d.fillRoundRect(SettingsManager.getResX() - (refLoc[0]+300), (int) scaleFactor[1] * 140, 280, 40, 10, 10);
+		g2d.setColor(Color.WHITE);
+		g2d.drawString("Money: £" + gold,SettingsManager.getResX() - (refLoc[0]+280) ,(int) (scaleFactor[1] * 140) + 30);
 
 		return g2d;
 	}

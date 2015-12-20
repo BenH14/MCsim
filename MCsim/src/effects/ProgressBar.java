@@ -34,7 +34,7 @@ public class ProgressBar extends Effect {
 
 		if(deviation < 50) {
 			if(progress != 100) {
-				progress++;				
+				progress = progress + Shop.captureSpeed;				
 			} else {
 				lifeTime = 0;
 				Parent.MOB_DIRECTION = DIRECTION.DYING;

@@ -176,7 +176,7 @@ public class Shop {
 			break;
 			case 3: staticSpawn = true;
 			break;
-			case 4: if(captureSpeed < 3) {captureSpeed++;}
+			case 4: if(captureSpeed < 50) {captureSpeed++;}
 			break;
 			}
 		}

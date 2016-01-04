@@ -79,7 +79,7 @@ public class SuperController {
 				//Create Mob
 				Mob temp = mobHead.next;
 				if (Shop.staticSpawn) {
-					ranInt = ranGen.nextInt(50);
+					ranInt = ranGen.nextInt(10);
 					mobHead.next = new Enemy(500 + ranInt, 250 + ranInt, (Player) (mobHead));
 				} else {
 					mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));

@@ -56,6 +56,8 @@ public class Shop {
 		staticSpawn = false;
 		deadlines = false;
 
+		gold = 10000;
+
 		updateGameLength();
 
 	}
@@ -162,21 +164,22 @@ public class Shop {
 			if(choice != 4) {choice++;key.down = false;}
 		}
 
-				if(key.enter && gold >= 500) {
-					gold = gold - 500;
-					switch(choice) {
-					case 0: gameLength++; updateGameLength();
-						break;
-					case 1: deadlines = true;
-						break;
-					case 2: spawnRate++;
-						break;
-					case 3: staticSpawn = true;
-						break;
-					case 4: captureSpeed++;
-						break;
-					}
-				}
+		if(key.enter && gold >= 500) {
+			gold = gold - 500;
+			key.enter = false;
+			switch(choice) {
+			case 0: gameLength++; updateGameLength();
+			break;
+			case 1: deadlines = true;
+			break;
+			case 2: spawnRate++;
+			break;
+			case 3: staticSpawn = true;
+			break;
+			case 4: if(captureSpeed < 3) {captureSpeed++;}
+			break;
+			}
+		}
 
 		if(ticks < 600) {ticks++;} else {ticks = 0;}
 

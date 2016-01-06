@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -79,7 +80,11 @@ public abstract class Mob {
 		Animators[7] = new Animator(TypeName + "/NORTH_WEST.png"); //NORTH_WEST
 
 		//TEXT BOX
-		try {textBoxImage = ImageIO.read(new File("res/textbox.png"));} catch (IOException e) {e.printStackTrace();}
+		try {
+			textBoxImage = new BufferedImage(300,50, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D g2d = (Graphics2D) textBoxImage.getGraphics();
+			g2d.drawImage(ImageIO.read(new File("res/textbox.png")), 0, 0, 300, 50, null);
+		} catch (IOException e) {e.printStackTrace();}
 
 
 	}
@@ -136,11 +141,18 @@ public abstract class Mob {
 		g2d.drawString(MOB_DIRECTION.toString(),(int) (x * scaleFactor[0]),(int) (y * scaleFactor[1]));
 		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
-		if(textBoxLifetime != 0 && false){//TODO
-
-			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (200 * scaleFactor[0]) ,(int) (50 * scaleFactor[0]), null);
-
-			g2d.drawString(textBoxString,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20);
+		if(textBoxLifetime != 0) {
+			g2d.setColor(Color.WHITE);
+			//			g2d.fillRect((int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (300 * scaleFactor[0]) ,(int) (20 * scaleFactor[0]));
+			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) - 60, null);
+			g2d.setColor(Color.BLACK);
+			int size = 12;
+			g2d.setFont(new Font("DialogInput", Font.BOLD, size));
+			while(g2d.getFontMetrics().stringWidth(textBoxString) > 300){
+				g2d.setFont(new Font("DialogInput", Font.BOLD, size));
+				size--;
+			}
+			g2d.drawString(textBoxString,(int) ((x * scaleFactor[0]) +  170) - (g2d.getFontMetrics().stringWidth(textBoxString) / 2),(int) ((y * scaleFactor[1]) - 55) + g2d.getFontMetrics().getHeight());
 
 		}
 
@@ -218,11 +230,11 @@ public abstract class Mob {
 
 	public void setTextBox() {
 
-		int ranInt = RanGen.nextInt(100);
+		int ranInt = RanGen.nextInt(500);
 
-		if(textBoxLifetime < 0 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
+		if(textBoxLifetime < 1 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
 
-			ranInt = (int) ranInt / 10;
+			ranInt = RanGen.nextInt(10);
 
 			textBoxLifetime = 120;
 
@@ -300,6 +312,9 @@ public abstract class Mob {
 					break;
 				}
 			}
+
+			System.out.println(textBoxString);
+
 		}
 	}
 

@@ -214,7 +214,7 @@ public class SuperController {
 						//Set rendering hints
 						g2d = SettingsManager.setRenderingHints(g2d);
 
-						g2d.setColor(Color.BLACK);
+						g2d.setColor(Color.GRAY);
 						g2d.fillRect(0, 0, SettingsManager.getResX(), SettingsManager.getResY());
 
 						if(pause == false) {

@@ -81,8 +81,9 @@ public abstract class Mob {
 
 		//TEXT BOX
 		try {
-			textBoxImage = new BufferedImage(300,50, BufferedImage.TYPE_3BYTE_BGR);
+			textBoxImage = new BufferedImage(300,50, BufferedImage.TYPE_4BYTE_ABGR);
 			Graphics2D g2d = (Graphics2D) textBoxImage.getGraphics();
+			g2d = SettingsManager.setRenderingHints(g2d);
 			g2d.drawImage(ImageIO.read(new File("res/textbox.png")), 0, 0, 300, 50, null);
 		} catch (IOException e) {e.printStackTrace();}
 
@@ -293,22 +294,22 @@ public abstract class Mob {
 					textBoxString = "I am doing it right now";
 					break;
 				case 5:
-					textBoxString = "";
+					textBoxString = "!";
 					break;
 				case 6:
-					textBoxString = "";
+					textBoxString = "!";
 					break;
 				case 7:
-					textBoxString = "";
+					textBoxString = "!";
 					break;
 				case 8:
-					textBoxString = "";
+					textBoxString = "!";
 					break;
 				case 9:
-					textBoxString = "";
+					textBoxString = "!";
 					break;
 				case 10:
-					textBoxString = "";
+					textBoxString = "!";
 					break;
 				}
 			}

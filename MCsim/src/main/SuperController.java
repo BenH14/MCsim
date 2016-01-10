@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import display.HUD;
 import display.Window;
 import effects.EffectManager;
+import effects.Pulse;
 import settings.SettingsManager;
 
 public class SuperController {
@@ -27,6 +28,7 @@ public class SuperController {
 	private Mob mobHead;
 
 	private StatisticsContainer stats;
+	private SoundManager sound;
 
 	private HUD ui;
 
@@ -107,12 +109,17 @@ public class SuperController {
 		renderThread.setPriority(9);
 		renderThread.start();
 
+		sound = new SoundManager();
+		sound.setPriority(5);
+		sound.start();
+
 		while(exit == false) {
 
 			//Main Update Loop
 			double tickStartTime = System.currentTimeMillis();
 
 			if(pause == false) {
+
 
 
 				if(mainKey.exit == true){
@@ -146,6 +153,13 @@ public class SuperController {
 					pause = true;
 				}
 			} else {
+
+				sound.stopLoop();
+				try {
+					sound.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 
 				mainMenu.tick();
 

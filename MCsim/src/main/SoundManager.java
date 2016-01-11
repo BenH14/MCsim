@@ -41,7 +41,7 @@ public class SoundManager extends Thread{
 
 		stop = false;
 		
-		pulser = new Pulse(60);
+		pulser = new Pulse(140);
 		EffectManager.addEffect(pulser);
 //		try {
 //			players[0] = AudioSystem.getClip();

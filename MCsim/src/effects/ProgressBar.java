@@ -33,8 +33,8 @@ public class ProgressBar extends Effect {
 		double deviation = Math.sqrt(Math.pow(deltaX, 2)) + Math.sqrt(Math.pow(deltaY, 2)) + 0.0;
 
 		if(deviation < 50) {
-			if(progress != 100) {
-				progress++;				
+			if(progress < 100) {
+				progress = progress + Shop.captureSpeed;				
 			} else {
 				lifeTime = 0;
 				Parent.MOB_DIRECTION = DIRECTION.DYING;
@@ -56,7 +56,7 @@ public class ProgressBar extends Effect {
 
 		g2d = SettingsManager.setRenderingHints(g2d);
 
-		g2d.setColor(new Color(255,255,255,55 + (progress * 2))); //Translucent White
+		g2d.setColor(new Color(255,255,255,(progress * 2))); //Translucent White
 
 		int xPos = (int) ((Parent.x + 20) * scaleFactor[0]);
 		int yPos = (int) ((Parent.y - 20) * scaleFactor[1]);

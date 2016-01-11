@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import display.HUD;
 import display.Window;
 import effects.EffectManager;
+import effects.Pulse;
 import settings.SettingsManager;
 
 public class SuperController {
@@ -27,6 +28,7 @@ public class SuperController {
 	private Mob mobHead;
 
 	private StatisticsContainer stats;
+	private SoundManager sound;
 
 	private HUD ui;
 
@@ -71,14 +73,19 @@ public class SuperController {
 
 		int ranInt = ranGen.nextInt(1000);
 
-		if((ranInt % 250) == 0 || force) {
+		if((ranInt % 500) < Shop.spawnRate || force) {
 
 			//Add new enemy
 			if(mobHead.next != null) {
 
 				//Create Mob
 				Mob temp = mobHead.next;
-				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
+				if (Shop.staticSpawn) {
+					ranInt = ranGen.nextInt(10);
+					mobHead.next = new Enemy(500 + ranInt, 250 + ranInt, (Player) (mobHead));
+				} else {
+					mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
+				}
 				mobHead.next.prev = mobHead;
 				mobHead.next.next = temp;
 				temp.prev = mobHead.next;
@@ -102,12 +109,17 @@ public class SuperController {
 		renderThread.setPriority(9);
 		renderThread.start();
 
+		sound = new SoundManager();
+		sound.setPriority(5);
+		sound.start();
+
 		while(exit == false) {
 
 			//Main Update Loop
 			double tickStartTime = System.currentTimeMillis();
 
 			if(pause == false) {
+
 
 
 				if(mainKey.exit == true){
@@ -135,12 +147,19 @@ public class SuperController {
 				EffectManager.tick();
 
 				doSpawning(false);
-				
-				if ((Shop.gameLength - stats.gameTimeSecs) < 0) {
+
+				if ((Shop.gameLengthVal - stats.gameTimeSecs) < 0) {
 					//End Game if time has exceeded the allotted gamelength
 					pause = true;
 				}
 			} else {
+
+				sound.stopLoop();
+				try {
+					sound.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 
 				mainMenu.tick();
 
@@ -162,7 +181,6 @@ public class SuperController {
 					pause = false;
 
 				}
-
 			}
 
 			double sleepTime = (1000.0/60) - (System.currentTimeMillis() - tickStartTime);
@@ -210,7 +228,7 @@ public class SuperController {
 						//Set rendering hints
 						g2d = SettingsManager.setRenderingHints(g2d);
 
-						g2d.setColor(Color.BLACK);
+						g2d.setColor(Color.GRAY);
 						g2d.fillRect(0, 0, SettingsManager.getResX(), SettingsManager.getResY());
 
 						if(pause == false) {

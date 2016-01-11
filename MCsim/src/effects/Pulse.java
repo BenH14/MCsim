@@ -50,10 +50,6 @@ public class Pulse extends Effect{
 
 		if (offset > 0) {
 			Graphics2D g2d = (Graphics2D) img.getGraphics();
-			g2d.setColor(Color.MAGENTA);
-			g2d.drawString(Integer.toString(period), 100, 100);
-			
-
 			g2d.drawImage(img, -offset, -offset, null);
 		}
 		return img;

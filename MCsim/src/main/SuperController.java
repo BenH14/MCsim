@@ -9,10 +9,11 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+import display.Animator;
 import display.HUD;
 import display.Window;
+import effects.Combo;
 import effects.EffectManager;
-import effects.Pulse;
 import settings.SettingsManager;
 
 public class SuperController {
@@ -168,7 +169,7 @@ public class SuperController {
 				if(mainMenu.startGame) {
 
 					stats = new StatisticsContainer();
-
+					EffectManager.addEffect(new Combo());
 					ui = new HUD(stats);
 
 					//Start Game 
@@ -213,9 +214,11 @@ public class SuperController {
 
 	Runnable renderLoop = new Runnable() {
 		public void run() {
+
 			while(exit == false) {
 
 				Graphics2D g2d;
+
 
 				do {
 					do {

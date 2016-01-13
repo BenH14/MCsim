@@ -29,9 +29,10 @@ public class Animator {
 
 		currentStage = 0;
 
-		stagesPerRow = SpriteSheet.getHeight() / spriteSizeX;
-
-		totalStages = stagesPerRow * (SpriteSheet.getWidth() / spriteSizeY);
+		stagesPerRow = (int) ((SpriteSheet.getWidth() * 1.0) / (spriteSizeX * 1.0));
+		
+		totalStages = (int) (stagesPerRow * (SpriteSheet.getHeight() / (spriteSizeY * 1.0)));
+		
 		
 		} catch (Exception e) {e.printStackTrace();}
 
@@ -41,20 +42,31 @@ public class Animator {
 	public void nextSprite() {
 
 		if(currentStage == totalStages) {
-			currentStage = 0;
+			currentStage = 1;
+		} else {
+			currentStage++;
 		}
+		
+		
 		
 		int y = 1; 
 		int x = 0;
 
+		System.out.println(currentStage);
+		System.out.println(stagesPerRow);
 		while(currentStage > stagesPerRow * y) {
 			y++;
 		}
-
+		
 		y--;
-		x = currentStage - (y * stagesPerRow);
+		currentStage--;
+		x = (currentStage * spriteSizeX) - (y * stagesPerRow);
+		currentStage++;
 		y = y * spriteSizeY;
-
+		
+		System.out.println("x " + x);
+		System.out.println("y " + y);
+		
 		Output = SpriteSheet.getSubimage(x, y, spriteSizeX, spriteSizeY);
 
 	}

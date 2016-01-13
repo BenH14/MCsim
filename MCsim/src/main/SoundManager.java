@@ -1,7 +1,11 @@
 package main;
 
+import java.io.IOException;
+
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 
 import effects.EffectManager;
 import effects.Pulse;
@@ -30,13 +34,29 @@ public class SoundManager extends Thread{
 	}
 
 	public void stopLoop() {
-		for (int x = 0;x < 10; x++) {
-			if(players[x] != null) {
-				if(players[x].isRunning()) {
-					players[x].stop();	
-				}
-			}
+//		for (int x = 0;x < 10; x++) {
+//			
+//				if(players[x].isRunning()) {
+//					players[x].stop();	
+//				}
+//			
+//		}
+	}
+
+	public void playerSound(AudioInputStream in) {
+
+		Clip clip = null;
+
+		try {
+			clip = AudioSystem.getClip();
+			clip.open(in);
+		} catch (LineUnavailableException | IOException e) {
+			e.printStackTrace();
 		}
+
+		clip.setFramePosition(0);
+		clip.start();
+
 	}
 
 	public void run() {

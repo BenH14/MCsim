@@ -38,6 +38,7 @@ public class ProgressBar extends Effect {
 			} else {
 				lifeTime = 0;
 				Parent.MOB_DIRECTION = DIRECTION.DYING;
+				Combo.addKill();
 			}
 		} else {
 			if(progress != 0) {

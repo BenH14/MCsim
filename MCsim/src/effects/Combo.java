@@ -50,8 +50,9 @@ public class Combo extends Effect {
 		if(timeout != 0) {
 			Graphics2D g2d = (Graphics2D) img.getGraphics();
 
-			g2d.drawImage(mainAnim.getSprite(),(int) ((SettingsManager.getResX() / 2) - 100), 60,null);
+			g2d.drawImage(mainAnim.getSprite(),(int) ((SettingsManager.getResX() / 2) - 100), (int) (timeout/2.0),null);
 			g2d.fillRect(100, 100, timeout, 20);
+			g2d.drawString(Integer.toString(killCount), 500, 200);
 
 			g2d.dispose();
 		}
@@ -61,7 +62,11 @@ public class Combo extends Effect {
 
 	public static void addKill() {
 		killCount++;
-		timeout = 120;
+		timeout = 240 + (20 * killCount);
+	}
+	
+	public static int getCombo() {
+		return killCount;
 	}
 
 }

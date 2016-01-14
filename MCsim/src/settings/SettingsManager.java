@@ -27,6 +27,8 @@ public class SettingsManager {
 	static boolean HighQualityColour;
 	static int textLCDContrast;
 
+	static float volume;
+	
 	//Variables to store the state of each setting
 	static int res[];
 	static int keyBinding[];
@@ -85,6 +87,8 @@ public class SettingsManager {
 			AlphaInterpolation = Boolean.parseBoolean(prop.getProperty("Alpha Interpolation"));
 			HighQualityColour = Boolean.parseBoolean(prop.getProperty("High Quality Colour"));
 			textLCDContrast = Integer.parseInt(prop.getProperty("Text LCD Contrast"));
+			
+			volume = Float.parseFloat(prop.getProperty("Volume")); 
 
 		} catch (IOException io) {
 			io.printStackTrace();
@@ -134,6 +138,8 @@ public class SettingsManager {
 			prop.setProperty("Alpha Interpolation", Boolean.toString(AlphaInterpolation));
 			prop.setProperty("High Quality Colour", Boolean.toString(HighQualityColour));
 			prop.setProperty("Text LCD Contrast", Integer.toString(textLCDContrast));
+			
+			prop.setProperty("Volume", Float.toString(volume));
 
 			//SAVE FILE
 			prop.store(output, null);
@@ -180,6 +186,8 @@ public class SettingsManager {
 		HighQualityColour = true;
 		textLCDContrast = 100; 
 
+		volume = 0.0f;
+		
 		saveSettings();
 
 	}
@@ -222,6 +230,9 @@ public class SettingsManager {
 
 	public static boolean getSplashScreenEnabled() {return splashScreen;}
 	public static void setSplashScreenEnabled(boolean given) {splashScreen = given;}
+	
+	public static float getVolume() {return volume;}
+	public static void setVolume(float givenVolume){volume = givenVolume;}
 
 
 

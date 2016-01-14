@@ -52,8 +52,6 @@ public class Animator {
 		int y = 1; 
 		int x = 0;
 
-		System.out.println(currentStage);
-		System.out.println(stagesPerRow);
 		while(currentStage > stagesPerRow * y) {
 			y++;
 		}
@@ -64,8 +62,6 @@ public class Animator {
 		currentStage++;
 		y = y * spriteSizeY;
 		
-		System.out.println("x " + x);
-		System.out.println("y " + y);
 		
 		Output = SpriteSheet.getSubimage(x, y, spriteSizeX, spriteSizeY);
 

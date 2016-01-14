@@ -314,8 +314,6 @@ public abstract class Mob {
 				}
 			}
 
-			System.out.println(textBoxString);
-
 		}
 	}
 

@@ -72,34 +72,34 @@ public class SuperController {
 
 	private void doSpawning(boolean force) {
 
-//		int ranInt = ranGen.nextInt(1000);
-//
-//		if((ranInt % 500) < Shop.spawnRate || force) {
-//
-//			//Add new enemy
-//			if(mobHead.next != null) {
-//
-//				//Create Mob
-//				Mob temp = mobHead.next;
-//				if (Shop.staticSpawn) {
-//					ranInt = ranGen.nextInt(10);
-//					mobHead.next = new Enemy(500 + ranInt, 250 + ranInt, (Player) (mobHead));
-//				} else {
-//					mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
-//				}
-//				mobHead.next.prev = mobHead;
-//				mobHead.next.next = temp;
-//				temp.prev = mobHead.next;
-//
-//				mobHead.next.MOB_DIRECTION = DIRECTION.SPAWNING;
-//
-//			} else {
-//
-//				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
-//				mobHead.next.prev = mobHead;
-//
-//			}
-//		}
+		int ranInt = ranGen.nextInt(1000);
+
+		if((ranInt % 500) < Shop.spawnRate || force) {
+
+			//Add new enemy
+			if(mobHead.next != null) {
+
+				//Create Mob
+				Mob temp = mobHead.next;
+				if (Shop.staticSpawn) {
+					ranInt = ranGen.nextInt(10);
+					mobHead.next = new Enemy(500 + ranInt, 250 + ranInt, (Player) (mobHead));
+				} else {
+					mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
+				}
+				mobHead.next.prev = mobHead;
+				mobHead.next.next = temp;
+				temp.prev = mobHead.next;
+
+				mobHead.next.MOB_DIRECTION = DIRECTION.SPAWNING;
+
+			} else {
+
+				mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
+				mobHead.next.prev = mobHead;
+
+			}
+		}
 
 	}
 

@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
@@ -20,17 +21,17 @@ public class SoundManager extends Thread{
 	private Pulse pulser;
 
 	public SoundManager() {
-		//
-		//		stop = false;
-		//
-		//		players = new Clip[10];
-		//		
-		//		try {
-		//			//Open Files
-		////			drums = AudioSystem.getAudioInputStream(new File("/res/music/drums.mp3"));
-		//		} catch (Exception ex) {
-		//			ex.printStackTrace();
-		//		}
+		
+				stop = false;
+		
+				players = new Clip[10];
+				
+				try {
+					//Open Files
+					drums = AudioSystem.getAudioInputStream(new File("/res/sound/Ding.wav"));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 	}
 
 	public void stopLoop() {
@@ -43,7 +44,7 @@ public class SoundManager extends Thread{
 //		}
 	}
 
-	public void playerSound(AudioInputStream in) {
+	public void playSound(AudioInputStream in) {
 
 		Clip clip = null;
 
@@ -65,16 +66,17 @@ public class SoundManager extends Thread{
 
 		pulser = new Pulse(60);
 		EffectManager.addEffect(pulser);
-		//		try {
-		//			players[0] = AudioSystem.getClip();
-		//			players[0].open(drums);
-		//		} catch (LineUnavailableException | IOException e) {
-		//			e.printStackTrace();
-		//		}
-		//
-		//		players[0].setFramePosition(0);
-		//		players[0].start();
-		//		players[0].loop(Clip.LOOP_CONTINUOUSLY);
+		
+				try {
+					players[0] = AudioSystem.getClip();
+					players[0].open(drums);
+				} catch (LineUnavailableException | IOException e) {
+					e.printStackTrace();
+				}
+		
+				players[0].setFramePosition(0);
+				players[0].start();
+				players[0].loop(Clip.LOOP_CONTINUOUSLY);
 
 
 

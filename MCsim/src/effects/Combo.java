@@ -50,7 +50,7 @@ public class Combo extends Effect {
 		if(timeout != 0 && killCount > 2) {
 			Graphics2D g2d = (Graphics2D) img.getGraphics();
 
-			g2d.drawImage(mainAnim.getSprite(),(int) ((SettingsManager.getResX() / 2) - 100), (int) (timeout/2.0),null);
+			g2d.drawImage(mainAnim.getSprite(),(int) ((SettingsManager.getResX() / 2) - 100), (int) (timeout/2.0) - 60,null);
 
 			g2d.dispose();
 		}

@@ -38,25 +38,13 @@ public class SoundManager extends Thread{
 	}
 
 	public void stopLoop() {
-		//		for (int x = 0;x < 10; x++) {
-		//			
-		//				if(players[x].isRunning()) {
-		//					players[x].stop();	
-		//				}
-		//			
-		//		}
+
+		stop = true;
+		
 	}
 
-	public void playSound(AudioInputStream in) {
+	public void playSound(Clip clip) {
 
-		Clip clip = null;
-
-		try {
-			clip = AudioSystem.getClip();
-			clip.open(in);
-		} catch (LineUnavailableException | IOException e) {
-			e.printStackTrace();
-		}
 
 		FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		volumeControl.setValue(SettingsManager.getVolume());
@@ -85,11 +73,14 @@ public class SoundManager extends Thread{
 		
 		mainSoundtrack.setFramePosition(0);
 		mainSoundtrack.start();
-		mainSoundtrack.loop(Clip.LOOP_CONTINUOUSLY);
-
-
-
-
+		
+		while(stop == false) {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 

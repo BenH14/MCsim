@@ -9,7 +9,6 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-import display.Animator;
 import display.HUD;
 import display.Window;
 import effects.Combo;
@@ -112,7 +111,8 @@ public class SuperController {
 
 		sound = new SoundManager();
 		sound.setPriority(5);
-		sound.start();
+		
+		mainMenu.addSound(sound);
 
 		while(exit == false) {
 
@@ -156,6 +156,7 @@ public class SuperController {
 			} else {
 
 				sound.stopLoop();
+				
 				try {
 					sound.join();
 				} catch (InterruptedException e) {
@@ -168,6 +169,14 @@ public class SuperController {
 
 				if(mainMenu.startGame) {
 
+					try {
+					sound.start();
+					} catch (IllegalThreadStateException ex) {
+						sound = new SoundManager();
+						sound.setPriority(5);
+						sound.start();
+					}
+					
 					stats = new StatisticsContainer();
 					EffectManager.addEffect(new Combo());
 					ui = new HUD(stats);

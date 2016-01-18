@@ -40,15 +40,14 @@ public class SoundManager extends Thread{
 	public void stopLoop() {
 
 		stop = true;
-		
+
 	}
 
 	public void playSound(Clip clip) {
 
-
 		FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		volumeControl.setValue(SettingsManager.getVolume());
-		
+
 		clip.setFramePosition(0);
 		clip.start();
 
@@ -70,10 +69,10 @@ public class SoundManager extends Thread{
 
 		FloatControl volumeControl = (FloatControl) mainSoundtrack.getControl(FloatControl.Type.MASTER_GAIN);
 		volumeControl.setValue(SettingsManager.getVolume());
-		
+
 		mainSoundtrack.setFramePosition(0);
 		mainSoundtrack.start();
-		
+
 		while(stop == false) {
 			try {
 				Thread.sleep(200);

@@ -178,7 +178,7 @@ public class SuperController {
 					}
 					
 					stats = new StatisticsContainer();
-					EffectManager.addEffect(new Combo());
+					EffectManager.addEffect(new Combo(sound));
 					ui = new HUD(stats);
 
 					//Start Game 

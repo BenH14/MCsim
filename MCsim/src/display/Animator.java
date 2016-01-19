@@ -20,7 +20,7 @@ public class Animator {
 	public Animator(String filePath) {
 		this(filePath, 100,100); //If no sprite sizes are given, use 100x100
 	}
-	
+
 	public Animator(String filePath, int givenSpriteSizeX, int givenSpriteSizeY) {
 
 		try {SpriteSheet = ImageIO.read(new File("res/" + filePath));
@@ -30,11 +30,14 @@ public class Animator {
 		currentStage = 0;
 
 		stagesPerRow = (int) ((SpriteSheet.getWidth() * 1.0) / (spriteSizeX * 1.0));
-		
+
 		totalStages = (int) (stagesPerRow * (SpriteSheet.getHeight() / (spriteSizeY * 1.0)));
-		
-		
-		} catch (Exception e) {e.printStackTrace();}
+
+
+		} catch (Exception e) {
+			if(filePath == "ANIM_COMBO_NUM.png")
+			e.printStackTrace();
+		}
 
 
 	}
@@ -46,23 +49,23 @@ public class Animator {
 		} else {
 			currentStage++;
 		}
-		
-		
-		
+
+
+
 		int y = 1; 
 		int x = 0;
 
 		while(currentStage > stagesPerRow * y) {
 			y++;
 		}
-		
+
 		y--;
 		currentStage--;
 		x = (currentStage * spriteSizeX) - (y * stagesPerRow);
 		currentStage++;
 		y = y * spriteSizeY;
-		
-		
+
+
 		Output = SpriteSheet.getSubimage(x, y, spriteSizeX, spriteSizeY);
 
 	}
@@ -70,5 +73,8 @@ public class Animator {
 	public BufferedImage getSprite() {
 		return Output;
 	}
+	
+	public void reset() {currentStage = 0;}
+	public void setStage(int given) {currentStage = given - 1;nextSprite();}
 
 }

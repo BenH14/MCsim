@@ -33,6 +33,7 @@ public class SoundManager extends Thread{
 			drums = AudioSystem.getAudioInputStream(new File("res/sound/Ding.wav"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			
 		}
 
 	}

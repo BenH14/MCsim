@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import settings.SettingsManager;
 
@@ -24,6 +27,9 @@ public class Menu {
 
 	private BufferedImage backgroundImage;
 	private BufferedImage preBake;
+
+	private SoundManager sound;
+	private Clip menuSound;
 
 	public Menu(KeyController givenKey) {
 
@@ -44,12 +50,19 @@ public class Menu {
 			e.printStackTrace();
 		}
 
+		try {
+			AudioInputStream in = AudioSystem.getAudioInputStream(new File("res/sound/EFFECT_MENU_HIGH.wav"));
+			menuSound = AudioSystem.getClip();
+			menuSound.open(in);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public void preBakeBackground() {
 
 		preBake = new BufferedImage(SettingsManager.getResX(), SettingsManager.getResY(), BufferedImage.TYPE_INT_ARGB);
-		
+
 		Graphics2D g2d = (Graphics2D) preBake.getGraphics();
 
 		int titleDeviation = (int) (Math.sin(ticks / 10.0) * 10.0) - 5;
@@ -84,7 +97,13 @@ public class Menu {
 
 	}
 
+	public void addSound(SoundManager given) {sound = given;}
+
 	public void tick() {
+
+		if(key.up == true || key.down == true) {
+				sound.playSound(menuSound);
+		}
 
 		if(goToShop) {
 			Shop.tick(key);
@@ -101,7 +120,7 @@ public class Menu {
 			if(choice == 0) {startGame = key.enter;}
 			else if(choice == 1) {goToShop = key.enter;}
 			else {endGame = key.enter;}
-			
+
 			key.enter = false;
 		} 
 
@@ -115,7 +134,7 @@ public class Menu {
 			}
 			g2d.drawImage(preBake, 0, 0, null);
 			g2d = Shop.render(g2d);
-			
+
 		} else {
 
 			int titleDeviation = (int) (Math.sin(ticks / 10.0) * 10.0) - 5;

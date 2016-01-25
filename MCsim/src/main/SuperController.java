@@ -11,8 +11,8 @@ import javax.swing.JFrame;
 
 import display.HUD;
 import display.Window;
+import effects.Combo;
 import effects.EffectManager;
-import effects.Pulse;
 import settings.SettingsManager;
 
 public class SuperController {
@@ -111,7 +111,8 @@ public class SuperController {
 
 		sound = new SoundManager();
 		sound.setPriority(5);
-		sound.start();
+		
+		mainMenu.addSound(sound);
 
 		while(exit == false) {
 
@@ -155,6 +156,7 @@ public class SuperController {
 			} else {
 
 				sound.stopLoop();
+				
 				try {
 					sound.join();
 				} catch (InterruptedException e) {
@@ -167,8 +169,16 @@ public class SuperController {
 
 				if(mainMenu.startGame) {
 
+					try {
+					sound.start();
+					} catch (IllegalThreadStateException ex) {
+						sound = new SoundManager();
+						sound.setPriority(5);
+						sound.start();
+					}
+					
 					stats = new StatisticsContainer();
-
+					EffectManager.addEffect(new Combo(sound));
 					ui = new HUD(stats);
 
 					//Start Game 
@@ -213,9 +223,11 @@ public class SuperController {
 
 	Runnable renderLoop = new Runnable() {
 		public void run() {
+
 			while(exit == false) {
 
 				Graphics2D g2d;
+
 
 				do {
 					do {

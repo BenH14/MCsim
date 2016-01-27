@@ -1,14 +1,11 @@
 package logging;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 public class FileLogger extends Logger{
-
-	BufferedWriter out;
 	
 	public FileLogger(URGENCY GIVEN_URGENCY) throws FileNotFoundException {
 		

@@ -13,6 +13,8 @@ import display.HUD;
 import display.Window;
 import effects.Combo;
 import effects.EffectManager;
+import logging.DebugFactory;
+import logging.Logger;
 import settings.SettingsManager;
 
 public class SuperController {
@@ -124,6 +126,7 @@ public class SuperController {
 
 
 				if(mainKey.exit == true){
+					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Pausing Game");
 					pause = true;
 					mainMenu.startGame = false;
 				}
@@ -161,6 +164,7 @@ public class SuperController {
 					sound.join();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					DebugFactory.getDebug(Logger.URGENCY.FATAL).write("SOUND THREAD - " + e.getMessage());
 				}
 
 				mainMenu.tick();
@@ -169,6 +173,8 @@ public class SuperController {
 
 				if(mainMenu.startGame) {
 
+					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Starting Game");
+					
 					try {
 					sound.start();
 					} catch (IllegalThreadStateException ex) {
@@ -189,6 +195,8 @@ public class SuperController {
 					doSpawning(true);
 
 					pause = false;
+					
+					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Game Started");
 
 				}
 			}

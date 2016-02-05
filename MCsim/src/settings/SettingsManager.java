@@ -31,7 +31,7 @@ public class SettingsManager {
 	static int textLCDContrast;
 
 	static float volume;
-	
+
 	//Variables to store the state of each setting
 	static int res[];
 	static int keyBinding[];
@@ -45,7 +45,7 @@ public class SettingsManager {
 		filePath = "config.properties";
 		res = new int[2];
 		keyBinding = new int[8];
-		
+
 		loadSettings();
 
 		if(firstTime == true) {
@@ -62,37 +62,41 @@ public class SettingsManager {
 
 		Properties prop = new Properties();
 
+		InputStream in = null;
+
 		try {
+			
+			in = ClassLoader.class.getResourceAsStream(filePath);
 
 			//LOAD FILE
-			prop.load(ClassLoader.class.getResourceAsStream(filePath));
-
-			//GET VALUES
-			firstTime = Boolean.parseBoolean(prop.getProperty("First Time"));
-			splashScreen = Boolean.parseBoolean(prop.getProperty("Enable Splashscreen"));
-
-			res[0] = Integer.parseInt(prop.getProperty("Resoloution (X)"));
-			res[1] = Integer.parseInt(prop.getProperty("Resoloution (Y)"));
-
-			setKeyCode("left", Integer.parseInt(prop.getProperty("Key Binding : Left")));
-			setKeyCode("right", Integer.parseInt(prop.getProperty("Key Binding : Right")));
-			setKeyCode("up", Integer.parseInt(prop.getProperty("Key Binding : Up")));
-			setKeyCode("down", Integer.parseInt(prop.getProperty("Key Binding : Down")));
-			setKeyCode("pause", Integer.parseInt(prop.getProperty("Key Binding : Pause")));
-
-			TextAA = Boolean.parseBoolean(prop.getProperty("Text Antialiasing"));
-			AA = Boolean.parseBoolean(prop.getProperty("Antialiasing"));
-			Dithering = Boolean.parseBoolean(prop.getProperty("Dithering"));
-			HighQuality = Boolean.parseBoolean(prop.getProperty("High Quality Rendering"));
-			AlphaInterpolation = Boolean.parseBoolean(prop.getProperty("Alpha Interpolation"));
-			HighQualityColour = Boolean.parseBoolean(prop.getProperty("High Quality Colour"));
-			textLCDContrast = Integer.parseInt(prop.getProperty("Text LCD Contrast"));
+			prop.load(in);
 			
-			volume = Float.parseFloat(prop.getProperty("Volume")); 
+		} catch (Exception ex) {DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Error in loading properties file - " + ex.getStackTrace());
+		} finally { if (in != null) {try {in.close();} catch (IOException ignored) {}}}
 
-		} catch (IOException io) {
-			io.printStackTrace();
-		}
+
+		//GET VALUES
+		firstTime = Boolean.parseBoolean(prop.getProperty("First Time"));
+		splashScreen = Boolean.parseBoolean(prop.getProperty("Enable Splashscreen"));
+
+		res[0] = Integer.parseInt(prop.getProperty("Resoloution (X)"));
+		res[1] = Integer.parseInt(prop.getProperty("Resoloution (Y)"));
+
+		setKeyCode("left", Integer.parseInt(prop.getProperty("Key Binding : Left")));
+		setKeyCode("right", Integer.parseInt(prop.getProperty("Key Binding : Right")));
+		setKeyCode("up", Integer.parseInt(prop.getProperty("Key Binding : Up")));
+		setKeyCode("down", Integer.parseInt(prop.getProperty("Key Binding : Down")));
+		setKeyCode("pause", Integer.parseInt(prop.getProperty("Key Binding : Pause")));
+
+		TextAA = Boolean.parseBoolean(prop.getProperty("Text Antialiasing"));
+		AA = Boolean.parseBoolean(prop.getProperty("Antialiasing"));
+		Dithering = Boolean.parseBoolean(prop.getProperty("Dithering"));
+		HighQuality = Boolean.parseBoolean(prop.getProperty("High Quality Rendering"));
+		AlphaInterpolation = Boolean.parseBoolean(prop.getProperty("Alpha Interpolation"));
+		HighQualityColour = Boolean.parseBoolean(prop.getProperty("High Quality Colour"));
+		textLCDContrast = Integer.parseInt(prop.getProperty("Text LCD Contrast"));
+
+		volume = Float.parseFloat(prop.getProperty("Volume"));
 
 		System.out.println("... Settings File saved");
 
@@ -130,7 +134,7 @@ public class SettingsManager {
 			prop.setProperty("Alpha Interpolation", Boolean.toString(AlphaInterpolation));
 			prop.setProperty("High Quality Colour", Boolean.toString(HighQualityColour));
 			prop.setProperty("Text LCD Contrast", Integer.toString(textLCDContrast));
-			
+
 			prop.setProperty("Volume", Float.toString(volume));
 
 			//SAVE FILE
@@ -179,7 +183,7 @@ public class SettingsManager {
 		textLCDContrast = 100; 
 
 		volume = 0.0f;
-		
+
 		saveSettings();
 
 	}
@@ -222,7 +226,7 @@ public class SettingsManager {
 
 	public static boolean getSplashScreenEnabled() {return splashScreen;}
 	public static void setSplashScreenEnabled(boolean given) {splashScreen = given;}
-	
+
 	public static float getVolume() {return volume;}
 	public static void setVolume(float givenVolume){volume = givenVolume;}
 

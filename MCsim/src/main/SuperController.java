@@ -232,6 +232,8 @@ public class SuperController {
 	Runnable renderLoop = new Runnable() {
 		public void run() {
 
+			DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Starting Render Loop");
+			
 			while(exit == false) {
 
 				Graphics2D g2d;

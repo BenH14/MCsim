@@ -62,7 +62,7 @@ public class SettingsManager {
 
 		try {
 
-			input = new FileInputStream(filePath);
+			input = new FileInputStream(SettingsManager.getClass().getClassLoader().getResource(filePath));
 
 			//LOAD FILE
 			prop.load(input);

@@ -11,6 +11,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+import logging.DebugFactory;
+import logging.Logger;
+
 public class SettingsManager {	
 
 	//Tells us if the program has been run before
@@ -55,17 +58,14 @@ public class SettingsManager {
 	//Load the settings
 	public static void loadSettings() {
 
-		System.out.println("Trying to load settings File...");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Trying to load settings File...");
 
 		Properties prop = new Properties();
-		InputStream input = null;
 
 		try {
 
-			input = new FileInputStream(SettingsManager.getClass().getClassLoader().getResource(filePath));
-
 			//LOAD FILE
-			prop.load(input);
+			prop.load(ClassLoader.class.getResourceAsStream(filePath));
 
 			//GET VALUES
 			firstTime = Boolean.parseBoolean(prop.getProperty("First Time"));
@@ -92,14 +92,6 @@ public class SettingsManager {
 
 		} catch (IOException io) {
 			io.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException io){
-					io.printStackTrace();
-				}
-			}
 		}
 
 		System.out.println("... Settings File saved");

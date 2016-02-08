@@ -42,7 +42,6 @@ public class Menu {
 
 		try {
 			//Load the image and resize it to the correct size
-//			backgroundImage = ImageIO.read(new File("res/background.png"));
 			backgroundImage = ImageIO.read(this.getClass().getClassLoader().getResource("res/background.png"));
 			backgroundImage.setAccelerationPriority(1);
 			Graphics2D tempResizeG2d = (Graphics2D) backgroundImage.getGraphics();

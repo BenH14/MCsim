@@ -30,7 +30,7 @@ public class SoundManager extends Thread{
 
 		try {
 			//Open Files
-			drums = AudioSystem.getAudioInputStream(new File("res/sound/Ding.wav"));
+			drums = AudioSystem.getAudioInputStream(getClass().getClassLoader().getResourceAsStream("res/sound/Ding.wav"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			

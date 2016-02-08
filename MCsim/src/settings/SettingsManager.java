@@ -65,13 +65,13 @@ public class SettingsManager {
 		InputStream in = null;
 
 		try {
-			
-			in = ClassLoader.class.getResourceAsStream(filePath);
 
+			in = new FileLoader().getStream(filePath);
+			
 			//LOAD FILE
 			prop.load(in);
-			
-		} catch (Exception ex) {DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Error in loading properties file - " + ex.getStackTrace());
+
+		} catch (Exception ex) {DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Error in loading properties file - " + ex.toString());
 		} finally { if (in != null) {try {in.close();} catch (IOException ignored) {}}}
 
 

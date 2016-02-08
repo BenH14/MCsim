@@ -1,2 +1,4 @@
-New Launch at 12:13:49
-<OK>  - 12:13:49 : Trying to load settings File...
+New Launch at 12:16:51
+<OK>  - 12:16:52 : Trying to load settings File...
+<OK>  - 12:16:52 : Starting Main Controller Loop
+<OK>  - 12:16:52 : Starting Render Loop

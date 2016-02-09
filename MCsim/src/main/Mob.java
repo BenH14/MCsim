@@ -48,7 +48,6 @@ public abstract class Mob {
 		tickCount = 0;
 
 		x = spawnPosX;
-
 		y = spawnPosY;
 
 		MOB_DIRECTION = DIRECTION.STILL;	

@@ -84,7 +84,7 @@ public abstract class Mob {
 			textBoxImage = new BufferedImage(300,50, BufferedImage.TYPE_4BYTE_ABGR);
 			Graphics2D g2d = (Graphics2D) textBoxImage.getGraphics();
 			g2d = SettingsManager.setRenderingHints(g2d);
-			g2d.drawImage(ImageIO.read(new File("res/textbox.png")), 0, 0, 300, 50, null);
+			g2d.drawImage(ImageIO.read(this.getClass().getClassLoader().getResource("res/textbox.png")), 0, 0, 300, 50, null);
 		} catch (IOException e) {e.printStackTrace();}
 
 

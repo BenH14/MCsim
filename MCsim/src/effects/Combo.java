@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -36,7 +37,7 @@ public class Combo extends Effect {
 		mainAnim.nextSprite();
 
 		try {
-			AudioInputStream in = AudioSystem.getAudioInputStream(new File("res/sound/EFFECT_COMBO.wav"));
+			AudioInputStream in = AudioSystem.getAudioInputStream(this.getClass().getClassLoader().getResource("res/sound/EFFECT_COMBO.wav"));
 			comboSound = AudioSystem.getClip();
 			comboSound.open(in);
 		} catch (Exception ex) {

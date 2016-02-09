@@ -234,12 +234,11 @@ public abstract class Mob {
 
 		if(textBoxLifetime < 1 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
 
-			ranInt = RanGen.nextInt(10);
+			if (TypeName != "player") {
+				ranInt = RanGen.nextInt(10);
 
-			textBoxLifetime = 120;
+				textBoxLifetime = 120;
 
-
-			if(TypeName == "player") {
 				switch (ranInt) {
 				case 0:
 					textBoxString = "Wheres your coursework?";
@@ -274,8 +273,13 @@ public abstract class Mob {
 				case 10:
 					textBoxString = "Google it, yeah?";
 					break;
-				}
-			} else { //TODO decide on enemy text box contents
+				}				
+			} else { 
+
+				ranInt = RanGen.nextInt(30);
+
+				textBoxLifetime = 120;
+
 				switch (ranInt) {
 				case 0:
 					textBoxString = "I just need to print it off";
@@ -293,23 +297,25 @@ public abstract class Mob {
 					textBoxString = "I am doing it right now";
 					break;
 				case 5:
-					textBoxString = "!";
+					textBoxString = "I have it on my memory stick";
 					break;
 				case 6:
-					textBoxString = "!";
+					textBoxString = "I forgot to send it";
 					break;
 				case 7:
-					textBoxString = "!";
+					textBoxString = "I'll email it tonight";
 					break;
 				case 8:
-					textBoxString = "!";
+					textBoxString = "I thought you said monday";
 					break;
 				case 9:
-					textBoxString = "!";
+					textBoxString = "Did you not get my email?";
 					break;
 				case 10:
-					textBoxString = "!";
+					textBoxString = "I can't get eclipse to work";
 					break;
+				default:
+					textBoxLifetime = 0;
 				}
 			}
 

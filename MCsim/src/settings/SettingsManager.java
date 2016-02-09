@@ -98,14 +98,14 @@ public class SettingsManager {
 
 		volume = Float.parseFloat(prop.getProperty("Volume"));
 
-		System.out.println("... Settings File saved");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("... Settings File loaded");
 
 	}
 
 	//Save the settings
 	public static void saveSettings() {
 
-		System.out.println("Trying to save settings File...");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Trying to save settings File...");
 
 		Properties prop = new Properties();
 		OutputStream output = null;
@@ -152,7 +152,7 @@ public class SettingsManager {
 			}
 		}
 
-		System.out.println("... Settings File saved");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("... Settings File saved");
 
 	}
 
@@ -264,8 +264,7 @@ public class SettingsManager {
 		};		
 
 		if(result == -1) {
-			System.out.println("Improper call for getKeyCode in SettingsManager");
-			System.out.println("Exiting...");
+			DebugFactory.getDebug(Logger.URGENCY.FATAL).write("Improper call for getKeyCode in SettingsManager");
 			System.exit(0);
 		}
 

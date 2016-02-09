@@ -83,7 +83,8 @@ public class SuperController {
 				//Create Mob
 				Mob temp = mobHead.next;
 				if (Shop.staticSpawn) {
-					ranInt = ranGen.nextInt(10);
+					ranInt = ranGen.nextInt(100);
+					ranInt =- 50;
 					mobHead.next = new Enemy(500 + ranInt, 250 + ranInt, (Player) (mobHead));
 				} else {
 					mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
@@ -137,7 +138,9 @@ public class SuperController {
 					tempMob.tick();
 
 					if(tempMob.MOB_DIRECTION == DIRECTION.DYING) {
-						Shop.addGold(50);
+						if(Shop.deadlines == true) {Shop.addGold(50);
+						} else {Shop.addGold(75);}
+						
 						tempMob.prev.next = tempMob.next;
 						if(tempMob.next != null) {
 							tempMob.next.prev = tempMob.prev;

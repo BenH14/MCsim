@@ -232,7 +232,7 @@ public abstract class Mob {
 
 		if(textBoxLifetime < 1 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
 
-			if (TypeName != "player") {
+			if (TypeName == "player") {
 				ranInt = RanGen.nextInt(10);
 
 				textBoxLifetime = 120;

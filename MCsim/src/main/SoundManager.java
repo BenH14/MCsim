@@ -16,7 +16,7 @@ public class SoundManager extends Thread{
 
 	private boolean stop;
 
-	private AudioInputStream drums;
+	private AudioInputStream mainSound;
 
 	private Clip mainSoundtrack;
 	private Pulse pulser;
@@ -29,7 +29,7 @@ public class SoundManager extends Thread{
 
 		try {
 			//Open Files
-			drums = AudioSystem.getAudioInputStream(getClass().getClassLoader().getResourceAsStream("res/sound/Ding.wav"));
+//			mainSound = AudioSystem.getAudioInputStream(getClass().getClassLoader().getResourceAsStream("res/sound/Ding.wav"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			
@@ -62,7 +62,7 @@ public class SoundManager extends Thread{
 
 		try {
 			mainSoundtrack = AudioSystem.getClip();
-			mainSoundtrack.open(drums);
+			mainSoundtrack.open(mainSound);
 		} catch (LineUnavailableException | IOException e) {
 			e.printStackTrace();
 		}

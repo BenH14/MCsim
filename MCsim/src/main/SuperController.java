@@ -227,7 +227,7 @@ public class SuperController {
 		}
 
 		//EXIT GAME
-		System.out.println("Goodbye!");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Goodbye!");
 		System.exit(0);
 
 	}

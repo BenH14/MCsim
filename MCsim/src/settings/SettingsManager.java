@@ -1,14 +1,16 @@
 package settings;
 
+import java.awt.AWTError;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import logging.DebugFactory;
@@ -49,8 +51,9 @@ public class SettingsManager {
 		loadSettings();
 
 		if(firstTime == true) {
-			System.out.println("FIRST TIME SETUP");
+			DebugFactory.getDebug(Logger.URGENCY.STATUS).write("First Time Detected, using default settings");
 			restoreDefaultSettings();
+			loadSettings();
 		}
 
 	}
@@ -66,12 +69,15 @@ public class SettingsManager {
 
 		try {
 
-			in = new FileLoader().getStream(filePath);
-			
+			in = new FileLoader().getInStream(filePath);
+
 			//LOAD FILE
 			prop.load(in);
 
-		} catch (Exception ex) {DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Error in loading properties file - " + ex.toString());
+		} catch (Exception ex) {
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Error in loading properties file - " + ex.toString());
+			DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Assuming no properties file exists, restoring default settings");
+			restoreDefaultSettings();
 		} finally { if (in != null) {try {in.close();} catch (IOException ignored) {}}}
 
 
@@ -112,7 +118,7 @@ public class SettingsManager {
 
 		try {
 
-			output = new FileOutputStream(filePath);
+			output = new FileLoader().getOutStream(filePath);
 
 			//SET VALUES
 			prop.setProperty("First Time", Boolean.toString(firstTime));
@@ -140,8 +146,8 @@ public class SettingsManager {
 			//SAVE FILE
 			prop.store(output, null);
 
-		} catch (IOException io) {
-			io.printStackTrace();
+		} catch (IOException | URISyntaxException io) {
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Error in saving properties file - " + io.toString());
 		} finally {
 			if (output != null) {
 				try {
@@ -163,9 +169,18 @@ public class SettingsManager {
 		splashScreen = true;
 
 		//Get the default size of the primary monitor, not using toolkit as that messes up multi-monitor setups
+		try {
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		res[0] = gd.getDisplayMode().getWidth();
+		System.out.println(res[0]);
 		res[1] = gd.getDisplayMode().getHeight();
+		System.out.println(res[1]);
+		} catch (AWTError fuckxorg) {
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Cannot connect to xorg server - " + fuckxorg.toString());
+			System.out.println("IMPORTANT - We cannot seem to connect to the Graphics Device, please set your resoloution manually in the config.properties file");
+			res[0] = 3200;
+			res[1] = 1600;
+		}
 
 		//Default Bindings are WAD for Jump/Left/Right respectively, spacebar is primary attack, ctrl for secondary attack, placeblock as q, pause as esc
 		setKeyCode("left", 37);

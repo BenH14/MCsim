@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import logging.DebugFactory;
+import logging.Logger;
 import settings.SettingsManager;
 
 public class Shop {
@@ -32,7 +34,7 @@ public class Shop {
 		try {
 			readFile();
 		} catch (Exception ex) {
-			System.out.println("No data for progression!");
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("No data for progression!");
 
 			//Set default values:
 			resetValues();
@@ -149,7 +151,7 @@ public class Shop {
 		g2d.setColor(Color.YELLOW);
 		g2d.fillRoundRect(SettingsManager.getResX() - (refLoc[0]+300), (int) scaleFactor[1] * 140, 280, 40, 10, 10);
 		g2d.setColor(Color.WHITE);
-		g2d.drawString("Money: £" + gold,SettingsManager.getResX() - (refLoc[0]+280) ,(int) (scaleFactor[1] * 140) + 30);
+		g2d.drawString("Money: " + gold,SettingsManager.getResX() - (refLoc[0]+280) ,(int) (scaleFactor[1] * 140) + 30);
 
 		return g2d;
 	}

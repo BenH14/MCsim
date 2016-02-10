@@ -51,7 +51,7 @@ public class SuperController {
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainWindow.setSize(SettingsManager.getResX(), SettingsManager.getResY());
 		mainWindow.setLocationRelativeTo(null);
-		mainWindow.setUndecorated(true);
+		mainWindow.setUndecorated(SettingsManager.getUndecorated());
 
 		mainWindow.setVisible(true);
 

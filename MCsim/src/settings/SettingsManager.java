@@ -30,6 +30,7 @@ public class SettingsManager {
 	static boolean HighQuality;
 	static boolean AlphaInterpolation;
 	static boolean HighQualityColour;
+	static boolean Undecorated;
 	static int textLCDContrast;
 
 	static float volume;
@@ -100,6 +101,7 @@ public class SettingsManager {
 		HighQuality = Boolean.parseBoolean(prop.getProperty("High Quality Rendering"));
 		AlphaInterpolation = Boolean.parseBoolean(prop.getProperty("Alpha Interpolation"));
 		HighQualityColour = Boolean.parseBoolean(prop.getProperty("High Quality Colour"));
+		Undecorated = Boolean.parseBoolean(prop.getProperty("Undecorated"));
 		textLCDContrast = Integer.parseInt(prop.getProperty("Text LCD Contrast"));
 
 		volume = Float.parseFloat(prop.getProperty("Volume"));
@@ -139,6 +141,7 @@ public class SettingsManager {
 			prop.setProperty("High Quality Rendering", Boolean.toString(HighQuality));
 			prop.setProperty("Alpha Interpolation", Boolean.toString(AlphaInterpolation));
 			prop.setProperty("High Quality Colour", Boolean.toString(HighQualityColour));
+			prop.setProperty("Undecorated", Boolean.toString(Undecorated));
 			prop.setProperty("Text LCD Contrast", Integer.toString(textLCDContrast));
 
 			prop.setProperty("Volume", Float.toString(volume));
@@ -178,8 +181,8 @@ public class SettingsManager {
 		} catch (AWTError fuckxorg) {
 			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Cannot connect to xorg server - " + fuckxorg.toString());
 			System.out.println("IMPORTANT - We cannot seem to connect to the Graphics Device, please set your resoloution manually in the config.properties file");
-			res[0] = 3200;
-			res[1] = 1600;
+			res[0] = 1366;
+			res[1] = 768;
 		}
 
 		//Default Bindings are WAD for Jump/Left/Right respectively, spacebar is primary attack, ctrl for secondary attack, placeblock as q, pause as esc
@@ -195,6 +198,7 @@ public class SettingsManager {
 		HighQuality = true;
 		AlphaInterpolation = true;
 		HighQualityColour = true;
+		Undecorated = true;
 		textLCDContrast = 100; 
 
 		volume = 0.0f;
@@ -234,6 +238,9 @@ public class SettingsManager {
 
 		return g2d;
 	}
+	
+	public static boolean getUndecorated() {return Undecorated;}
+	public static void setUndecorated(boolean given) {Undecorated = given;}
 
 	//========================
 	//OTHER SETTINGS

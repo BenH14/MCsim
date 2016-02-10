@@ -67,8 +67,6 @@ public class Shop {
 	private static void updateGameLength() {
 
 		gameLengthVal = 30 + (gameLength * 15);
-		System.out.println(gameLength);
-		System.out.println(gameLengthVal);
 
 	}
 

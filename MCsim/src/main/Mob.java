@@ -37,6 +37,7 @@ public abstract class Mob {
 
 	//IDENTIFICATION
 	protected MOB_TYPE TYPE;
+	protected String mobName;
 
 	//UTIL
 	protected Random RanGen;
@@ -60,6 +61,8 @@ public abstract class Mob {
 
 		scaleFactor[0] = SettingsManager.getResX() / 1000.0;
 		scaleFactor[1] = SettingsManager.getResY() / 500.0;
+		
+		mobName = TYPE.getName();
 
 	}
 

@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Random;
+
 public enum MOB_TYPE {
 
 	PLAYER(new String[]{
@@ -48,8 +50,20 @@ public enum MOB_TYPE {
 					"Tony"					
 	});
 
-	private MOB_TYPE(String phrases[], String Names[]) {
+	private String phrases[];
+	private String names[];
 
+	private MOB_TYPE(String givenPhrases[], String givenNames[]) {
+		phrases = givenPhrases;
+		names = givenNames;
+	}
+	
+	public String getPhrase() {
+		return phrases[new Random().nextInt(phrases.length)];
+	}
+	
+	public String getName() {
+		return names[new Random().nextInt(names.length)];
 	}
 
 }

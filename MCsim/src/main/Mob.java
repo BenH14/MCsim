@@ -36,13 +36,13 @@ public abstract class Mob {
 	public Mob prev;
 
 	//IDENTIFICATION
-	protected String TypeName;
+	protected MOB_TYPE TYPE;
 
 	//UTIL
 	protected Random RanGen;
 	protected int tickCount;
 
-	public Mob(int spawnPosX, int spawnPosY, String GivenTypeName) {
+	public Mob(int spawnPosX, int spawnPosY, MOB_TYPE GIVEN_TYPE) {
 
 		RanGen = new Random();
 		tickCount = 0;
@@ -52,7 +52,7 @@ public abstract class Mob {
 
 		MOB_DIRECTION = DIRECTION.STILL;	
 
-		TypeName = GivenTypeName;
+		TYPE = GIVEN_TYPE;
 
 		loadAssets();
 
@@ -69,14 +69,14 @@ public abstract class Mob {
 
 		//DIRECTIONS
 		//Still doesn't need an asset as the last used one will be kept
-		Animators[0] = new Animator(TypeName + "/NORTH.png"); //NORTH
-		Animators[1] = new Animator(TypeName + "/NORTH_EAST.png"); //NORTH_EAST
-		Animators[2] = new Animator(TypeName + "/EAST.png"); //EAST
-		Animators[3] = new Animator(TypeName + "/SOUTH_EAST.png"); //SOUTH_EAST
-		Animators[4] = new Animator(TypeName + "/SOUTH.png"); //SOUTH
-		Animators[5] = new Animator(TypeName + "/SOUTH_WEST.png"); //SOUTH_WEST
-		Animators[6] = new Animator(TypeName + "/WEST.png"); //WEST
-		Animators[7] = new Animator(TypeName + "/NORTH_WEST.png"); //NORTH_WEST
+		Animators[0] = new Animator(TYPE.toString() + "/NORTH.png"); //NORTH
+		Animators[1] = new Animator(TYPE.toString() + "/NORTH_EAST.png"); //NORTH_EAST
+		Animators[2] = new Animator(TYPE.toString() + "/EAST.png"); //EAST
+		Animators[3] = new Animator(TYPE.toString() + "/SOUTH_EAST.png"); //SOUTH_EAST
+		Animators[4] = new Animator(TYPE.toString() + "/SOUTH.png"); //SOUTH
+		Animators[5] = new Animator(TYPE.toString() + "/SOUTH_WEST.png"); //SOUTH_WEST
+		Animators[6] = new Animator(TYPE.toString() + "/WEST.png"); //WEST
+		Animators[7] = new Animator(TYPE.toString() + "/NORTH_WEST.png"); //NORTH_WEST
 
 		//TEXT BOX
 		try {
@@ -232,92 +232,11 @@ public abstract class Mob {
 
 		if(textBoxLifetime < 1 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
 
-			if (TypeName == "player") {
-				ranInt = RanGen.nextInt(10);
-
-				textBoxLifetime = 120;
-
-				switch (ranInt) {
-				case 0:
-					textBoxString = "Wheres your coursework?";
-					break;
-				case 1:
-					textBoxString = "Jamie that breaks the chairs, yeah?";
-					break;
-				case 2:
-					textBoxString = "Ben, I don't want to hear any more from you";
-					break;
-				case 3:
-					textBoxString = "Need it by the end of the week, monday at the latest";
-					break;
-				case 4:
-					textBoxString = "We don't need a running commentary";
-					break;
-				case 5:
-					textBoxString = "Lets not waste any more time, yeah?";
-					break;
-				case 6:
-					textBoxString = "Ahad, wheres your extended essay?";
-					break;
-				case 7:
-					textBoxString = "Correct format is 120% of the marks";
-					break;
-				case 8:
-					textBoxString = "Hindolo, this isn't a maths lesson";
-					break;
-				case 9:
-					textBoxString = "Just do it";
-					break;
-				case 10:
-					textBoxString = "Google it, yeah?";
-					break;
-				}				
-			} else { 
-
-				ranInt = RanGen.nextInt(30);
-
-				textBoxLifetime = 120;
-
-				switch (ranInt) {
-				case 0:
-					textBoxString = "I just need to print it off";
-					break;
-				case 1:
-					textBoxString = "Its on my computer at home";
-					break;
-				case 2:
-					textBoxString = "My printer is broken";
-					break;
-				case 3:
-					textBoxString = "The program is done, I just need to do the documentation";
-					break;
-				case 4:
-					textBoxString = "I am doing it right now";
-					break;
-				case 5:
-					textBoxString = "I have it on my memory stick";
-					break;
-				case 6:
-					textBoxString = "I forgot to send it";
-					break;
-				case 7:
-					textBoxString = "I'll email it tonight";
-					break;
-				case 8:
-					textBoxString = "I thought you said monday";
-					break;
-				case 9:
-					textBoxString = "Did you not get my email?";
-					break;
-				case 10:
-					textBoxString = "I can't get eclipse to work";
-					break;
-				default:
-					textBoxLifetime = 0;
-				}
-			}
+			textBoxString = TYPE.getPhrase();
+			if (textBoxString != null) {textBoxLifetime = 120;}
 
 		}
+
 	}
 
 	//This should get the direction of the mob, set the asset and set up textboxes

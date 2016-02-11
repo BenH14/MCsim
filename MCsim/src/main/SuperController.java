@@ -114,7 +114,7 @@ public class SuperController {
 
 		sound = new SoundManager();
 		sound.setPriority(5);
-		
+
 		mainMenu.addSound(sound);
 
 		while(exit == false) {
@@ -140,7 +140,7 @@ public class SuperController {
 					if(tempMob.MOB_DIRECTION == DIRECTION.DYING) {
 						if(Shop.deadlines == true) {Shop.addGold(50);
 						} else {Shop.addGold(75);}
-						
+
 						tempMob.prev.next = tempMob.next;
 						if(tempMob.next != null) {
 							tempMob.next.prev = tempMob.prev;
@@ -162,7 +162,7 @@ public class SuperController {
 			} else {
 
 				sound.stopLoop();
-				
+
 				try {
 					sound.join();
 				} catch (InterruptedException e) {
@@ -177,15 +177,15 @@ public class SuperController {
 				if(mainMenu.startGame) {
 
 					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Starting Game");
-					
+
 					try {
-					sound.start();
+						sound.start();
 					} catch (IllegalThreadStateException ex) {
 						sound = new SoundManager();
 						sound.setPriority(5);
 						sound.start();
 					}
-					
+
 					stats = new StatisticsContainer();
 					EffectManager.addEffect(new Combo(sound));
 					ui = new HUD(stats);
@@ -198,7 +198,7 @@ public class SuperController {
 					doSpawning(true);
 
 					pause = false;
-					
+
 					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Game Started");
 
 				}
@@ -236,7 +236,7 @@ public class SuperController {
 		public void run() {
 
 			DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Starting Render Loop");
-			
+
 			while(exit == false) {
 
 				Graphics2D g2d;
@@ -253,8 +253,10 @@ public class SuperController {
 						//Set rendering hints
 						g2d = SettingsManager.setRenderingHints(g2d);
 
-						g2d.setColor(Color.GRAY);
-						g2d.fillRect(0, 0, SettingsManager.getResX(), SettingsManager.getResY());
+						if(pause == false) {
+							g2d.setColor(Color.getHSBColor((float) (stats.gameTime / 1000.0), 1, 0.5f));
+							g2d.fillRect(0, 0, SettingsManager.getResX(), SettingsManager.getResY());
+						}
 
 						if(pause == false) {
 

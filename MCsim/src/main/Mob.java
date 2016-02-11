@@ -36,24 +36,24 @@ public abstract class Mob {
 	public Mob prev;
 
 	//IDENTIFICATION
-	protected String TypeName;
+	protected MOB_TYPE TYPE;
+	protected String mobName;
 
 	//UTIL
 	protected Random RanGen;
 	protected int tickCount;
 
-	public Mob(int spawnPosX, int spawnPosY, String GivenTypeName) {
+	public Mob(int spawnPosX, int spawnPosY, MOB_TYPE GIVEN_TYPE) {
 
 		RanGen = new Random();
 		tickCount = 0;
 
 		x = spawnPosX;
-
 		y = spawnPosY;
 
 		MOB_DIRECTION = DIRECTION.STILL;	
 
-		TypeName = GivenTypeName;
+		TYPE = GIVEN_TYPE;
 
 		loadAssets();
 
@@ -61,6 +61,8 @@ public abstract class Mob {
 
 		scaleFactor[0] = SettingsManager.getResX() / 1000.0;
 		scaleFactor[1] = SettingsManager.getResY() / 500.0;
+		
+		mobName = TYPE.getName();
 
 	}
 
@@ -70,21 +72,21 @@ public abstract class Mob {
 
 		//DIRECTIONS
 		//Still doesn't need an asset as the last used one will be kept
-		Animators[0] = new Animator(TypeName + "/NORTH.png"); //NORTH
-		Animators[1] = new Animator(TypeName + "/NORTH_EAST.png"); //NORTH_EAST
-		Animators[2] = new Animator(TypeName + "/EAST.png"); //EAST
-		Animators[3] = new Animator(TypeName + "/SOUTH_EAST.png"); //SOUTH_EAST
-		Animators[4] = new Animator(TypeName + "/SOUTH.png"); //SOUTH
-		Animators[5] = new Animator(TypeName + "/SOUTH_WEST.png"); //SOUTH_WEST
-		Animators[6] = new Animator(TypeName + "/WEST.png"); //WEST
-		Animators[7] = new Animator(TypeName + "/NORTH_WEST.png"); //NORTH_WEST
+		Animators[0] = new Animator(TYPE.toString() + "/NORTH.png"); //NORTH
+		Animators[1] = new Animator(TYPE.toString() + "/NORTH_EAST.png"); //NORTH_EAST
+		Animators[2] = new Animator(TYPE.toString() + "/EAST.png"); //EAST
+		Animators[3] = new Animator(TYPE.toString() + "/SOUTH_EAST.png"); //SOUTH_EAST
+		Animators[4] = new Animator(TYPE.toString() + "/SOUTH.png"); //SOUTH
+		Animators[5] = new Animator(TYPE.toString() + "/SOUTH_WEST.png"); //SOUTH_WEST
+		Animators[6] = new Animator(TYPE.toString() + "/WEST.png"); //WEST
+		Animators[7] = new Animator(TYPE.toString() + "/NORTH_WEST.png"); //NORTH_WEST
 
 		//TEXT BOX
 		try {
 			textBoxImage = new BufferedImage(300,50, BufferedImage.TYPE_4BYTE_ABGR);
 			Graphics2D g2d = (Graphics2D) textBoxImage.getGraphics();
 			g2d = SettingsManager.setRenderingHints(g2d);
-			g2d.drawImage(ImageIO.read(new File("res/textbox.png")), 0, 0, 300, 50, null);
+			g2d.drawImage(ImageIO.read(this.getClass().getClassLoader().getResource("res/textbox.png")), 0, 0, 300, 50, null);
 		} catch (IOException e) {e.printStackTrace();}
 
 
@@ -139,12 +141,11 @@ public abstract class Mob {
 		//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
 		g2d.setColor(Color.WHITE);
 		g2d.drawRect((int) (x * scaleFactor[0]),(int) (y * scaleFactor[1]), 20, 20);
-		g2d.drawString(MOB_DIRECTION.toString(),(int) (x * scaleFactor[0]),(int) (y * scaleFactor[1]));
+		g2d.drawString(mobName,(int) (x * scaleFactor[0]) + 10 - (int) (g2d.getFontMetrics().stringWidth(mobName) / 2.0) ,(int) (y * scaleFactor[1]) + 35);
 		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
 		if(textBoxLifetime != 0) {
 			g2d.setColor(Color.WHITE);
-			//			g2d.fillRect((int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) + 20 ,(int) (300 * scaleFactor[0]) ,(int) (20 * scaleFactor[0]));
 			g2d.drawImage(textBoxImage,(int) (x * scaleFactor[0]) +  20,(int) (y * scaleFactor[1]) - 60, null);
 			g2d.setColor(Color.BLACK);
 			int size = 12;
@@ -235,86 +236,11 @@ public abstract class Mob {
 
 		if(textBoxLifetime < 1 && ranInt == 69) { //LE DANK MEMES XDDDDDDD
 
-			ranInt = RanGen.nextInt(10);
-
-			textBoxLifetime = 120;
-
-
-			if(TypeName == "player") {
-				switch (ranInt) {
-				case 0:
-					textBoxString = "Wheres your coursework?";
-					break;
-				case 1:
-					textBoxString = "Jamie that breaks the chairs, yeah?";
-					break;
-				case 2:
-					textBoxString = "Ben, I don't want to hear any more from you";
-					break;
-				case 3:
-					textBoxString = "Need it by the end of the week, monday at the latest";
-					break;
-				case 4:
-					textBoxString = "We don't need a running commentary";
-					break;
-				case 5:
-					textBoxString = "Lets not waste any more time, yeah?";
-					break;
-				case 6:
-					textBoxString = "Ahad, wheres your extended essay?";
-					break;
-				case 7:
-					textBoxString = "Correct format is 120% of the marks";
-					break;
-				case 8:
-					textBoxString = "Hindolo, this isn't a maths lesson";
-					break;
-				case 9:
-					textBoxString = "Just do it";
-					break;
-				case 10:
-					textBoxString = "Google it, yeah?";
-					break;
-				}
-			} else { //TODO decide on enemy text box contents
-				switch (ranInt) {
-				case 0:
-					textBoxString = "I just need to print it off";
-					break;
-				case 1:
-					textBoxString = "Its on my computer at home";
-					break;
-				case 2:
-					textBoxString = "My printer is broken";
-					break;
-				case 3:
-					textBoxString = "The program is done, I just need to do the documentation";
-					break;
-				case 4:
-					textBoxString = "I am doing it right now";
-					break;
-				case 5:
-					textBoxString = "!";
-					break;
-				case 6:
-					textBoxString = "!";
-					break;
-				case 7:
-					textBoxString = "!";
-					break;
-				case 8:
-					textBoxString = "!";
-					break;
-				case 9:
-					textBoxString = "!";
-					break;
-				case 10:
-					textBoxString = "!";
-					break;
-				}
-			}
+			textBoxString = TYPE.getPhrase();
+			if (textBoxString != null) {textBoxLifetime = 120;}
 
 		}
+
 	}
 
 	//This should get the direction of the mob, set the asset and set up textboxes

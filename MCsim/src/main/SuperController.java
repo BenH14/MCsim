@@ -13,6 +13,8 @@ import display.HUD;
 import display.Window;
 import effects.Combo;
 import effects.EffectManager;
+import logging.DebugFactory;
+import logging.Logger;
 import settings.SettingsManager;
 
 public class SuperController {
@@ -49,7 +51,7 @@ public class SuperController {
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainWindow.setSize(SettingsManager.getResX(), SettingsManager.getResY());
 		mainWindow.setLocationRelativeTo(null);
-		mainWindow.setUndecorated(true);
+		mainWindow.setUndecorated(SettingsManager.getUndecorated());
 
 		mainWindow.setVisible(true);
 
@@ -81,7 +83,8 @@ public class SuperController {
 				//Create Mob
 				Mob temp = mobHead.next;
 				if (Shop.staticSpawn) {
-					ranInt = ranGen.nextInt(10);
+					ranInt = ranGen.nextInt(100);
+					ranInt =- 50;
 					mobHead.next = new Enemy(500 + ranInt, 250 + ranInt, (Player) (mobHead));
 				} else {
 					mobHead.next = new Enemy(ranInt, ranGen.nextInt(500), (Player) (mobHead));
@@ -124,6 +127,7 @@ public class SuperController {
 
 
 				if(mainKey.exit == true){
+					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Pausing Game");
 					pause = true;
 					mainMenu.startGame = false;
 				}
@@ -134,7 +138,9 @@ public class SuperController {
 					tempMob.tick();
 
 					if(tempMob.MOB_DIRECTION == DIRECTION.DYING) {
-						Shop.addGold(50);
+						if(Shop.deadlines == true) {Shop.addGold(50);
+						} else {Shop.addGold(75);}
+						
 						tempMob.prev.next = tempMob.next;
 						if(tempMob.next != null) {
 							tempMob.next.prev = tempMob.prev;
@@ -161,6 +167,7 @@ public class SuperController {
 					sound.join();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					DebugFactory.getDebug(Logger.URGENCY.FATAL).write("SOUND THREAD - " + e.getMessage());
 				}
 
 				mainMenu.tick();
@@ -169,6 +176,8 @@ public class SuperController {
 
 				if(mainMenu.startGame) {
 
+					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Starting Game");
+					
 					try {
 					sound.start();
 					} catch (IllegalThreadStateException ex) {
@@ -189,6 +198,8 @@ public class SuperController {
 					doSpawning(true);
 
 					pause = false;
+					
+					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Game Started");
 
 				}
 			}
@@ -216,7 +227,7 @@ public class SuperController {
 		}
 
 		//EXIT GAME
-		System.out.println("Goodbye!");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Goodbye!");
 		System.exit(0);
 
 	}
@@ -224,6 +235,8 @@ public class SuperController {
 	Runnable renderLoop = new Runnable() {
 		public void run() {
 
+			DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Starting Render Loop");
+			
 			while(exit == false) {
 
 				Graphics2D g2d;

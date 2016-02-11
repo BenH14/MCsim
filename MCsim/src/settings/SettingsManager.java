@@ -1,15 +1,20 @@
 package settings;
 
+import java.awt.AWTError;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.Properties;
+
+import logging.DebugFactory;
+import logging.Logger;
 
 public class SettingsManager {	
 
@@ -25,10 +30,11 @@ public class SettingsManager {
 	static boolean HighQuality;
 	static boolean AlphaInterpolation;
 	static boolean HighQualityColour;
+	static boolean Undecorated;
 	static int textLCDContrast;
 
 	static float volume;
-	
+
 	//Variables to store the state of each setting
 	static int res[];
 	static int keyBinding[];
@@ -42,12 +48,13 @@ public class SettingsManager {
 		filePath = "config.properties";
 		res = new int[2];
 		keyBinding = new int[8];
-		
+
 		loadSettings();
 
 		if(firstTime == true) {
-			System.out.println("FIRST TIME SETUP");
+			DebugFactory.getDebug(Logger.URGENCY.STATUS).write("First Time Detected, using default settings");
 			restoreDefaultSettings();
+			loadSettings();
 		}
 
 	}
@@ -55,68 +62,65 @@ public class SettingsManager {
 	//Load the settings
 	public static void loadSettings() {
 
-		System.out.println("Trying to load settings File...");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Trying to load settings File...");
 
 		Properties prop = new Properties();
-		InputStream input = null;
+
+		InputStream in = null;
 
 		try {
 
-			input = new FileInputStream(filePath);
+			in = new FileLoader().getInStream(filePath);
 
 			//LOAD FILE
-			prop.load(input);
+			prop.load(in);
 
-			//GET VALUES
-			firstTime = Boolean.parseBoolean(prop.getProperty("First Time"));
-			splashScreen = Boolean.parseBoolean(prop.getProperty("Enable Splashscreen"));
+		} catch (Exception ex) {
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Error in loading properties file - " + ex.toString());
+			DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Assuming no properties file exists, restoring default settings");
+			restoreDefaultSettings();
+		} finally { if (in != null) {try {in.close();} catch (IOException ignored) {}}}
 
-			res[0] = Integer.parseInt(prop.getProperty("Resoloution (X)"));
-			res[1] = Integer.parseInt(prop.getProperty("Resoloution (Y)"));
 
-			setKeyCode("left", Integer.parseInt(prop.getProperty("Key Binding : Left")));
-			setKeyCode("right", Integer.parseInt(prop.getProperty("Key Binding : Right")));
-			setKeyCode("up", Integer.parseInt(prop.getProperty("Key Binding : Up")));
-			setKeyCode("down", Integer.parseInt(prop.getProperty("Key Binding : Down")));
-			setKeyCode("pause", Integer.parseInt(prop.getProperty("Key Binding : Pause")));
+		//GET VALUES
+		firstTime = Boolean.parseBoolean(prop.getProperty("First Time"));
+		splashScreen = Boolean.parseBoolean(prop.getProperty("Enable Splashscreen"));
 
-			TextAA = Boolean.parseBoolean(prop.getProperty("Text Antialiasing"));
-			AA = Boolean.parseBoolean(prop.getProperty("Antialiasing"));
-			Dithering = Boolean.parseBoolean(prop.getProperty("Dithering"));
-			HighQuality = Boolean.parseBoolean(prop.getProperty("High Quality Rendering"));
-			AlphaInterpolation = Boolean.parseBoolean(prop.getProperty("Alpha Interpolation"));
-			HighQualityColour = Boolean.parseBoolean(prop.getProperty("High Quality Colour"));
-			textLCDContrast = Integer.parseInt(prop.getProperty("Text LCD Contrast"));
-			
-			volume = Float.parseFloat(prop.getProperty("Volume")); 
+		res[0] = Integer.parseInt(prop.getProperty("Resoloution (X)"));
+		res[1] = Integer.parseInt(prop.getProperty("Resoloution (Y)"));
 
-		} catch (IOException io) {
-			io.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException io){
-					io.printStackTrace();
-				}
-			}
-		}
+		setKeyCode("left", Integer.parseInt(prop.getProperty("Key Binding : Left")));
+		setKeyCode("right", Integer.parseInt(prop.getProperty("Key Binding : Right")));
+		setKeyCode("up", Integer.parseInt(prop.getProperty("Key Binding : Up")));
+		setKeyCode("down", Integer.parseInt(prop.getProperty("Key Binding : Down")));
+		setKeyCode("pause", Integer.parseInt(prop.getProperty("Key Binding : Pause")));
 
-		System.out.println("... Settings File saved");
+		TextAA = Boolean.parseBoolean(prop.getProperty("Text Antialiasing"));
+		AA = Boolean.parseBoolean(prop.getProperty("Antialiasing"));
+		Dithering = Boolean.parseBoolean(prop.getProperty("Dithering"));
+		HighQuality = Boolean.parseBoolean(prop.getProperty("High Quality Rendering"));
+		AlphaInterpolation = Boolean.parseBoolean(prop.getProperty("Alpha Interpolation"));
+		HighQualityColour = Boolean.parseBoolean(prop.getProperty("High Quality Colour"));
+		Undecorated = Boolean.parseBoolean(prop.getProperty("Undecorated"));
+		textLCDContrast = Integer.parseInt(prop.getProperty("Text LCD Contrast"));
+
+		volume = Float.parseFloat(prop.getProperty("Volume"));
+
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("... Settings File loaded");
 
 	}
 
 	//Save the settings
 	public static void saveSettings() {
 
-		System.out.println("Trying to save settings File...");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Trying to save settings File...");
 
 		Properties prop = new Properties();
 		OutputStream output = null;
 
 		try {
 
-			output = new FileOutputStream(filePath);
+			output = new FileLoader().getOutStream(filePath);
 
 			//SET VALUES
 			prop.setProperty("First Time", Boolean.toString(firstTime));
@@ -137,15 +141,16 @@ public class SettingsManager {
 			prop.setProperty("High Quality Rendering", Boolean.toString(HighQuality));
 			prop.setProperty("Alpha Interpolation", Boolean.toString(AlphaInterpolation));
 			prop.setProperty("High Quality Colour", Boolean.toString(HighQualityColour));
+			prop.setProperty("Undecorated", Boolean.toString(Undecorated));
 			prop.setProperty("Text LCD Contrast", Integer.toString(textLCDContrast));
-			
+
 			prop.setProperty("Volume", Float.toString(volume));
 
 			//SAVE FILE
 			prop.store(output, null);
 
-		} catch (IOException io) {
-			io.printStackTrace();
+		} catch (IOException | URISyntaxException io) {
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Error in saving properties file - " + io.toString());
 		} finally {
 			if (output != null) {
 				try {
@@ -156,7 +161,7 @@ public class SettingsManager {
 			}
 		}
 
-		System.out.println("... Settings File saved");
+		DebugFactory.getDebug(Logger.URGENCY.STATUS).write("... Settings File saved");
 
 	}
 
@@ -167,9 +172,18 @@ public class SettingsManager {
 		splashScreen = true;
 
 		//Get the default size of the primary monitor, not using toolkit as that messes up multi-monitor setups
+		try {
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		res[0] = gd.getDisplayMode().getWidth();
+		System.out.println(res[0]);
 		res[1] = gd.getDisplayMode().getHeight();
+		System.out.println(res[1]);
+		} catch (AWTError fuckxorg) {
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Cannot connect to xorg server - " + fuckxorg.toString());
+			System.out.println("IMPORTANT - We cannot seem to connect to the Graphics Device, please set your resoloution manually in the config.properties file");
+			res[0] = 1366;
+			res[1] = 768;
+		}
 
 		//Default Bindings are WAD for Jump/Left/Right respectively, spacebar is primary attack, ctrl for secondary attack, placeblock as q, pause as esc
 		setKeyCode("left", 37);
@@ -184,10 +198,11 @@ public class SettingsManager {
 		HighQuality = true;
 		AlphaInterpolation = true;
 		HighQualityColour = true;
+		Undecorated = true;
 		textLCDContrast = 100; 
 
 		volume = 0.0f;
-		
+
 		saveSettings();
 
 	}
@@ -223,6 +238,9 @@ public class SettingsManager {
 
 		return g2d;
 	}
+	
+	public static boolean getUndecorated() {return Undecorated;}
+	public static void setUndecorated(boolean given) {Undecorated = given;}
 
 	//========================
 	//OTHER SETTINGS
@@ -230,7 +248,7 @@ public class SettingsManager {
 
 	public static boolean getSplashScreenEnabled() {return splashScreen;}
 	public static void setSplashScreenEnabled(boolean given) {splashScreen = given;}
-	
+
 	public static float getVolume() {return volume;}
 	public static void setVolume(float givenVolume){volume = givenVolume;}
 
@@ -268,8 +286,7 @@ public class SettingsManager {
 		};		
 
 		if(result == -1) {
-			System.out.println("Improper call for getKeyCode in SettingsManager");
-			System.out.println("Exiting...");
+			DebugFactory.getDebug(Logger.URGENCY.FATAL).write("Improper call for getKeyCode in SettingsManager");
 			System.exit(0);
 		}
 

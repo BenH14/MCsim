@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -27,16 +28,16 @@ public class Combo extends Effect {
 
 	public Combo(SoundManager givenSM) {
 		super(1);
-		
+
 		sm = givenSM;
-		
+
 		mainAnim = new Animator("ANIM_COMBO.png", 200, 60);
 		numAnim = new Animator("ANIM_COMBO_NUM.png", 70, 60);
 		tickCount = 0;
 		mainAnim.nextSprite();
 
 		try {
-			AudioInputStream in = AudioSystem.getAudioInputStream(new File("res/sound/EFFECT_COMBO.wav"));
+			AudioInputStream in = AudioSystem.getAudioInputStream(this.getClass().getClassLoader().getResource("res/sound/EFFECT_COMBO.wav"));
 			comboSound = AudioSystem.getClip();
 			comboSound.open(in);
 		} catch (Exception ex) {
@@ -56,10 +57,10 @@ public class Combo extends Effect {
 		if(tickCount % 10 == 0) {
 			mainAnim.nextSprite();
 		}
-		
+
 		if(killCount > 2) {
 			if(killCount < 7) {
-			numAnim.setStage(killCount - 2);
+				numAnim.setStage(killCount - 2);
 			} else {
 				numAnim.setStage(5);
 			}
@@ -75,9 +76,10 @@ public class Combo extends Effect {
 
 
 	public BufferedImage render(BufferedImage img) {
-		
+
 		if(timeout != 0 && killCount > 2) {
 			Graphics2D g2d = (Graphics2D) img.getGraphics();
+			g2d = SettingsManager.setRenderingHints(g2d);
 
 			g2d.drawImage(mainAnim.getSprite(),(int) ((SettingsManager.getResX() / 2) - 100), (int) (timeout/2.0) - 60,null);
 			g2d.drawImage(numAnim.getSprite(),(int) ((SettingsManager.getResX() / 2) + 100), (int) (timeout/2.0) - 60,null);
@@ -91,9 +93,8 @@ public class Combo extends Effect {
 	public static void addKill() {
 		killCount++;
 		timeout = 240;
-		
+
 		if(killCount > 3) {
-			System.out.println("another one");
 			sm.playSound(comboSound);
 		}
 	}

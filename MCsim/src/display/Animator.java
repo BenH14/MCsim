@@ -23,7 +23,7 @@ public class Animator {
 
 	public Animator(String filePath, int givenSpriteSizeX, int givenSpriteSizeY) {
 
-		try {SpriteSheet = ImageIO.read(new File("res/" + filePath));
+		try {SpriteSheet = ImageIO.read(this.getClass().getClassLoader().getResource("res/" + filePath));
 		spriteSizeX = givenSpriteSizeX;
 		spriteSizeY = givenSpriteSizeY;
 

@@ -42,7 +42,7 @@ public class Menu {
 
 		try {
 			//Load the image and resize it to the correct size
-			backgroundImage = ImageIO.read(new File("res/background.png"));
+			backgroundImage = ImageIO.read(this.getClass().getClassLoader().getResource("res/background.png"));
 			backgroundImage.setAccelerationPriority(1);
 			Graphics2D tempResizeG2d = (Graphics2D) backgroundImage.getGraphics();
 			tempResizeG2d.drawImage(backgroundImage, 0, 0, SettingsManager.getResX(), SettingsManager.getResY(), null);
@@ -51,7 +51,7 @@ public class Menu {
 		}
 
 		try {
-			AudioInputStream in = AudioSystem.getAudioInputStream(new File("res/sound/EFFECT_MENU_HIGH.wav"));
+			AudioInputStream in = AudioSystem.getAudioInputStream(this.getClass().getClassLoader().getResource("res/sound/EFFECT_MENU_HIGH.wav"));
 			menuSound = AudioSystem.getClip();
 			menuSound.open(in);
 		} catch (Exception ex) {

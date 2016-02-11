@@ -16,7 +16,7 @@ public class Enemy extends Mob{
 
 	public Enemy(int spawnPosX, int spawnPosY, Player givenPlayer) {
 
-		super(spawnPosX, spawnPosY, "enemy");
+		super(spawnPosX, spawnPosY, MOB_TYPE.ENEMY);
 
 		speedMultiplier = 2;
 

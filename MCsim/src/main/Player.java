@@ -6,7 +6,7 @@ public class Player extends Mob {
 
 	public Player(int spawnPosX, int spawnPosY, KeyController givenKey) {
 
-		super(spawnPosX, spawnPosY, "player");
+		super(spawnPosX, spawnPosY, MOB_TYPE.PLAYER);
 
 		speedMultiplier = 4;
 

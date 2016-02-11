@@ -37,7 +37,7 @@ public enum MOB_TYPE {
 			"I thought you said monday",
 			"Did you not get my email?",
 			"I can't get eclipse to work",
-			null,null,null,null,null,null,null,null,null,null //Bias towards collins
+			null,null,null,null,null,null,null,null,null,null //Bias towards Collins
 	},
 			new String[]{
 					//NAMES

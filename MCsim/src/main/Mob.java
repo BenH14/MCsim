@@ -138,6 +138,7 @@ public abstract class Mob {
 		//		g2d.drawImage(CurrentAnimator.getSprite(),(int) x * scaleFactor[0] ,(int) y * scaleFactor[1] ,(int) 50 * scaleFactor[0] ,(int) 50 * scaleFactor[0], null);
 		g2d.setColor(Color.WHITE);
 		g2d.drawRect((int) (x * scaleFactor[0]),(int) (y * scaleFactor[1]), 20, 20);
+		g2d.drawString(mobName,(int) (x * scaleFactor[0]) - (int) (g2d.getFontMetrics().stringWidth(mobName) / 2.0) ,(int) (y * scaleFactor[1]) + 30);
 		g2d.setColor(Color.BLACK);
 		//Draws text box if it still has a lifetime
 		if(textBoxLifetime != 0) {

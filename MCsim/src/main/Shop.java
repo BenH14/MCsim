@@ -3,13 +3,16 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import logging.DebugFactory;
 import logging.Logger;
+import settings.FileLoader;
 import settings.SettingsManager;
 
 public class Shop {
@@ -26,15 +29,18 @@ public class Shop {
 
 	private static int choice;
 	private static int ticks;
+	private static String filePath;
 
 	private static double scaleFactor[];
 
 	public static void init() {
 
+		filePath = "save.dat";
+		
 		try {
 			readFile();
 		} catch (Exception ex) {
-			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("No data for progression!");
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("No data for progression! Error - " + ex.toString());
 
 			//Set default values:
 			resetValues();
@@ -58,9 +64,11 @@ public class Shop {
 		staticSpawn = false;
 		deadlines = false;
 
-		gold = 10000;
+		gold = 10000; DebugFactory.getDebug(Logger.URGENCY.DEBUG).write("10000 gold is still being allocated as debug, fix this in shop.resetValues()"); //TODO	
 
 		updateGameLength();
+		
+		saveFile();
 
 	}
 
@@ -71,10 +79,12 @@ public class Shop {
 	}
 
 	public static void readFile() throws IOException {
-
+		
 		Properties prop = new Properties();
-		InputStream in = new FileInputStream("save.properties");
+		InputStream in = new FileLoader().getInStream(filePath);
 
+		prop.load(in);
+		
 		gold = Integer.parseInt(prop.getProperty("gold"));
 		gameLength = Integer.parseInt(prop.getProperty("gameLength"));
 		captureSpeed = Integer.parseInt(prop.getProperty("captureSpeed"));
@@ -89,6 +99,27 @@ public class Shop {
 
 	public static void saveFile() {
 
+		Properties prop = new Properties();
+		OutputStream out = null;
+		try {
+			out = new FileLoader().getOutStream(filePath);
+		} catch (FileNotFoundException | URISyntaxException e1) {
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Could not load output stream to save file for progression");
+		}
+
+		prop.setProperty("gold", Integer.toString(gold));
+		prop.setProperty("gameLength", Integer.toString(gameLength));
+		prop.setProperty("captureSpeed", Integer.toString(captureSpeed));
+		prop.setProperty("spawnRate", Integer.toString(spawnRate));
+		prop.setProperty("staticSpawn", Boolean.toString(staticSpawn));
+		prop.setProperty("deadlines", Boolean.toString(deadlines));
+
+		try {
+			prop.store(out, null);
+		} catch (IOException e) {
+			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Could not store properties to save file for progression");
+		}
+		
 	}
 
 	public static void addGold(int amount) {
@@ -179,6 +210,9 @@ public class Shop {
 			case 4: if(captureSpeed < 50) {captureSpeed++;}
 			break;
 			}
+			
+			saveFile();
+			
 		}
 
 		if(ticks < 600) {ticks++;} else {ticks = 0;}

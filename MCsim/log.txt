@@ -1,4 +1,7 @@
-New Launch at 12:21:43
-<OK>  - 12:21:43 : Trying to load settings File...
-<OK>  - 12:21:44 : Starting Main Controller Loop
-<OK>  - 12:21:44 : Starting Render Loop
+New Launch at 17:02:35
+<OK>  - 17:02:35 : Trying to load settings File...
+<OK>  - 17:02:35 : ... Settings File loaded
+<OK>  - 17:02:36 : Starting Main Controller Loop
+<OK>  - 17:02:36 : Starting Render Loop
+<OK>  - 17:02:55 : Starting Game
+<OK>  - 17:02:56 : Game Started

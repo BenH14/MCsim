@@ -55,31 +55,31 @@ public class SoundManager extends Thread{
 
 	public void run() {
 
-		stop = false;
-
-		pulser = new Pulse(60);
-		EffectManager.addEffect(pulser);
-
-		try {
-			mainSoundtrack = AudioSystem.getClip();
-			mainSoundtrack.open(mainSound);
-		} catch (LineUnavailableException | IOException e) {
-			e.printStackTrace();
-		}
-
-		FloatControl volumeControl = (FloatControl) mainSoundtrack.getControl(FloatControl.Type.MASTER_GAIN);
-		volumeControl.setValue(SettingsManager.getVolume());
-
-		mainSoundtrack.setFramePosition(0);
-		mainSoundtrack.start();
-
-		while(stop == false) {
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+//		stop = false;
+//
+//		pulser = new Pulse(60);
+//		EffectManager.addEffect(pulser);
+//
+//		try {
+//			mainSoundtrack = AudioSystem.getClip();
+//			mainSoundtrack.open(mainSound);
+//		} catch (LineUnavailableException | IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		FloatControl volumeControl = (FloatControl) mainSoundtrack.getControl(FloatControl.Type.MASTER_GAIN);
+//		volumeControl.setValue(SettingsManager.getVolume());
+//
+//		mainSoundtrack.setFramePosition(0);
+//		mainSoundtrack.start();
+//
+//		while(stop == false) {
+//			try {
+//				Thread.sleep(200);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
 
 	}
 

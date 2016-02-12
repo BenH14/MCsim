@@ -93,6 +93,8 @@ public class Shop {
 		deadlines = Boolean.parseBoolean(prop.getProperty("deadlines"));
 
 		in.close();
+		
+		updateGameLength();
 
 
 	}

@@ -124,8 +124,6 @@ public class SuperController {
 
 			if(pause == false) {
 
-
-
 				if(mainKey.exit == true){
 					DebugFactory.getDebug(Logger.URGENCY.STATUS).write("Pausing Game");
 					pause = true;
@@ -154,11 +152,12 @@ public class SuperController {
 				EffectManager.tick();
 
 				doSpawning(false);
-
+				
 				if ((Shop.gameLengthVal - stats.gameTimeSecs) < 0) {
 					//End Game if time has exceeded the allotted gamelength
 					pause = true;
 				}
+				
 			} else {
 
 				sound.stopLoop();
@@ -259,7 +258,7 @@ public class SuperController {
 						}
 
 						if(pause == false) {
-
+							
 							//Render Game
 							Mob tempMob = mobHead;
 							while(tempMob != null) {

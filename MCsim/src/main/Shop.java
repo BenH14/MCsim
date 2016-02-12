@@ -116,6 +116,7 @@ public class Shop {
 
 		try {
 			prop.store(out, null);
+			out.close();
 		} catch (IOException e) {
 			DebugFactory.getDebug(Logger.URGENCY.ERROR).write("Could not store properties to save file for progression");
 		}

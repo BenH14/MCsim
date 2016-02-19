@@ -188,7 +188,7 @@ public class Shop {
 		return g2d;
 	}
 
-	public static void tick(KeyController key) {
+	public static void tick(KeyController key, MouseController mouse) {
 
 
 

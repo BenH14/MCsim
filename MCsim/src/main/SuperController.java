@@ -35,6 +35,7 @@ public class SuperController {
 	private HUD ui;
 
 	private KeyController mainKey;
+	private MouseController mainMouse;
 
 	private Random ranGen;
 
@@ -62,9 +63,11 @@ public class SuperController {
 		exit = false;
 
 		mainKey = new KeyController();
+		mainMouse = new MouseController();
 		mainWindow.addKeyListener(mainKey);
+		mainWindow.addMouseListener(mainMouse);
 
-		mainMenu = new Menu(mainKey);
+		mainMenu = new Menu(mainKey, mainMouse);
 
 		EffectManager.init();
 		Shop.init();

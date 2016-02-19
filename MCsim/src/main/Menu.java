@@ -3,8 +3,8 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -24,6 +24,7 @@ public class Menu {
 
 	private int choice;
 	private KeyController key;
+	private MouseController mouse;
 
 	private BufferedImage backgroundImage;
 	private BufferedImage preBake;
@@ -31,7 +32,7 @@ public class Menu {
 	private SoundManager sound;
 	private Clip menuSound;
 
-	public Menu(KeyController givenKey) {
+	public Menu(KeyController givenKey, MouseController givenMouse) {
 
 		choice = 0;
 
@@ -39,6 +40,7 @@ public class Menu {
 		startGame = false;
 
 		key = givenKey;
+		mouse = givenMouse;
 
 		try {
 			//Load the image and resize it to the correct size
@@ -57,6 +59,7 @@ public class Menu {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+
 	}
 
 	public void preBakeBackground() {
@@ -102,7 +105,7 @@ public class Menu {
 	public void tick() {
 
 		if(key.up == true || key.down == true) {
-				sound.playSound(menuSound);
+			sound.playSound(menuSound);
 		}
 
 		if(goToShop) {
@@ -122,7 +125,20 @@ public class Menu {
 			else {endGame = key.enter;}
 
 			key.enter = false;
-		} 
+		}
+		
+		if(mouse.check() == true) {
+			if(mouse.getX() > 60 && mouse.getX() < 550) {
+				System.out.println(mouse.getY());
+				if(mouse.getY() > 350 && mouse.getY() < 450) {
+					startGame = true;
+				} else if (mouse.getY() > 450 && mouse.getY() < 550) {
+					goToShop = true;
+				} else if (mouse.getY() > 550 && mouse.getY() < 650) {
+					endGame = true;
+				}
+			}
+		}
 
 	}
 

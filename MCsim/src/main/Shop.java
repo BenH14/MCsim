@@ -217,6 +217,10 @@ public class Shop {
 			saveFile();
 			
 		}
+		
+		if(mouse.check() == true) {
+			gold--;
+		}
 
 		if(ticks < 600) {ticks++;} else {ticks = 0;}
 

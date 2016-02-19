@@ -109,7 +109,7 @@ public class Menu {
 		}
 
 		if(goToShop) {
-			Shop.tick(key);
+			Shop.tick(key, mouse);
 			goToShop = !key.exit;
 		} else {
 			if(key.up == true) {

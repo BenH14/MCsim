@@ -7,6 +7,8 @@ public class Launch {
 
 	public static void main(String[] args) {
 		
+		System.setProperty("sun.java2d.opengl","True");
+		
 		DebugFactory.getDebug(Logger.URGENCY.STATUS).startup();
 		
 		SuperController sc = new SuperController();
